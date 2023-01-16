@@ -31,6 +31,7 @@ header {
   display: block;
   height: 50px;
   width: 100%;
+  z-index: 9999999;
 
   background-color: $navbar;
 

@@ -2,9 +2,15 @@
 
 <template>
   <div class="wrapper">
+    <h1>ПРОДУКЦИЯ</h1>
+    <svg height="0" width="0" viewBox="0 0 600 600">
+      <clipPath id="hexagon">
+        <path
+          d="M0,203.1v193.71c0,37.96,20.25,73.03,53.12,92.01l167.76,96.86c32.87,18.98,73.37,18.98,106.25,0l167.76-96.86c32.87-18.98,53.12-54.05,53.12-92.01V203.1c0-37.96-20.25-73.03-53.12-92.01L327.13,14.23c-32.87-18.98-73.37-18.98-106.25,0L53.12,111.09C20.25,130.07,0,165.14,0,203.1Z"
+        />
+      </clipPath>
+    </svg>
     <div class="product-section">
-      <h1>ПРОДУКЦИЯ</h1>
-
       <div class="product-section-block">
         <div class="product-item-image">
           <img src="../images/section_product/stairs.webp" alt="" />
@@ -20,7 +26,9 @@
       </div>
 
       <div class="product-section-block">
-        
+        <div class="product-item-image">
+          <img src="../images/section_product/section_stair_railing.webp" alt="" />
+        </div>
         <div class="product-item-description">
           <h3>Лестничные ограждения</h3>
           <p>
@@ -28,9 +36,6 @@
             commodi sed quae autem a distinctio, blanditiis nobis explicabo quis impedit illum illo
             dignissimos minima excepturi esse et perspiciatis.
           </p>
-        </div>
-        <div class="product-item-image">
-          <img src="../images/section_product/section_stair_railing.webp" alt="" />
         </div>
       </div>
 
@@ -95,6 +100,14 @@
 
 <style lang="scss" scoped>
 @import "../assets/_vars.scss";
+
+svg {
+  position: absolute;
+  width: 0;
+  height: 0;
+  transform: scale(0.9);
+}
+
 .wrapper {
   max-width: $wrapper-width;
   margin: 0 auto;
@@ -103,7 +116,7 @@
 h1 {
   font-size: 4rem;
   font-weight: $font-bold;
-  margin-top: 50px;
+  margin-top: 80px;
   margin-bottom: 50px;
   color: $navbar;
 
@@ -124,21 +137,56 @@ h3 {
 
 .product-section {
   .product-section-block {
-    height: 550px;
+    position: relative;
+    height: 600px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    gap: 100px;
 
-    margin-top: 40px;
-    .product-item-image {
-      height: 100%;
-      img {
-        height: 100%;
+    margin-bottom: 120px;
+
+    &:not(:last-child)::after {
+      content: url("./icons/header_elements/Devider.png");
+
+      position: absolute;
+      bottom: -85px;
+      left: auto;
+    }
+
+    &:nth-child(2n) {
+      flex-direction: row-reverse;
+
+      .product-item-description {
+        h3 {
+          text-align: end;
+        }
       }
     }
+
+    .product-item-image {
+      height: 100%;
+
+      img {
+        height: 100%;
+        margin-left: calc(100% - 100% / 1.09); // Trouble with clip-path position
+        clip-path: url(#hexagon);
+        -webkit-clip-path: url(#hexagon);
+      }
+    }
+
+    &:nth-child(2n) img {
+      margin-left: 0; // Trouble with clip-path position
+    }
+
     .product-item-description {
-      text-align: start;
+      text-align: justify;
+
+      p {
+        font-size: 2rem;
+        margin-top: 20px;
+      }
     }
   }
 }
