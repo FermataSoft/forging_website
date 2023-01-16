@@ -1,0 +1,19 @@
+<script setup>
+import MyButton from "../components/OrderButton.vue";
+</script>
+
+<template>
+  <div class="about">
+    <h1>This is an about page</h1>
+    <MyButton text="fdsfdsf"></MyButton>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+@import '../assets/vars.scss';
+
+h1 {
+  color: $accent;
+  font-size: 2rem;
+}
+</style>
