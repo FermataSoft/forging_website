@@ -36,53 +36,44 @@ header {
   background-color: $navbar;
 
   .wrapper {
-    max-width: $wrapper-width;
+    width: $wrapper-width;
     height: 100%;
-    width: 100%;
     margin: auto;
 
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 60px;
-  }
 
-  nav {
-    height: 100%;
-    width: 100%;
+    nav {
+      height: 100%;
+      width: 100%;
 
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    align-items: center;
-    justify-content: end;
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      align-items: center;
+      justify-content: end;
 
-    a {
-      position: relative;
-      font-size: 1.6rem;
-      font-weight: $font-regular;
+      a {
+        position: relative;
+        font-size: 1.6rem;
+        font-weight: $font-regular;
 
-      color: $white;
-      padding: 6px 0;
+        color: $white;
+        padding: 6px 0;
 
-      transition: color 0.2s ease-in-out;
-
-      &:hover {
-        color: $accent;
-      }
-
-      &.router-link-active {
-        color: $accent;
+        transition: color 0.2s ease-in-out;
 
         &::before {
           content: "";
 
           position: absolute;
           top: 1px;
-          left: 50%;
-          transform: translate(-50%);
+          left: 0%;
           height: 2px;
           width: 67%;
+          transform: translate(-50%) scaleX(0);
 
           background-color: $accent;
         }
@@ -92,12 +83,42 @@ header {
 
           position: absolute;
           bottom: 0;
-          left: 50%;
-          transform: translate(-50%);
+          left: 100%;
+          transform: translate(-50%) scaleX(0);
           height: 2px;
           width: 67%;
 
           background-color: $accent;
+        }
+
+        &::before,
+        &::after {
+          transition: all 0.3s ease-in-out;
+        }
+
+        &:hover {
+          color: $accent;
+
+          &::before,
+          &::after {
+            left: 50%;
+            width: 80%;
+            transform: translate(-50%) scaleX(1);
+          }
+        }
+
+        &.router-link-active {
+          color: $accent;
+
+          &::before {
+            transform: translate(-50%) scale(1);
+            left: 50%;
+          }
+
+          &::after {
+            transform: translate(-50%) scale(1);
+            left: 50%;
+          }
         }
       }
     }

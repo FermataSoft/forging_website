@@ -1,8 +1,9 @@
-<script></script>
+<script setup>
+import SectionHeader from "./elements/SectionHeader.vue";
+</script>
 
 <template>
-  <div class="wrapper">
-    <h1>ПРОДУКЦИЯ</h1>
+    <SectionHeader text="Продукция"></SectionHeader>
     <svg height="0" width="0" viewBox="0 0 600 600">
       <clipPath id="hexagon">
         <path
@@ -95,7 +96,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -106,28 +106,6 @@ svg {
   width: 0;
   height: 0;
   transform: scale(0.9);
-}
-
-.wrapper {
-  max-width: $wrapper-width;
-  margin: 0 auto;
-}
-
-h1 {
-  font-size: 4rem;
-  font-weight: $font-bold;
-  margin-top: 80px;
-  margin-bottom: 50px;
-  color: $navbar;
-
-  &::before {
-    content: url(../components/icons/header_elements/header_before.svg);
-    margin-right: 10px;
-  }
-  &::after {
-    content: url(../components/icons/header_elements/header_after.svg);
-    margin-left: 10px;
-  }
 }
 
 h3 {
