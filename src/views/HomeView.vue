@@ -13,7 +13,7 @@ import ScrollTopButton from '../components/elements/ScrollTopButton.vue'
     <Hero></Hero>
     <div class="wrapper">
       <ProductSectionHome></ProductSectionHome>
-      <ButtonLink text="Наши работы"></ButtonLink>
+      <ButtonLink class="btn-works" text="Наши работы"></ButtonLink>
     </div>
 
     <ProcessSectionHome></ProcessSectionHome>
@@ -36,6 +36,10 @@ main {
 
   .wrapper {
     max-width: $wrapper-width;
+    margin: 0 auto;
+  }
+
+  .btn-works {
     margin: 0 auto;
   }
 }

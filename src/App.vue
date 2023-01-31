@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from "vue-router";
 import MyButton from "./components/OrderButton.vue";
 import LanguageDropdownMenu from "./components/LanguageDropdownMenuView.vue";
+import FooterSection from './components/sections/FooterSection.vue';
 </script>
 
 <template>
@@ -21,6 +22,7 @@ import LanguageDropdownMenu from "./components/LanguageDropdownMenuView.vue";
   <div class="navbar-margin"></div>
 
   <RouterView />
+  <FooterSection></FooterSection>
 </template>
 
 <style scoped lang="scss">

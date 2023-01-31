@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+import ButtonLink from '../ButtonLink.vue';
+
+</script>
 
 <template>
   <div class="feedback-section">
@@ -87,7 +90,7 @@
           >
         </div>
       </div>
-      <input type="submit" class="lang_form_submit" value="Отправить" />
+      <ButtonLink class="btn-submit" inputType="submit" text="Отправить"></ButtonLink>
     </form>
   </div>
 </template>
@@ -257,32 +260,36 @@
   }
 }
 
-input[type="submit"] {
-    align-self: flex-start;
-    width: 120px;
-    height: 40px;
-    border-radius: 30px;
-    background-color: $accent;
-    color: $white;
-    font-weight: $font-bold;
-    font-size: 1.6rem;
-    transition: transform 0.05s;
-    transition: background-color 0.3s ease;
+.btn-submit {
+  align-self: flex-start;
+}
 
-    @include breakpoint(xs) {
-      align-self: end;
-    }
+// input[type="submit"] {
+//     align-self: flex-start;
+//     width: 120px;
+//     height: 40px;
+//     border-radius: 30px;
+//     background-color: $accent;
+//     color: $white;
+//     font-weight: $font-bold;
+//     font-size: 1.6rem;
+//     transition: transform 0.05s;
+//     transition: background-color 0.3s ease;
 
-    &:hover {
-      background-color: $accent;
-    }
+//     @include breakpoint(xs) {
+//       align-self: end;
+//     }
 
-    &:disabled {
-      background-color: $gray;
-    }
+//     &:hover {
+//       background-color: $accent;
+//     }
 
-    &:not(:disabled):active {
-      transform: translate(0, 1px);
-    }
-  }
+//     &:disabled {
+//       background-color: $gray;
+//     }
+
+//     &:not(:disabled):active {
+//       transform: translate(0, 1px);
+//     }
+//   }
 </style>
