@@ -1,8 +1,4 @@
 <script setup>
-import ButtonLink from '../ButtonLink.vue';
-
-</script>
-<script setup>
 import ButtonLink from '../elements/ButtonLink.vue';
 
 </script>
