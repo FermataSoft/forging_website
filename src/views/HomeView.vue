@@ -39,5 +39,9 @@ main {
   .btn-works {
     margin: 0 auto;
   }
+
+  .btn-works {
+    margin: 0 auto;
+  }
 }
 </style>
