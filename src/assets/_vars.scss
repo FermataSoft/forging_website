@@ -5,12 +5,13 @@ $wrapper-width: 1250px;
 $app-background-color: #000000;
 $navbar_opacity: rgba(11, 11, 14, 0.7);
 $navbar: #232323;
+$navbar-url: '%23232323';
 $dark: #050d21;
-$white: #FEFEFE;
-$gray: #B8B8B8;
+$white: #fefefe;
+$gray: #b8b8b8;
 $links: rgb(242, 242, 242);
-$accent: #FFD166;
-$accent-hover: #E9BF5D;
+$accent: #ffd166;
+$accent-hover: #f3c761;
 $add-dark-blue: linear-gradient(252.85deg, #0e0e25 0%, #0e0e25 100%);
 // $blue-gradient: linear-gradient(252.85deg, #006fbf 0%, #7000c0 100%);
 $blue-gradient: linear-gradient(252.85deg, #004272 0%, #47007a 100%);
@@ -23,12 +24,13 @@ $font-medium: 500;
 $font-bold: 700;
 // $font-extraBold: 800;
 
+$font-sans-serif: 'Ubuntu', sans-serif;
+$font-mono: 'Ubuntu Mono', monospace;
+
 // @font-face {
 //   font-family: mellanissa;
 //   src: url("../fonts/mellanissa.ttf");
 // }
-
-
 
 $mobile-attention: 500px;
 $mobile: 767px;

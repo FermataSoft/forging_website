@@ -4,17 +4,15 @@ defineProps({
     type: String,
     required: true,
   },
-  text: {
-    type: String,
-    required: true,
-  },
 });
 </script>
 
 <template>
-  <div class="benefits-item">
+  <div class="benefits-item _unselectable">
     <img class="benefits-item__icon" :src="`src/images/benefits_icons/${icon}`" alt="" />
-    <p class="benefits-item__text">{{ text }}</p>
+    <p class="benefits-item__text">
+      <slot></slot>
+    </p>
   </div>
 </template>
 
@@ -37,7 +35,6 @@ defineProps({
   background-color: #fff;
 
   transition: all 0.3s ease-in-out;
-  cursor: pointer;
 
   &:hover {
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.25);

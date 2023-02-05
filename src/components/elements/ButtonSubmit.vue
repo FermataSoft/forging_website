@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 defineProps({
   text: {
     type: String,
@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="btn">{{ text }}</div>
+  <input type="submit" class="lang_form-submit" value="{{ text }}" />
 </template>
 
 <style lang="scss" scoped>

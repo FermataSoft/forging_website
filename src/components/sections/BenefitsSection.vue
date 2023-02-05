@@ -1,32 +1,31 @@
 <script setup>
-import BenefitsItem from "../elements/BenefitsItem.vue";
-import SectionHeader from "../elements/SectionHeader.vue";
+import BenefitsItem from '../elements/BenefitsItem.vue';
+import SectionHeader from '../elements/SectionHeader.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 </script>
 
 <template>
-  <SectionHeader text="Наши преимущества"></SectionHeader>
+  <SectionHeader>{{ t('SectionBenefitsHeader') }}</SectionHeader>
   <div class="benefits-block">
     <BenefitsItem
       icon="drawing@96.webp"
-      text="Индивидуальный подход к каждому заказу"
-    ></BenefitsItem>
-    <BenefitsItem icon="stack-of-coins@96.webp" text="Конкурентная цена"></BenefitsItem>
+    >{{ t('SectionBenefitsItem1') }}</BenefitsItem>
+    <BenefitsItem icon="stack-of-coins@96.webp" >{{ t('SectionBenefitsItem2') }}</BenefitsItem>
     <BenefitsItem
       icon="embroidery@96.webp"
-      text="Выполняем даже самые смелые Ваши решения"
-    ></BenefitsItem>
+
+    >{{ t('SectionBenefitsItem3') }}</BenefitsItem>
     <BenefitsItem
       icon="quality@96.webp"
-      text="Высокое качество изготовления. Все сварные стыки тщательно зачищаются и полируются"
-    ></BenefitsItem>
+    >{{ t('SectionBenefitsItem4') }}</BenefitsItem>
     <BenefitsItem
       icon="key@96.webp"
-      text="Изделия выполняем “под ключ”. Осуществляем доставку"
-    ></BenefitsItem>
+    >{{ t('SectionBenefitsItem5') }}</BenefitsItem>
     <BenefitsItem
       icon="3d-model@96.webp"
-      text="Один из этапов изготовления - 3D визуализация будущего изделия"
-    ></BenefitsItem>
+    >{{ t('SectionBenefitsItem6') }}</BenefitsItem>
   </div>
 </template>
 

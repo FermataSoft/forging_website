@@ -1,14 +1,10 @@
 <script setup>
-defineProps({
-  text: {
-    type: String,
-    required: true,
-  },
-});
 </script>
 
 <template>
-  <h1>{{ text }}</h1>
+  <h1>
+    <slot></slot>
+  </h1>
 </template>
 
 <style lang="scss" scoped>
