@@ -17,7 +17,7 @@ defineProps({
 </template>
 
 <style lang="scss" scoped>
-@import "../../assets/_vars.scss";
+@import '../../assets/_vars.scss';
 
 .benefits-item {
   max-width: 350px;
