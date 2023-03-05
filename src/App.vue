@@ -8,19 +8,21 @@ import LanguageDropdownMenu from './components/LanguageDropdownMenuView.vue';
 import FooterSection from './components/sections/FooterSection.vue';
 import ScrollTopButton from './components/elements/ScrollTopButton.vue';
 import { useLocaleStore } from './stores/LocaleStore';
+import { useWindowParamsStore } from './stores/WindowParamsStore';
 
-// Global event listeners
-const scrollYPos = ref(window.scrollY);
-const windowHeight = ref(window.innerHeight);
-const composedPath = ref([]);
+const windowParamsStore = useWindowParamsStore();
 
 onMounted(() => {
   window.addEventListener('scroll', () => {
-    scrollYPos.value = window.scrollY;
+    windowParamsStore.$patch({
+      scrollYPos: window.scrollY,
+    });
   });
 
   window.addEventListener('resize', () => {
-    windowHeight.value = window.innerHeight;
+    windowParamsStore.$patch({
+      windowHeight: window.innerHeight,
+    });
   });
 });
 
@@ -41,15 +43,18 @@ localeStore.$subscribe(() => {
     <div class="wrapper">
       <div class="logo-wrapper">
         <img class="logo" src="./favicon/android-chrome-512x512.png" alt="" />
-        <span>Декоративная ковка</span>
       </div>
 
       <nav>
-        <RouterLink to="/">Главная</RouterLink>
-        <RouterLink to="/works">Наши работы</RouterLink>
-        <RouterLink to="/articles">Статьи</RouterLink>
-        <RouterLink to="/contacts">Контакты</RouterLink>
-        <RouterLink to="/about">О нас</RouterLink>
+        <div class="nav__item">
+          <RouterLink to="/">Главная</RouterLink>
+        </div>
+        <div class="nav__item">
+          <RouterLink to="/works">Наши работы</RouterLink>
+        </div>
+        <div class="nav__item"><RouterLink to="/articles">Статьи</RouterLink></div>
+        <div class="nav__item"><RouterLink to="/contacts">Контакты</RouterLink></div>
+        <div class="nav__item"><RouterLink to="/about">О нас</RouterLink></div>
       </nav>
       <MyButton>Заказать</MyButton>
       <LanguageDropdownMenu></LanguageDropdownMenu>
@@ -57,7 +62,12 @@ localeStore.$subscribe(() => {
   </header>
   <div class="navbar-margin"></div>
 
-  <RouterView />
+  <RouterView v-slot="{ Component }">
+    <Transition name="fade" mode="out-in" appear>
+      <component :is="Component" :key="$route.path"></component>
+    </Transition>
+  </RouterView>
+
   <FooterSection></FooterSection>
 
   <ScrollTopButton></ScrollTopButton>
@@ -65,6 +75,16 @@ localeStore.$subscribe(() => {
 
 <style scoped lang="scss">
 @import './assets/vars.scss';
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 
 header {
   position: fixed;
@@ -94,7 +114,7 @@ header {
       align-items: center;
 
       .logo {
-        width: 35px;
+        width: 30px;
         height: auto;
       }
 
@@ -107,7 +127,7 @@ header {
 
     nav {
       height: 100%;
-      // width: 100%;
+      width: 100%;
 
       display: flex;
       flex-direction: row;
@@ -115,38 +135,46 @@ header {
       align-items: center;
       justify-content: center;
 
-      a {
+      .nav__item {
+        height: 100%;
         position: relative;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        text-align: center;
         font-size: 1.6rem;
         font-weight: $font-regular;
+        height: 100%;
 
         color: $white;
-        padding: 6px 0;
 
         transition: color 0.2s ease-in-out;
 
-        &::before {
-          content: '';
+        // &::before {
+        //   content: '';
 
-          position: absolute;
-          top: 1px;
-          left: 0%;
-          height: 2px;
-          width: 67%;
-          transform: translate(-50%) scaleX(0);
+        //   position: absolute;
+        //   top: 0;
+        //   left: 0%;
+        //   height: 2px;
+        //   width: 67%;
+        //   transform: translate(-50%) scaleX(0);
 
-          background-color: $accent;
-        }
+        //   background-color: $accent;
+        // }
 
         &::after {
           content: '';
 
           position: absolute;
           bottom: 0;
-          left: 100%;
-          transform: translate(-50%) scaleX(0);
-          height: 2px;
-          width: 67%;
+          left: 50%;
+          height: 3px;
+          width: 0;
+
+          transform: translate(-50%, 0%);
 
           background-color: $accent;
         }
@@ -157,13 +185,9 @@ header {
         }
 
         &:hover {
-          color: $accent;
-
           &::before,
           &::after {
-            left: 50%;
             width: 80%;
-            transform: translate(-50%) scaleX(1);
           }
         }
 
@@ -171,13 +195,11 @@ header {
           color: $accent;
 
           &::before {
-            transform: translate(-50%) scale(1);
-            left: 50%;
+            width: 67%;
           }
 
           &::after {
-            transform: translate(-50%) scale(1);
-            left: 50%;
+            width: 67%;
           }
         }
       }

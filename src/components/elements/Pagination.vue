@@ -1,0 +1,70 @@
+<script setup lang="ts">
+import { ref, watch } from 'vue';
+
+const props = defineProps({
+  totalCount: Number,
+  itemsPerPage: Number,
+});
+
+defineEmits(['update']);
+
+const currentPage = ref(1);
+
+watch(
+  () => props.itemsPerPage,
+  () => {
+    currentPage.value = 1;
+  }
+);
+</script>
+
+<template>
+  <vue-awesome-paginate
+    v-show="totalCount > itemsPerPage"
+    :total-items="totalCount"
+    :items-per-page="itemsPerPage"
+    :max-pages-shown="5"
+    v-model="currentPage"
+    :on-click="$emit('update', currentPage)"
+    :hide-prev-next-when-ends="true"
+  />
+</template>
+
+<style lang="scss">
+@import '../../assets/_vars.scss';
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+  padding-bottom: 50px;
+}
+.paginate-buttons {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  color: $navbar;
+  font-size: 1.4rem;
+  font-weight: $font-medium;
+}
+.paginate-buttons:hover {
+  background-color: #e1e1e1;
+}
+.active-page {
+  background-color: $navbar;
+  color: white;
+  font-size: 1.6rem;
+  font-weight: $font-bold;
+}
+.active-page:hover {
+  background-color: $accent;
+}
+
+.back-button,
+.next-button {
+  font-size: 1.6rem;
+  background: #f1f1f1;
+}
+</style>

@@ -2,6 +2,7 @@
 import { ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useLocaleStore } from '../stores/LocaleStore';
+import { useWindowParamsStore } from '../stores/WindowParamsStore';
 
 const { locale } = useI18n();
 
@@ -13,6 +14,15 @@ function openDropdownMenu() {
   } else {
     isDropdownMenuActive.value = true;
   }
+}
+
+function changeLanguage(lang) {
+  useLocaleStore().currentLocale = lang;
+  closeDropdownMenu();
+}
+
+function closeDropdownMenu() {
+  isDropdownMenuActive.value = false;
 }
 
 function isClickWithinBoundaries(event) {
@@ -27,8 +37,11 @@ function isClickWithinBoundaries(event) {
 watchEffect(() => {
   if (isDropdownMenuActive.value) {
     document.addEventListener('click', isClickWithinBoundaries);
+
+    window.addEventListener('scroll', closeDropdownMenu);
   } else {
     document.removeEventListener('click', isClickWithinBoundaries);
+    window.removeEventListener('scroll', closeDropdownMenu)
   }
 });
 </script>
@@ -47,14 +60,14 @@ watchEffect(() => {
         <div
           class="dropdown-menu__item"
           :class="{ _active: locale == 'ru-RU' }"
-          @click.stop="useLocaleStore().currentLocale = 'ru-RU'"
+          @click.stop="changeLanguage('ru-RU')"
         >
           RU
         </div>
         <div
           class="dropdown-menu__item"
           :class="{ _active: locale == 'by-BY' }"
-          @click.stop="useLocaleStore().currentLocale = 'by-BY'"
+          @click.stop="changeLanguage('by-BY')"
         >
           BY
         </div>
@@ -71,11 +84,10 @@ watchEffect(() => {
   width: max-content;
   align-self: flex-start;
 
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: $font-medium;
   color: $white;
   line-height: 2rem;
-  // font-family: $font-mono;
   letter-spacing: 0.1rem;
 
   box-shadow: 0 0 15px rgba(0, 0, 0, 0);
