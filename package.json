@@ -1,5 +1,5 @@
 {
-  "name": "vuejs_learn",
+  "name": "forging_website",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "pinia": "^2.0.30",
+    "vee-validate": "^4.7.4",
     "vue": "^3.2.45",
+    "vue-awesome-paginate": "^1.1.46",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.1.6"
   },

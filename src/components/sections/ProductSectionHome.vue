@@ -7,13 +7,22 @@ const { t } = useI18n();
 
 <template>
   <SectionHeader>{{ t('SectionProductHeader') }}</SectionHeader>
-  <svg height="0" width="0" viewBox="0 0 600 600">
-    <clipPath id="hexagon">
+  <!-- <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 600 600" >
+    <clipPath id="hexagon" clipPathUnits="objectBoundingBox">
       <path
         d="M0,203.1v193.71c0,37.96,20.25,73.03,53.12,92.01l167.76,96.86c32.87,18.98,73.37,18.98,106.25,0l167.76-96.86c32.87-18.98,53.12-54.05,53.12-92.01V203.1c0-37.96-20.25-73.03-53.12-92.01L327.13,14.23c-32.87-18.98-73.37-18.98-106.25,0L53.12,111.09C20.25,130.07,0,165.14,0,203.1Z"
       />
     </clipPath>
+  </svg> -->
+
+  <svg id="hexagon-mask" viewBox="0 0 1 1" width="100%" height="100%" preserveAspectRatio="none">
+    <clipPath id="hexagon" clipPathUnits="objectBoundingBox">
+      <path
+        d="M.09.32V.68A.09.09,0,0,0,.14.76L.45.94a.09.09,0,0,0,.1,0L.86.76A.09.09,0,0,0,.91.68V.32A.09.09,0,0,0,.86.24L.55.06a.09.09,0,0,0-.1,0L.14.24A.09.09,0,0,0,.09.32Z"
+      />
+    </clipPath>
   </svg>
+
   <div class="product-section">
     <div class="product-section-block">
       <div class="product-item-image">
@@ -31,7 +40,7 @@ const { t } = useI18n();
 
     <div class="product-section-block">
       <div class="product-item-image">
-        <img src="../../images/section_product/section_stair_railing.webp" alt="" />
+        <img src="../../images/section_product/stair_railing.webp" alt="" />
       </div>
       <div class="product-item-description">
         <h3>Лестничные ограждения</h3>
@@ -104,11 +113,10 @@ const { t } = useI18n();
 <style lang="scss" scoped>
 @import '../../assets/_vars.scss';
 
-svg {
+#hexagon-mask {
   position: absolute;
   width: 0;
   height: 0;
-  transform: scale(0.9);
 }
 
 h3 {
@@ -119,14 +127,14 @@ h3 {
 .product-section {
   .product-section-block {
     position: relative;
-    height: 600px;
+    height: 80vh;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 100px;
 
-    margin-bottom: 120px;
+    margin-bottom: 100px;
 
     &:not(:last-child)::after {
       content: url('../icons/header_elements/Devider.png');

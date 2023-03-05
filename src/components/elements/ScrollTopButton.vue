@@ -33,15 +33,15 @@ onMounted(() => {
 
 span {
   position: fixed;
-  bottom: 100px;
-  right: 100px;
+  bottom: 60px;
+  right: 80px;
 }
 
 .btn-scrollTop {
   z-index: 9999;
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 20px;
 
   width: 50px;
   height: 50px;

@@ -1,5 +1,11 @@
 <template>
-  <svg width="38" height="31" viewBox="0 0 38 31" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <svg width="38" height="31" viewBox="0 0 38 31" fill="url(#email-gradient)" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="email-gradient" gradientTransform="rotate(90)">
+        <stop offset="0%" stop-color="#f7ff8e" />
+        <stop offset="100%" stop-color="#f1e566" />
+      </linearGradient>
+    </defs>
     <path
       d="M19.3726 14.4565L37.6275 4.95277V4.32317C37.6275 3.53272 37.3135 2.77464 36.7545 2.21571C36.1956 1.65678 35.4375 1.34277 34.6471 1.34277H3.35295C2.5625 1.34277 1.80443 1.65678 1.2455 2.21571C0.686563 2.77464 0.372559 3.53272 0.372559 4.32317V4.58395L19.3726 14.4565Z"
     />

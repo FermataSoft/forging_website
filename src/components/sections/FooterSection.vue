@@ -1,24 +1,37 @@
 <script setup>
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useWindowParamsStore } from '../../stores/WindowParamsStore.js'
+
 import IconAddress from '../icons/footer/IconAddress.vue';
 import IconWorkingHours from '../icons/footer/IconWorkingHours.vue';
 import IconMail from '../icons/footer/IconMail.vue';
 import IconPhone from '../icons/footer/IconPhone.vue';
 import IconTelegram from '../icons/footer/IconTelegram.vue';
-import IconFacebook from '../icons/footer/IconFacebook.vue';
 import IconViber from '../icons/footer/IconViber.vue';
 import IconInstagram from '../icons/footer/IconInstagram.vue';
 import IconVK from '../icons/footer/IconVK.vue';
 
-const socialLinksColors = {
-  instagram: 'url(#linearGradient-1)',
-  vk: '#0077FF',
-  telegram: 'url(#linearGradient-1)',
-  viber: '#7360f2',
-};
+const { t } = useI18n();
+
+const body = document.body,
+  html = document.documentElement;
+
+// const pageHeight = ref(Math.max(
+//   body.scrollHeight,
+//   body.offsetHeight,
+//   html.clientHeight,
+//   html.scrollHeight,
+//   html.offsetHeight
+// ))
+const windowHeight = computed(() => window.innerHeight);
+const pageHeight = computed(() => document.body.scrollHeight);
+
+const isPositionFixed = computed(() => windowHeight.value < pageHeight.value);
 </script>
 
 <template>
-  <footer>
+  <footer :class="{ _fixed: isPositionFixed }">
     <div class="wrapper">
       <div class="footer__top-block">
         <div class="footer__contact-block">
@@ -35,7 +48,9 @@ const socialLinksColors = {
             <IconMail></IconMail>
             <div class="footer__text-block">
               <h2>Email</h2>
-              <p>email@test.ru</p>
+              <p>
+                <a href="mailto:subneck@gmail.com">email@test.ru</a>
+              </p>
             </div>
           </div>
 
@@ -66,7 +81,9 @@ const socialLinksColors = {
                   <p>МТС</p>
                 </div>
                 <div class="footer__subtext_right">
-                  <p>+375 (XX) XXX-XX-XX</p>
+                  <p>
+                    <a href="tel:+375447199961">+375 (44) 719-99-61</a>
+                  </p>
                   <p>+375 (XX) XXX-XX-XX</p>
                 </div>
               </div>
@@ -110,23 +127,45 @@ const socialLinksColors = {
           <div class="footer__site-map-item">
             <h2>Наши работы</h2>
             <ul>
-              <li><RouterLink to="/">Лестницы</RouterLink></li>
-              <li><RouterLink to="/">Ограждения</RouterLink></li>
-              <li><RouterLink to="/">Ворота</RouterLink></li>
-              <li><RouterLink to="/">Калитки</RouterLink></li>
-              <li><RouterLink to="/">Козырьки</RouterLink></li>
-              <li><RouterLink to="/">Дымники</RouterLink></li>
-              <li><RouterLink to="/">Адресные таблички</RouterLink></li>
-              <li><RouterLink to="/">Другое</RouterLink></li>
+              <li>
+                <RouterLink to="/works/category-stairs">{{ t('category-stairs') }}</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/works/category-stair_railing">{{
+                  t('category-stair_railing')
+                }}</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/works/category-gates">{{ t('category-gates') }}</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/works/category-gate">{{ t('category-gate') }}</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/works/category-marquises">{{
+                  t('category-marquises')
+                }}</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/works/category-pipes">{{ t('category-pipes') }}</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/works/category-address-plates">{{
+                  t('category-address-plates')
+                }}</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/works/category-other">{{ t('category-other') }}</RouterLink>
+              </li>
             </ul>
           </div>
           <div class="footer__site-map-item">
             <h2>Информация</h2>
             <ul>
-              <li><RouterLink to="/">Статьи</RouterLink></li>
-              <li><RouterLink to="/">Контакты</RouterLink></li>
-              <li><RouterLink to="/">Отзывы</RouterLink></li>
-              <li><RouterLink to="/">О нас</RouterLink></li>
+              <li><RouterLink to="/works/:category">Статьи</RouterLink></li>
+              <li><RouterLink to="/works/:category">Контакты</RouterLink></li>
+              <li><RouterLink to="/works/:category">Отзывы</RouterLink></li>
+              <li><RouterLink to="/works/:category">О нас</RouterLink></li>
             </ul>
           </div>
         </div>
@@ -141,9 +180,21 @@ const socialLinksColors = {
 <style lang="scss" scoped>
 @import '../../assets/_vars.scss';
 
+.footer-bottom-position {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
 footer {
   background-color: $navbar;
-  margin-top: 50px;
+
+  &._fixed {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
 
   .wrapper {
     max-width: $wrapper-width;
@@ -170,7 +221,7 @@ footer {
 
         svg {
           width: 30px;
-          color: $accent;
+          fill: $accent-gradient;
         }
 
         .footer__text-block {
@@ -183,17 +234,22 @@ footer {
           }
 
           p {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
+          }
+
+          a {
+            font-size: 1.4rem;
+            color: $white;
+
+            &:hover {
+              color: $accent;
+            }
           }
 
           .footer__subtext-block {
             display: flex;
             flex-direction: row;
             gap: 10px;
-          }
-          .footer__subtext_left {
-          }
-          .footer__subtext_right {
           }
         }
       }
@@ -211,7 +267,7 @@ footer {
 
           a {
             width: 30px;
-            height: auto;
+
             color: $white;
             position: relative;
 
@@ -250,6 +306,7 @@ footer {
       display: flex;
       flex-direction: row;
       gap: 100px;
+
       .footer__site-map-item {
         h2 {
           font-size: 2rem;
@@ -260,13 +317,12 @@ footer {
 
         ul {
           li {
-            margin-bottom: 12px;
+            margin-bottom: 16px;
 
             a {
-              font-size: 1.6rem;
+              font-size: 1.5rem;
               font-weight: $font-regular;
               color: $gray;
-
               position: relative;
 
               &::after {
@@ -274,14 +330,13 @@ footer {
 
                 display: block;
                 position: absolute;
-                bottom: -5px;
+                bottom: 0px;
                 left: 0;
                 height: 2px;
-                width: 100%;
+                width: 0%;
                 background-color: $accent;
+                transform: translateY(5px);
 
-                transform: scaleX(0);
-                transform-origin: left;
                 transition: all 0.3s ease-in-out;
               }
 
@@ -290,7 +345,7 @@ footer {
               }
 
               &:hover::after {
-                transform: scaleX(1);
+                width: 100%;
               }
             }
           }
