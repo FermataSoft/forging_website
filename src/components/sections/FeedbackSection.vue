@@ -1,13 +1,29 @@
 <script setup>
-import ButtonLink from '../elements/ButtonLink.vue';
+import { ref, computed } from 'vue';
+import ButtonSubmit from '../elements/ButtonSubmit.vue'
 
+const isEmailValid = computed((email) => {
+  return !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(email);
+});
+
+const inputAccordingMaxLength = computed(() => {
+  let lengthLimit = el.getAttribute('maxlength');
+
+  if (el.value.length >= lengthLimit) {
+    return (el.value = el.value.slice(0, lengthLimit - 1));
+  } else return el.value;
+});
+
+function submitForm() {
+  console.log('Form submitting!');
+}
 </script>
 
 <template>
   <div class="feedback-section">
     <h1>ЕСТЬ ВОПРОСЫ? ЗАДАВАЙТЕ!</h1>
 
-    <form action="submit" class="feedback-form" autocomplete="off">
+    <form action="submit" class="feedback-form" autocomplete="off" @submit.prevent="submitForm">
       <!-- <div class="form__loader">
         <div class="form__loader__animation">
           <div class="form__face">
@@ -26,11 +42,11 @@ import ButtonLink from '../elements/ButtonLink.vue';
           type="text"
           maxlength="50"
           id="name"
-          name="name"
+          v-model="name"
           class="feedback-form__item-input _required"
           placeholder="Full name"
         />
-        <label for="name" class="lang_form_name">Ваше имя</label>
+        <label for="name">Ваше имя</label>
       </div>
 
       <div class="feedback-form__item">
@@ -38,23 +54,23 @@ import ButtonLink from '../elements/ButtonLink.vue';
           type="email"
           maxlength="50"
           id="email"
-          name="email"
+          v-model="email"
           class="feedback-form__item-input _required _email"
           placeholder="Email"
         />
-        <label for="email" class="lang_form_email">Ваш Email</label>
+        <label for="email">Ваш Email</label>
       </div>
 
       <div class="feedback-form__item">
         <input
           type="text"
           maxlength="50"
-          id="name"
-          name="name"
+          id="topic"
+          v-model="topic"
           class="feedback-form__item-input"
-          placeholder="Full name"
+          placeholder="Topic"
         />
-        <label for="name" class="lang_form_topic">Тема сообщения</label>
+        <label for="topic">Тема сообщения</label>
       </div>
 
       <div class="feedback-form__item">
@@ -68,7 +84,7 @@ import ButtonLink from '../elements/ButtonLink.vue';
           class="feedback-form__item-input _required"
           placeholder="Describe your idea"
         ></textarea>
-        <label for="message" class="lang_form_message">Ваше сообщение</label>
+        <label for="message">Ваше сообщение</label>
       </div>
 
       <div class="feedback-form__termsAndConditionsBlock">
@@ -80,44 +96,44 @@ import ButtonLink from '../elements/ButtonLink.vue';
           class="_required"
         />
         <div class="termsAndConditionsBlock__label">
-          <label
-            for="termsAndConditionsBlock__checkbox"
-            class="lang_form_checkboxLabel unselectable"
-            >Я даю свое согласие&nbsp;
-          </label>
-          <a href="#termsAndConditions" class="termsAndConditionsBlock__link lang_form_checkboxLink"
+          <label for="termsAndConditionsBlock__checkbox">Я даю свое согласие&nbsp; </label>
+          <a href="#termsAndConditions" class="termsAndConditionsBlock__link"
             >Terms and Conditions</a
           >
         </div>
       </div>
-      <ButtonLink class="btn-submit" inputType="submit" text="ButtonSubmit"></ButtonLink>
+
+      <ButtonSubmit text="ButtonSubmit"></ButtonSubmit>
+
+      <!-- <ButtonLink class="btn-submit" inputType="submit" text="ButtonSubmit"></ButtonLink> -->
     </form>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "../../assets/_vars.scss";
+@import '../../assets/_vars.scss';
 
 .feedback-section {
   width: 100%;
   margin-top: 80px;
+  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 
   h1 {
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-weight: $font-regular;
     color: $navbar;
   }
 }
 .feedback-form {
-  width: 550px;
+  width: 450px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
   justify-content: center;
-  margin-top: 60px;
+  margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
 
@@ -133,12 +149,12 @@ import ButtonLink from '../elements/ButtonLink.vue';
       transform-origin: top left;
       transition: 0.2s cubic-bezier(0, 0, 0.2, 1) 0ms;
       color: #8e8e8e;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       left: 10px;
     }
 
     ._required + label::after {
-      content: " (обязательно)";
+      content: ' (обязательно)';
     }
 
     input {
@@ -149,7 +165,7 @@ import ButtonLink from '../elements/ButtonLink.vue';
       background-color: $white;
       font-weight: $font-light;
       color: $navbar;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       padding: 10px 10px 4px 10px;
       outline: none;
       box-shadow: none;
@@ -165,7 +181,7 @@ import ButtonLink from '../elements/ButtonLink.vue';
       color: $navbar;
       background-color: $white;
       font-weight: $font-light;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       transition: 0.2s cubic-bezier(0, 0, 0.2, 1);
     }
 
@@ -178,13 +194,13 @@ import ButtonLink from '../elements/ButtonLink.vue';
     input:placeholder-shown + label,
     textarea:placeholder-shown + label {
       transform: translate(0, 15px) scale(1);
-      font-size: 1.6rem;
+      font-size: 1.4rem;
     }
 
     input:not(:placeholder-shown) + label,
     textarea:not(:placeholder-shown) + label {
       transform: translate(0, -7px) scale(0.8);
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       background-color: #fff;
       padding: 0 5px;
     }
@@ -192,7 +208,7 @@ import ButtonLink from '../elements/ButtonLink.vue';
     input:focus + label,
     textarea:focus + label {
       transform: translate(0, -7px) scale(0.8);
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       background-color: #fff;
       padding: 0 5px;
       z-index: 2;
@@ -200,7 +216,7 @@ import ButtonLink from '../elements/ButtonLink.vue';
 
     input:focus,
     textarea:focus {
-      box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
+      box-shadow: 0 5px 10px 0 rgba(101, 101, 101, 0.3);
       z-index: 1;
     }
 
@@ -218,7 +234,7 @@ import ButtonLink from '../elements/ButtonLink.vue';
   justify-self: flex-start;
   align-self: flex-start;
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     cursor: pointer;
 
     &._error {
@@ -254,7 +270,7 @@ import ButtonLink from '../elements/ButtonLink.vue';
       }
 
       &::after {
-        content: " (обязательно)";
+        content: ' (обязательно)';
       }
     }
   }
