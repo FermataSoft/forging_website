@@ -7,11 +7,16 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
     },
     {
       path: '/works',
       name: 'works',
+      component: ()=> import('../views/WorksView.vue')
+    },
+    {
+      path: '/works/:category',
+      name: 'works-category',
       component: ()=> import('../views/WorksView.vue')
     },
     {
@@ -32,7 +37,10 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return { top: 0}
+  }
 })
 
 export default router

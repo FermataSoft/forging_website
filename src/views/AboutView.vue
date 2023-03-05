@@ -1,5 +1,5 @@
 <script setup>
-import MyButton from "../components/OrderButton.vue";
+import MyButton from "../components/elements/OrderButton.vue";
 </script>
 
 <template>
