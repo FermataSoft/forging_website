@@ -17,7 +17,7 @@ defineProps({
 
 <template>
   <div class="btn-wrapper">
-    <input class="btn" :type="inputType" :value="t(text)" @click.prevent="" />
+    <input class="btn" :type="inputType" :value="t(text)" />
     <div class="btn-arrow"></div>
   </div>
 </template>
@@ -35,7 +35,7 @@ defineProps({
   padding: 20px 40px;
   border-radius: 5px;
 
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: $font-bold;
   color: $navbar;
 
@@ -53,7 +53,7 @@ defineProps({
 
   @include element-color($navbar-url);
   background-repeat: no-repeat;
-  background-size: 2rem;
+  background-size: 1.6rem;
   background-position: center;
 
   position: absolute;

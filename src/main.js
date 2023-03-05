@@ -5,6 +5,8 @@ import { createI18n } from 'vue-i18n';
 import App from './App.vue';
 import router from './router';
 
+import VueAwesomePaginate from "vue-awesome-paginate";
+
 import './assets/main.css';
 
 const app = createApp(App);
@@ -25,23 +27,12 @@ const i18n = createI18n({
   locale: useLocaleStore().currentLocale,
   fallbackLocale: 'ru-RU',
   messages,
+  missingWarn: false,
+  fallbackWarn: false
 });
 
-// app.config.globalProperties = {
-//   $vars: { pageLocale: 'ru-RU' },
-//   $filters: {
-//     localize(key) {
-//       // todo locale получить из БД (store)
-//       const locale = app.config.globalProperties.$vars.pageLocale || 'ru-RU';
-//       return locales[locale][key] || `[Localize error]: key ${key} not found`;
-//     },
-//   },
-// };
-
-// app.provide('locale', app.config.globalProperties.$filters.localize);
-// app.provide('localeTest', app.config.globalProperties.$filters.localize);
-
-
+app.use(VueAwesomePaginate);
 app.use(router);
 app.use(i18n);
+
 app.mount('#app');
