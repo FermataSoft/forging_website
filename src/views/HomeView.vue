@@ -12,7 +12,7 @@ import FeedbackSection from '../components/sections/FeedbackSection.vue';
     <Hero></Hero>
     <div class="wrapper">
       <ProductSectionHome></ProductSectionHome>
-      <ButtonLink class="btn-works" text="ButtonOurWorks"></ButtonLink>
+      <ButtonLink class="btn-works" link="/works" text="ButtonOurWorks"></ButtonLink>
     </div>
 
     <ProcessSectionHome></ProcessSectionHome>
