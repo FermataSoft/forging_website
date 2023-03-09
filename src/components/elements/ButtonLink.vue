@@ -1,12 +1,13 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
+import { RouterLink } from 'vue-router';
 
 const { t } = useI18n();
 
 defineProps({
-  inputType: {
+  link: {
     type: String,
-    default: 'button',
+    required: true
   },
   text: {
     type: String,
@@ -16,16 +17,17 @@ defineProps({
 </script>
 
 <template>
-  <div class="btn-wrapper">
-    <input class="btn" :type="inputType" :value="t(text)" />
+  <RouterLink :to="link" class="btn-wrapper">
+    <input class="btn" type="button" :value="t(text)" />
     <div class="btn-arrow"></div>
-  </div>
+  </RouterLink>
 </template>
 
 <style lang="scss" scoped>
 @import '../../assets/_vars.scss';
 
 .btn-wrapper {
+  display: block;
   position: relative;
   width: fit-content;
   cursor: pointer;
