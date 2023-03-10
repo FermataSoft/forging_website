@@ -50,7 +50,7 @@ localeStore.$subscribe(() => {
           <RouterLink to="/">Главная</RouterLink>
         </div>
         <div class="nav__item">
-          <RouterLink to="/works">Наши работы</RouterLink>
+          <RouterLink to="/works/all">Наши работы</RouterLink>
         </div>
         <div class="nav__item"><RouterLink to="/articles">Статьи</RouterLink></div>
         <div class="nav__item"><RouterLink to="/contacts">Контакты</RouterLink></div>
@@ -62,7 +62,7 @@ localeStore.$subscribe(() => {
   </header>
   <div class="navbar-margin"></div>
 
-  <RouterView v-slot="{ Component }">
+  <RouterView class="router-view" v-slot="{ Component }">
     <Transition name="fade" mode="out-in" appear>
       <component :is="Component" :key="$route.path"></component>
     </Transition>
@@ -209,5 +209,9 @@ header {
 
 .navbar-margin {
   height: 50px;
+}
+
+.router-view {
+  min-height: 80vh;
 }
 </style>

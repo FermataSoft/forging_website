@@ -1,25 +1,17 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRoute, RouterLink } from 'vue-router';
 import IconSort from '../components/elements/IconSort.vue';
 import WorksBlock from '../components/sections/WorksBlock.vue';
 import { useI18n } from 'vue-i18n';
+import { useWorksStore } from '../stores/WorksStore';
 
 const { t } = useI18n();
+const route = useRoute();
 
-const categories = [
-  'category-all',
-  'category-stairs',
-  'category-stair_railing',
-  'category-fence',
-  'category-gates',
-  'category-gate',
-  'category-marquises',
-  'category-pipes',
-  'category-address-plates',
-  'category-other',
-];
+const categories = useWorksStore().categories;
 
-const currentCategorySelected = ref('category-all');
+const currentCategorySelected = ref(route.params.category);
 
 const isAscendingOrder = ref(true);
 
@@ -27,7 +19,13 @@ const itemsPerPage = ref(10);
 
 const sortBy = ref('uploadDate');
 
-
+watch(
+  () => route.params,
+  (toParams, prevParams) => {
+    console.log(toParams.category);
+    currentCategorySelected.value = toParams.category;
+  }
+);
 </script>
 
 <template>
@@ -37,20 +35,21 @@ const sortBy = ref('uploadDate');
         <div class="filters-menu__block">
           <div class="filters-menu__item">
             <h2>Категории</h2>
-            <ul class="category-menu__checkbox-container">
-              <li v-for="item in categories" class="category-menu__checkbox-item">
-                <span class="category-menu__checkbox"></span>
+            <ul class="menu__checkbox-container">
+              <li v-for="item in categories" class="menu__checkbox-item">
+                <!-- <RouterLink :to="'/works/' + item">{{ t('category-' + item) }}</RouterLink> -->
+                <span class="menu__checkbox"></span>
                 <input
                   class="_invisible"
                   type="radio"
-                  name="category-menu"
-                  :checked="item === 'category-all'"
+                  name="menu"
+                  :checked="item === currentCategorySelected"
                   :id="item"
                   :value="item"
                   v-model="currentCategorySelected"
                 />
-                <span class="category-menu__background"></span>
-                <label :for="item">{{ t(item) }}</label>
+                <span class="menu__background"></span>
+                <label :for="item">{{ t('category-' + item) }}</label>
               </li>
             </ul>
           </div>
@@ -160,14 +159,14 @@ main {
     font-weight: $font-bold;
   }
 }
-.category-menu__checkbox-container {
+.menu__checkbox-container {
   margin-top: 10px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
 
-  .category-menu__checkbox-item {
+  .menu__checkbox-item {
     position: relative;
     width: 100%;
     height: auto;
@@ -179,7 +178,7 @@ main {
       background-color: rgb(232, 232, 232);
     }
 
-    .category-menu__checkbox {
+    .menu__checkbox {
       position: absolute;
       height: 3rem;
       width: 3px;
@@ -203,7 +202,7 @@ main {
       z-index: 3;
     }
 
-    .category-menu__background {
+    .menu__background {
       content: '';
       position: absolute;
       width: 0%;
@@ -221,11 +220,11 @@ main {
       font-weight: $font-bold;
     }
 
-    input[type='radio']:checked ~ .category-menu__background {
+    input[type='radio']:checked ~ .menu__background {
       width: 100%;
     }
 
-    /*     input[type='radio']:checked + .category-menu__checkbox {
+    /*     input[type='radio']:checked + .menu__checkbox {
       background-color: $navbar;
       border-color: $navbar;
       background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 30 30' xml:space='preserve' fill='none' stroke='%23fff' stroke-width='8px' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='5,16.6 12.5,23 25.4,7 '/%3E%3C/svg%3E");
