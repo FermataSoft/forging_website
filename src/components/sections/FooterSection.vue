@@ -1,7 +1,7 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useWindowParamsStore } from '../../stores/WindowParamsStore.js'
+import { useWorksStore } from '../../stores/WorksStore';
 
 import IconAddress from '../icons/footer/IconAddress.vue';
 import IconWorkingHours from '../icons/footer/IconWorkingHours.vue';
@@ -14,24 +14,11 @@ import IconVK from '../icons/footer/IconVK.vue';
 
 const { t } = useI18n();
 
-const body = document.body,
-  html = document.documentElement;
-
-// const pageHeight = ref(Math.max(
-//   body.scrollHeight,
-//   body.offsetHeight,
-//   html.clientHeight,
-//   html.scrollHeight,
-//   html.offsetHeight
-// ))
-const windowHeight = computed(() => window.innerHeight);
-const pageHeight = computed(() => document.body.scrollHeight);
-
-const isPositionFixed = computed(() => windowHeight.value < pageHeight.value);
+const workStore = useWorksStore();
 </script>
 
 <template>
-  <footer :class="{ _fixed: isPositionFixed }">
+  <footer>
     <div class="wrapper">
       <div class="footer__top-block">
         <div class="footer__contact-block">
@@ -126,46 +113,19 @@ const isPositionFixed = computed(() => windowHeight.value < pageHeight.value);
         <div class="footer__site-map-block">
           <div class="footer__site-map-item">
             <h2>Наши работы</h2>
-            <ul>
+            <ul v-for="item in workStore.categories">
               <li>
-                <RouterLink to="/works/category-stairs">{{ t('category-stairs') }}</RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/works/category-stair_railing">{{
-                  t('category-stair_railing')
-                }}</RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/works/category-gates">{{ t('category-gates') }}</RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/works/category-gate">{{ t('category-gate') }}</RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/works/category-marquises">{{
-                  t('category-marquises')
-                }}</RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/works/category-pipes">{{ t('category-pipes') }}</RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/works/category-address-plates">{{
-                  t('category-address-plates')
-                }}</RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/works/category-other">{{ t('category-other') }}</RouterLink>
+                <RouterLink :to="'/works/' + item">{{ t('category-' + item) }}</RouterLink>
               </li>
             </ul>
           </div>
           <div class="footer__site-map-item">
             <h2>Информация</h2>
             <ul>
-              <li><RouterLink to="/works/:category">Статьи</RouterLink></li>
-              <li><RouterLink to="/works/:category">Контакты</RouterLink></li>
-              <li><RouterLink to="/works/:category">Отзывы</RouterLink></li>
-              <li><RouterLink to="/works/:category">О нас</RouterLink></li>
+              <li><RouterLink to="/articles">Статьи</RouterLink></li>
+              <li><RouterLink to="/contacts">Контакты</RouterLink></li>
+              <li><RouterLink to="/">Отзывы</RouterLink></li>
+              <li><RouterLink to="/about/">О нас</RouterLink></li>
             </ul>
           </div>
         </div>

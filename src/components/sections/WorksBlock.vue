@@ -37,7 +37,7 @@ function sortItems(arr, sortByField, ascendingOrder) {
 }
 
 const worksByCategory = computed(() => {
-  if (props.currentCategory === 'category-all') {
+  if (props.currentCategory === 'all') {
     return Object.values(works);
   } else {
     return Object.values(works).filter((item) => item.category === props.currentCategory);
@@ -61,7 +61,7 @@ const devidedWorks = computed(() => {
   <div class="works-block">
     <div v-for="item in devidedWorks[currentPage]" :key="item.id" class="works-item">
       <Transition name="fade-slide-up" appear mode="out-in">
-        <img :src="'src/images/section_product/' + item.srcName" :alt="item.srcName" />
+        <img :src="'/src/images/section_product/' + item.srcName" :alt="item.srcName" />
       </Transition>
     </div>
   </div>
