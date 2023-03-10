@@ -1,7 +1,7 @@
 {
   "post1": {
     "id": 1,
-    "category": "category-stairs",
+    "category": "stairs",
     "tags": "#лестница",
     "srcName": "stairs.webp",
     "uploadDate": "1677134830407"
@@ -9,7 +9,7 @@
 
   "post2": {
     "id": 2,
-    "category": "category-gate",
+    "category": "gate",
     "tags": "#калитка",
     "srcName": "gate.webp",
     "uploadDate": "1677134830407"
@@ -17,7 +17,7 @@
 
   "post3": {
     "id": 3,
-    "category": "category-gates",
+    "category": "gates",
     "tags": "#ворота",
     "srcName": "gates.webp",
     "uploadDate": "1677134830407"
@@ -25,7 +25,7 @@
 
   "post4": {
     "id": 4,
-    "category": "category-pipes",
+    "category": "pipes",
     "tags": "#дымник",
     "srcName": "pipe.webp",
     "uploadDate": "1677134830407"
@@ -33,7 +33,7 @@
 
   "post5": {
     "id": 5,
-    "category": "category-stair_railing",
+    "category": "stair-railing",
     "tags": "#лестничныеограждения",
     "srcName": "stair_railing.webp",
     "uploadDate": "1677134830407"
@@ -41,7 +41,7 @@
 
   "post6": {
     "id": 6,
-    "category": "category-address-plates",
+    "category": "address-plates",
     "tags": "#аддреснаятабличка",
     "srcName": "address_plate.webp",
     "uploadDate": "1677134830407"
@@ -49,7 +49,7 @@
   
   "post11": {
     "id": 11,
-    "category": "category-stairs",
+    "category": "stairs",
     "tags": "#лестница",
     "srcName": "stairs.webp",
     "uploadDate": "1677134830407"
@@ -57,7 +57,7 @@
 
   "post12": {
     "id": 12,
-    "category": "category-gate",
+    "category": "gate",
     "tags": "#калитка",
     "srcName": "gate.webp",
     "uploadDate": "1677134830407"
@@ -65,7 +65,7 @@
 
   "post13": {
     "id": 13,
-    "category": "category-gates",
+    "category": "gates",
     "tags": "#ворота",
     "srcName": "gates.webp",
     "uploadDate": "1677134830407"
@@ -73,7 +73,7 @@
 
   "post14": {
     "id": 14,
-    "category": "category-pipes",
+    "category": "pipes",
     "tags": "#дымник",
     "srcName": "pipe.webp",
     "uploadDate": "1677134830407"
@@ -81,7 +81,7 @@
 
   "post15": {
     "id": 15,
-    "category": "category-stair_railing",
+    "category": "stair-railing",
     "tags": "#лестничныеограждения",
     "srcName": "stair_railing.webp",
     "uploadDate": "1677134830407"
@@ -89,7 +89,7 @@
 
   "post16": {
     "id": 16,
-    "category": "category-address-plates",
+    "category": "address-plates",
     "tags": "#аддреснаятабличка",
     "srcName": "address_plate.webp",
     "uploadDate": "1677134830407"
