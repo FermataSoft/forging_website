@@ -13,9 +13,10 @@
 h1 {
   font-size: 4rem;
   font-weight: $font-bold;
-  margin-top: 80px;
+  margin-top: 50px;
   margin-bottom: 50px;
-  color: $navbar;
+  color: $on-surface;
+  text-align: center;
 
   &::before {
     content: url(../icons/header_elements/header_before.svg);

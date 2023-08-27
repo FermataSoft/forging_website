@@ -4,12 +4,15 @@ import { createI18n } from 'vue-i18n';
 
 import App from './App.vue';
 import router from './router';
+import SectionHeader from './components/elements/SectionHeader.vue'
 
 import VueAwesomePaginate from "vue-awesome-paginate";
 
 import './assets/main.css';
 
 const app = createApp(App);
+
+app.component('SectionHeader', SectionHeader)
 
 import ru from './locales/ru-RU.json';
 import by from './locales/by-BY.json';

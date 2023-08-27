@@ -37,14 +37,16 @@ defineProps({
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../assets/_vars.scss';
+
 .sort-toggle {
   padding: 0px 2px;
   transition: all 0.2s ease-in-out;
 }
 .sort-toggle:hover {
   border-radius: 3px;
-  background-color: rgb(206, 206, 206);
+  background-color: $surface-container-high;
 }
 
 svg {

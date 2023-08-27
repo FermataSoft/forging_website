@@ -52,13 +52,13 @@ defineProps({
     .number {
       font-size: 16rem;
       -webkit-text-fill-color: transparent;
-      -webkit-text-stroke: 8px $accent;
+      -webkit-text-stroke: 8px $primary;
       letter-spacing: -5px;
     }
 
     .header {
       font-size: 4rem;
-      color: $navbar;
+      color: $on-surface;
     }
   }
 

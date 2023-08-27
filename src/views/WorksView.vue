@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue';
-import { useRoute, RouterLink } from 'vue-router';
+import { useRoute, useRouter, RouterLink } from 'vue-router';
 import IconSort from '../components/elements/IconSort.vue';
 import WorksBlock from '../components/sections/WorksBlock.vue';
 import { useI18n } from 'vue-i18n';
@@ -8,15 +8,12 @@ import { useWorksStore } from '../stores/WorksStore';
 
 const { t } = useI18n();
 const route = useRoute();
+const router = useRouter();
 
 const categories = useWorksStore().categories;
-
 const currentCategorySelected = ref(route.params.category);
-
 const isAscendingOrder = ref(true);
-
 const itemsPerPage = ref(10);
-
 const sortBy = ref('uploadDate');
 
 watch(
@@ -26,6 +23,10 @@ watch(
     currentCategorySelected.value = toParams.category;
   }
 );
+
+watch(currentCategorySelected, (curr, prev) => {
+  router.replace(curr);
+});
 </script>
 
 <template>
@@ -61,7 +62,6 @@ watch(
           <div class="sort-menu-left">
             <span>{{ t('show-count') }}:</span>
             <select name="show-count" id="show-count" v-model.number="itemsPerPage">
-              <option value="5">5</option>
               <option selected value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
@@ -113,8 +113,8 @@ main {
   width: 300px;
   padding: 20px;
   z-index: 999;
-  background-color: rgb(246, 246, 246);
-  border-right: 3px solid rgb(240, 240, 240);
+  background-color: $surface-container-low;
+  // border-right: 3px solid $outline-variant;
 }
 .sort-menu {
   position: relative;
@@ -122,7 +122,7 @@ main {
   left: 0;
   width: 100%;
   padding: 10px;
-  background-color: rgb(246, 246, 246);
+  background-color: $surface-container-lowest;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -175,14 +175,14 @@ main {
     border-radius: 3px;
 
     &:hover {
-      background-color: rgb(232, 232, 232);
+      background-color: $surface-container-high;
     }
 
     .menu__checkbox {
       position: absolute;
       height: 3rem;
       width: 3px;
-      background-color: $navbar;
+      background-color: $secondary;
       z-index: 3;
 
       // background-repeat: no-repeat;
@@ -210,7 +210,7 @@ main {
       top: 0;
       left: 0;
       border-radius: 3px;
-      background-color: $accent;
+      background-color: $primary;
       transition: all 0.3s ease;
       z-index: 2;
     }
@@ -225,8 +225,8 @@ main {
     }
 
     /*     input[type='radio']:checked + .menu__checkbox {
-      background-color: $navbar;
-      border-color: $navbar;
+      background-color: $on-surface;
+      border-color: $on-surface;
       background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 30 30' xml:space='preserve' fill='none' stroke='%23fff' stroke-width='8px' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='5,16.6 12.5,23 25.4,7 '/%3E%3C/svg%3E");
     } */
   }
