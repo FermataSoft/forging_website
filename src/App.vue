@@ -93,7 +93,7 @@ header {
   width: 100%;
   z-index: 9999999;
 
-  background-color: $navbar;
+  background-color: $inverse-surface;
 
   .wrapper {
     max-width: $wrapper-width;
@@ -116,12 +116,6 @@ header {
       .logo {
         width: 30px;
         height: auto;
-      }
-
-      span {
-        font-size: 2rem;
-        font-weight: $font-medium;
-        color: $white;
       }
     }
 
@@ -148,22 +142,9 @@ header {
         font-weight: $font-regular;
         height: 100%;
 
-        color: $white;
+        color: $inverse-on-surface;
 
         transition: color 0.2s ease-in-out;
-
-        // &::before {
-        //   content: '';
-
-        //   position: absolute;
-        //   top: 0;
-        //   left: 0%;
-        //   height: 2px;
-        //   width: 67%;
-        //   transform: translate(-50%) scaleX(0);
-
-        //   background-color: $accent;
-        // }
 
         &::after {
           content: '';
@@ -176,7 +157,7 @@ header {
 
           transform: translate(-50%, 0%);
 
-          background-color: $accent;
+          background-color: $primary;
         }
 
         &::before,
@@ -192,7 +173,7 @@ header {
         }
 
         &.router-link-active {
-          color: $accent;
+          color: $primary;
 
           &::before {
             width: 67%;

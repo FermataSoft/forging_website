@@ -86,7 +86,7 @@ watchEffect(() => {
 
   font-size: 1.4rem;
   font-weight: $font-medium;
-  color: $white;
+  color: $inverse-on-surface;
   line-height: 2rem;
   letter-spacing: 0.1rem;
 
@@ -108,7 +108,7 @@ watchEffect(() => {
     padding-top: 15px;
     z-index: 2;
 
-    background-color: $navbar;
+    background-color: $inverse-surface;
 
     &::after {
       content: '▲';
@@ -118,7 +118,7 @@ watchEffect(() => {
       transition: transform 0.3s ease-out;
 
       font-size: 1.2rem;
-      color: $accent;
+      color: $primary;
     }
 
     &._active::after {
@@ -134,12 +134,12 @@ watchEffect(() => {
     z-index: 1;
 
     .dropdown-menu__item {
-      background-color: $navbar;
+      background-color: $inverse-surface;
       padding: 10px;
 
       &:hover {
-        background-color: $accent;
-        color: $navbar;
+        background-color: $primary;
+        color: $on-primary;
       }
 
       &:last-child {
@@ -148,7 +148,7 @@ watchEffect(() => {
     }
 
     & ._active {
-      color: $accent;
+      color: $primary;
     }
   }
 }

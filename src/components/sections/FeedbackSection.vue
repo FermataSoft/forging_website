@@ -38,68 +38,35 @@ function submitForm() {
         </div>
       </div> -->
       <div class="feedback-form__item">
-        <input
-          type="text"
-          maxlength="50"
-          id="name"
-          v-model="name"
-          class="feedback-form__item-input _required"
-          placeholder="Full name"
-        />
+        <input type="text" maxlength="50" id="name" v-model="name" class="feedback-form__item-input _required"
+          placeholder="Full name" />
         <label for="name">Ваше имя</label>
       </div>
 
       <div class="feedback-form__item">
-        <input
-          type="email"
-          maxlength="50"
-          id="email"
-          v-model="email"
-          class="feedback-form__item-input _required _email"
-          placeholder="Email"
-        />
+        <input type="email" maxlength="50" id="email" v-model="email" class="feedback-form__item-input _required _email"
+          placeholder="Email" />
         <label for="email">Ваш Email</label>
       </div>
 
       <div class="feedback-form__item">
-        <input
-          type="text"
-          maxlength="50"
-          id="topic"
-          v-model="topic"
-          class="feedback-form__item-input"
-          placeholder="Topic"
-        />
+        <input type="text" maxlength="50" id="topic" v-model="topic" class="feedback-form__item-input"
+          placeholder="Topic" />
         <label for="topic">Тема сообщения</label>
       </div>
 
       <div class="feedback-form__item">
-        <textarea
-          wrap="soft"
-          rows="7"
-          maxlength="300"
-          style="resize: none"
-          id="message"
-          name="message"
-          class="feedback-form__item-input _required"
-          placeholder="Describe your idea"
-        ></textarea>
+        <textarea class="feedback-form__item-input _required" wrap="soft" rows="7" maxlength="300" style="resize: none"
+          id="message" name="message" placeholder="Describe your idea"></textarea>
         <label for="message">Ваше сообщение</label>
       </div>
 
       <div class="feedback-form__termsAndConditionsBlock">
-        <input
-          type="checkbox"
-          name="privacy-policy"
-          id="termsAndConditionsBlock__checkbox"
-          value="Accept"
-          class="_required"
-        />
+        <input type="checkbox" name="privacy-policy" id="termsAndConditionsBlock__checkbox" value="Accept"
+          class="_required" />
         <div class="termsAndConditionsBlock__label">
           <label for="termsAndConditionsBlock__checkbox">Я даю свое согласие&nbsp; </label>
-          <a href="#termsAndConditions" class="termsAndConditionsBlock__link"
-            >Terms and Conditions</a
-          >
+          <a href="#termsAndConditions" class="termsAndConditionsBlock__link">Terms and Conditions</a>
         </div>
       </div>
 
@@ -124,9 +91,10 @@ function submitForm() {
   h1 {
     font-size: 3.5rem;
     font-weight: $font-regular;
-    color: $navbar;
+    color: $on-surface;
   }
 }
+
 .feedback-form {
   width: 450px;
   display: flex;
@@ -148,23 +116,23 @@ function submitForm() {
       pointer-events: none;
       transform-origin: top left;
       transition: 0.2s cubic-bezier(0, 0, 0.2, 1) 0ms;
-      color: #8e8e8e;
+      color: $outline;
       font-size: 1.4rem;
       left: 10px;
     }
 
-    ._required + label::after {
+    ._required+label::after {
       content: ' (обязательно)';
     }
 
     input {
-      border: 1px solid #b8b8b8;
+      border: 1px solid $outline-variant;
       border-radius: 5px;
       width: 100%;
       height: 50px;
-      background-color: $white;
+      background-color: $surface;
       font-weight: $font-light;
-      color: $navbar;
+      color: $on-surface;
       font-size: 1.4rem;
       padding: 10px 10px 4px 10px;
       outline: none;
@@ -175,11 +143,11 @@ function submitForm() {
     & textarea {
       padding: 10px 10px 4px 10px;
       outline: none;
-      border: 1px solid $gray;
+      border: 1px solid $outline-variant;
       border-radius: 5px;
       width: 100%;
-      color: $navbar;
-      background-color: $white;
+      color: $on-surface;
+      background-color: $surface;
       font-weight: $font-light;
       font-size: 1.4rem;
       transition: 0.2s cubic-bezier(0, 0, 0.2, 1);
@@ -191,37 +159,38 @@ function submitForm() {
       color: transparent;
     }
 
-    input:placeholder-shown + label,
-    textarea:placeholder-shown + label {
+    input:placeholder-shown+label,
+    textarea:placeholder-shown+label {
       transform: translate(0, 15px) scale(1);
       font-size: 1.4rem;
     }
 
-    input:not(:placeholder-shown) + label,
-    textarea:not(:placeholder-shown) + label {
+    input:not(:placeholder-shown)+label,
+    textarea:not(:placeholder-shown)+label {
       transform: translate(0, -7px) scale(0.8);
       font-size: 1.4rem;
-      background-color: #fff;
+      background-color: $surface;
       padding: 0 5px;
     }
 
-    input:focus + label,
-    textarea:focus + label {
+    input:focus+label,
+    textarea:focus+label {
       transform: translate(0, -7px) scale(0.8);
       font-size: 1.4rem;
-      background-color: #fff;
+      background-color: $surface;
       padding: 0 5px;
       z-index: 2;
     }
 
     input:focus,
     textarea:focus {
+      border: 1px solid $outline;
       box-shadow: 0 5px 10px 0 rgba(101, 101, 101, 0.3);
       z-index: 1;
     }
 
     ._error {
-      border-color: red;
+      border-color: $error;
     }
   }
 }
@@ -239,11 +208,12 @@ function submitForm() {
 
     &._error {
       box-shadow: 0 0 3px 1px red;
+      background-color: $on-error;
     }
   }
 
   label {
-    color: rgb(122, 122, 122);
+    color: $on-surface;
     font-weight: $font-regular;
     font-size: 1.2rem;
 
@@ -261,7 +231,7 @@ function submitForm() {
     }
 
     .termsAndConditionsBlock__link {
-      color: $accent;
+      color: $primary;
       font-weight: $font-regular;
       font-size: 1.2rem;
 
@@ -285,8 +255,8 @@ function submitForm() {
 //     width: 120px;
 //     height: 40px;
 //     border-radius: 30px;
-//     background-color: $accent;
-//     color: $white;
+//     background-color: $primary;
+//     color: $surface;
 //     font-weight: $font-bold;
 //     font-size: 1.6rem;
 //     transition: transform 0.05s;
@@ -297,11 +267,11 @@ function submitForm() {
 //     }
 
 //     &:hover {
-//       background-color: $accent;
+//       background-color: $primary;
 //     }
 
 //     &:disabled {
-//       background-color: $gray;
+//       background-color: $outline;
 //     }
 
 //     &:not(:disabled):active {
