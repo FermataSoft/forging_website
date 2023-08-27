@@ -32,7 +32,7 @@ defineProps({
 
   border-radius: 10px;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.25);
-  background-color: #fff;
+  background-color: $surface;
 
   transition: all 0.3s ease-in-out;
 
@@ -48,7 +48,7 @@ defineProps({
     text-align: left;
     font-size: 1.6rem;
     font-weight: $font-regular;
-    color: $navbar;
+    color: $on-surface;
   }
 }
 </style>

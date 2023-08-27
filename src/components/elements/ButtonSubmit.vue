@@ -20,13 +20,13 @@ defineProps({
 
 button {
   width: 200px;
-  background-color: $accent;
+  background-color: $primary;
   padding: 20px 40px;
   border-radius: 5px;
 
   font-size: 1.6rem;
   font-weight: $font-bold;
-  color: $navbar;
+  color: $on-primary;
 
   transform: translate(0);
   transition: all 0.3s ease-in-out;
@@ -38,7 +38,7 @@ button {
 }
 
 .btn-arrow {
-  @include element-color($navbar-url);
+  @include element-color($on-primary-url);
   background-repeat: no-repeat;
   background-size: 1.6rem;
   background-position: center;
@@ -53,8 +53,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $accent-hover;
-  color: $navbar;
+  background-color: $primary-variant;
+  color: $on-surface;
 
   border-radius: 50%;
 
