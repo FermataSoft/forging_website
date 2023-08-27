@@ -13,7 +13,7 @@ import MyButton from "../components/elements/OrderButton.vue";
 @import '../assets/vars.scss';
 
 h1 {
-  color: $accent;
+  color: $primary;
   font-size: 2rem;
 }
 </style>

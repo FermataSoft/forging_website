@@ -33,13 +33,13 @@ defineProps({
   cursor: pointer;
 }
 .btn {
-  background-color: $accent;
+  background-color: $primary;
   padding: 20px 40px;
   border-radius: 5px;
 
   font-size: 1.6rem;
   font-weight: $font-bold;
-  color: $navbar;
+  color: $on-primary;
 
   transform: translate(0);
   transition: all 0.3s ease-in-out;
@@ -53,7 +53,7 @@ defineProps({
 .btn-arrow {
   // background-image: url("./icons/arrow.svg");
 
-  @include element-color($navbar-url);
+  @include element-color($on-primary-url);
   background-repeat: no-repeat;
   background-size: 1.6rem;
   background-position: center;
@@ -68,8 +68,7 @@ defineProps({
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $accent-hover;
-  color: $navbar;
+  background-color: $primary-variant;
 
   border-radius: 50%;
 

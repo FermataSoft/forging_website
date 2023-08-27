@@ -147,7 +147,7 @@ const workStore = useWorksStore();
 }
 
 footer {
-  background-color: $navbar;
+  background-color: $inverse-surface;
 
   &._fixed {
     position: fixed;
@@ -185,7 +185,7 @@ footer {
         }
 
         .footer__text-block {
-          color: $white;
+          color: $surface;
 
           h2 {
             font-size: 2rem;
@@ -199,10 +199,10 @@ footer {
 
           a {
             font-size: 1.4rem;
-            color: $white;
+            color: $inverse-on-surface;
 
             &:hover {
-              color: $accent;
+              color: $primary;
             }
           }
 
@@ -218,7 +218,7 @@ footer {
         h2 {
           font-size: 1.6rem;
           margin-bottom: 10px;
-          color: $white;
+          color: $inverse-on-surface;
         }
         .social-links__block {
           display: flex;
@@ -228,7 +228,7 @@ footer {
           a {
             width: 30px;
 
-            color: $white;
+            color: $inverse-on-surface;
             position: relative;
 
             @keyframes hover-effect {
@@ -271,7 +271,7 @@ footer {
         h2 {
           font-size: 2rem;
           font-weight: $font-bold;
-          color: $white;
+          color: $inverse-on-surface;
           margin-bottom: 12px;
         }
 
@@ -282,7 +282,7 @@ footer {
             a {
               font-size: 1.5rem;
               font-weight: $font-regular;
-              color: $gray;
+              color: $inverse-on-surface-variant;
               position: relative;
 
               &::after {
@@ -294,14 +294,14 @@ footer {
                 left: 0;
                 height: 2px;
                 width: 0%;
-                background-color: $accent;
+                background-color: $primary;
                 transform: translateY(5px);
 
                 transition: all 0.3s ease-in-out;
               }
 
               &:hover {
-                color: $white;
+                color: $inverse-on-surface;
               }
 
               &:hover::after {
@@ -318,11 +318,11 @@ footer {
 .copyright-text {
   font-size: 1.4rem;
   font-weight: $font-light;
-  color: $white;
+  color: $inverse-on-surface;
   padding-bottom: 20px;
 
   a {
-    color: $accent;
+    color: $primary;
     font-weight: $font-regular;
   }
 }

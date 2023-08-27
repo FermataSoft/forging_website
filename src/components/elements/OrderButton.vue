@@ -14,14 +14,14 @@
   align-items: center;
   justify-content: center;
 
-  background-color: $accent;
+  background-color: $primary;
   width: 120px;
   height: 30px;
   border-radius: 3px;
 
   font-size: 1.4rem;
   font-weight: $font-medium;
-  color: $navbar;
+  color: $on-primary;
 
   cursor: pointer;
 

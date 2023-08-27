@@ -59,7 +59,7 @@ span {
     height: 5px;
     width: 20px;
     border-radius: 2px;
-    background-color: $navbar;
+    background-color: $secondary;
     filter: invert(1);
   }
 
@@ -77,7 +77,7 @@ span {
 
   &:hover::before,
   &:hover::after {
-    background-color: $accent;
+    background-color: $primary;
     filter: invert(0);
   }
 }
