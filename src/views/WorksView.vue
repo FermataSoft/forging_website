@@ -32,6 +32,7 @@ watch(currentCategorySelected, (curr, prev) => {
 <template>
   <Transition name="view">
     <div class="wrapper">
+      <div class="navbar-margin"></div>
       <div class="menu-block">
         <div class="filters-menu__block">
           <div class="filters-menu__item">
@@ -40,15 +41,8 @@ watch(currentCategorySelected, (curr, prev) => {
               <li v-for="item in categories" class="menu__checkbox-item">
                 <!-- <RouterLink :to="'/works/' + item">{{ t('category-' + item) }}</RouterLink> -->
                 <span class="menu__checkbox"></span>
-                <input
-                  class="_invisible"
-                  type="radio"
-                  name="menu"
-                  :checked="item === currentCategorySelected"
-                  :id="item"
-                  :value="item"
-                  v-model="currentCategorySelected"
-                />
+                <input class="_invisible" type="radio" name="menu" :checked="item === currentCategorySelected" :id="item"
+                  :value="item" v-model="currentCategorySelected" />
                 <span class="menu__background"></span>
                 <label :for="item">{{ t('category-' + item) }}</label>
               </li>
@@ -82,12 +76,8 @@ watch(currentCategorySelected, (curr, prev) => {
           </div>
         </div>
 
-        <WorksBlock
-          :current-category="currentCategorySelected"
-          :items-per-page="itemsPerPage"
-          :sort-by="sortBy"
-          :is-ascending-order="isAscendingOrder"
-        ></WorksBlock>
+        <WorksBlock :current-category="currentCategorySelected" :items-per-page="itemsPerPage" :sort-by="sortBy"
+          :is-ascending-order="isAscendingOrder"></WorksBlock>
       </main>
     </div>
   </Transition>
@@ -116,6 +106,7 @@ main {
   background-color: $surface-container-low;
   // border-right: 3px solid $outline-variant;
 }
+
 .sort-menu {
   position: relative;
   top: 0;
@@ -159,6 +150,7 @@ main {
     font-weight: $font-bold;
   }
 }
+
 .menu__checkbox-container {
   margin-top: 10px;
   width: 100%;
@@ -215,12 +207,12 @@ main {
       z-index: 2;
     }
 
-    input[type='radio']:checked ~ label {
+    input[type='radio']:checked~label {
       padding-left: 15px;
       font-weight: $font-bold;
     }
 
-    input[type='radio']:checked ~ .menu__background {
+    input[type='radio']:checked~.menu__background {
       width: 100%;
     }
 

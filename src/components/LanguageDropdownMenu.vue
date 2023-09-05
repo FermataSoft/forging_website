@@ -108,7 +108,7 @@ watchEffect(() => {
     padding-top: 15px;
     z-index: 2;
 
-    background-color: $inverse-surface;
+    // background-color: $inverse-surface;
 
     &::after {
       content: '▲';
@@ -119,6 +119,9 @@ watchEffect(() => {
 
       font-size: 1.2rem;
       color: $primary;
+    }
+    &._active {
+    background-color: $inverse-surface;
     }
 
     &._active::after {
