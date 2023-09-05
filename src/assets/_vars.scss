@@ -1,5 +1,6 @@
 /* Main STYLES */
 $wrapper-width: 1250px;
+$navbar-height: 50px;
 
 // PALLETE
 $color1: #232323;
@@ -60,27 +61,15 @@ $on-error: hsl(0, 100%, 95%);
 $error-container: hsl(360, 78%, 62%);
 $on-error-container: hsl(360, 78%, 20%);
 
+// Gradients
+$add-dark-blue: linear-gradient(252.85deg, #0e0e25 0%, #0e0e25 100%);
+$accent-gradient: linear-gradient(to right, #ffa751, #ffe259);
+
 // FONT SIZES
 $header1: 24px;
 $header2: 20px;
 $header3: 16px;
 $header4: 14px;
-
-// COLORS
-// $app-background-color: #000000;
-// $navbar_opacity: rgba(11, 11, 14, 0.7);
-// $navbar: #232323;
-// $navbar-url: '%23232323';
-// $dark: #050d21;
-// $white: #fefefe;
-// $gray: #b8b8b8;
-// $links: rgb(242, 242, 242);
-// $accent: #FFD460;
-// $accent-hover: #f3c761;
-$add-dark-blue: linear-gradient(252.85deg, #0e0e25 0%, #0e0e25 100%);
-// $blue-gradient: linear-gradient(252.85deg, #006fbf 0%, #7000c0 100%);
-$accent-gradient: linear-gradient(to right, #ffa751, #ffe259);
-
 
 // FONTS
 // $font-extraLight: 200;
@@ -90,7 +79,7 @@ $font-medium: 500;
 $font-bold: 700;
 // $font-extraBold: 800;
 
-$font-sans-serif: 'Ubuntu', sans-serif;
+$font-main: 'Ubuntu', sans-serif;
 $font-mono: 'Ubuntu Mono', monospace;
 
 // @font-face {
