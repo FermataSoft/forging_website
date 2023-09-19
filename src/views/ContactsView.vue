@@ -89,9 +89,7 @@ import IconViber from '../components/icons/footer/IconViber.vue';
       </div>
     </div>
 
-
-
-    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A129033f74be22cda48d129a08284fdef72f87a47db1f2215da8784730f8f7db8&amp;source=constructor" width="500" height="400" frameborder="0"></iframe>
+    <iframe class="yandex-maps-wrapper" src="https://yandex.ru/map-widget/v1/?um=constructor%3A129033f74be22cda48d129a08284fdef72f87a47db1f2215da8784730f8f7db8&amp;source=constructor" width="600" height="400" frameborder="0"></iframe>
   </div>
 </template>
 
@@ -204,5 +202,12 @@ import IconViber from '../components/icons/footer/IconViber.vue';
       }
     }
   }
+}
+
+.yandex-maps-wrapper {
+  width: 600px;
+  height: 400px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 </style>
