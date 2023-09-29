@@ -48,27 +48,15 @@ watchEffect(() => {
 
 <template>
   <div class="dropdown-menu _unselectable">
-    <div
-      class="dropdown-menu__current-lang"
-      :class="{ _active: isDropdownMenuActive }"
-      @click.stop="openDropdownMenu"
-    >
+    <div class="dropdown-menu__current-lang" :class="{ _active: isDropdownMenuActive }" @click.stop="openDropdownMenu">
       {{ locale.slice(0, 2).toUpperCase().trim() }}
     </div>
     <Transition name="dropdown-menu__items">
       <div class="dropdown-menu__items" v-if="isDropdownMenuActive">
-        <div
-          class="dropdown-menu__item"
-          :class="{ _active: locale == 'ru-RU' }"
-          @click.stop="changeLanguage('ru-RU')"
-        >
+        <div class="dropdown-menu__item" :class="{ _active: locale == 'ru-RU' }" @click.stop="changeLanguage('ru-RU')">
           RU
         </div>
-        <div
-          class="dropdown-menu__item"
-          :class="{ _active: locale == 'by-BY' }"
-          @click.stop="changeLanguage('by-BY')"
-        >
+        <div class="dropdown-menu__item" :class="{ _active: locale == 'by-BY' }" @click.stop="changeLanguage('by-BY')">
           BY
         </div>
       </div>
@@ -107,8 +95,7 @@ watchEffect(() => {
     padding: 10px;
     padding-top: 15px;
     z-index: 2;
-
-    // background-color: $inverse-surface;
+    transition: all 0.3s 0.5s ease-in-out;
 
     &::after {
       content: '▲';
@@ -120,8 +107,10 @@ watchEffect(() => {
       font-size: 1.2rem;
       color: $primary;
     }
+
     &._active {
-    background-color: $inverse-surface;
+      transition: all 0s ease-in-out;
+      background-color: $inverse-surface;
     }
 
     &._active::after {
