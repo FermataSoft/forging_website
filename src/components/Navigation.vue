@@ -32,7 +32,7 @@ function scrollHandler() {
           <RouterLink to="/">Главная</RouterLink>
         </div>
         <div class="nav__item">
-          <RouterLink to="/works/all">Наши работы</RouterLink>
+          <RouterLink :to="{path: '/works', query: {category: 'all'}}">Наши работы</RouterLink>
         </div>
         <div class="nav__item">
           <RouterLink to="/articles">Статьи</RouterLink>

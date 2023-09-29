@@ -115,7 +115,7 @@ const workStore = useWorksStore();
             <h2>Наши работы</h2>
             <ul v-for="item in workStore.categories">
               <li>
-                <RouterLink :to="'/works/' + item">{{ t('category-' + item) }}</RouterLink>
+                <RouterLink :to="{path: '/works', query: {category: item}}">{{ t('category-' + item) }}</RouterLink>
               </li>
             </ul>
           </div>

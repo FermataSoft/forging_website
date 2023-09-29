@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue';
-import { useRoute, useRouter, RouterLink } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import IconSort from '../components/elements/IconSort.vue';
 import WorksBlock from '../components/sections/WorksBlock.vue';
 import { useI18n } from 'vue-i18n';
@@ -11,21 +11,20 @@ const route = useRoute();
 const router = useRouter();
 
 const categories = useWorksStore().categories;
-const currentCategorySelected = ref(route.params.category);
+const currentCategorySelected = ref(route.query.category);
 const isAscendingOrder = ref(true);
 const itemsPerPage = ref(10);
 const sortBy = ref('uploadDate');
 
 watch(
-  () => route.params,
+  () => route.query,
   (toParams, prevParams) => {
-    console.log(toParams.category);
     currentCategorySelected.value = toParams.category;
   }
 );
 
 watch(currentCategorySelected, (curr, prev) => {
-  router.replace(curr);
+  router.push({query: {category: curr}})
 });
 </script>
 
