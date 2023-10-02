@@ -79,19 +79,11 @@ const workStore = useWorksStore();
           <div class="social-links">
             <h2>Мы в социальных сетях:</h2>
             <div class="social-links__block">
-              <a
-                href="https://www.instagram.com/bliznyuksasha/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://www.instagram.com/bliznyuksasha/" target="_blank" rel="noopener noreferrer">
                 <IconInstagram></IconInstagram>
               </a>
-              <a
-                class="link-vk"
-                href="https://www.instagram.com/bliznyuksasha/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a class="link-vk" href="https://www.instagram.com/bliznyuksasha/" target="_blank"
+                rel="noopener noreferrer">
                 <IconVK></IconVK>
               </a>
               <a href="https://t.me/+375447199961" target="_blank" rel="noopener noreferrer">
@@ -99,11 +91,7 @@ const workStore = useWorksStore();
               </a>
 
               <!-- !!! -->
-              <a
-                class="link-viber"
-                href="viber://chat?number=%2B375447199961"
-                rel="noopener noreferrer"
-              >
+              <a class="link-viber" href="viber://chat?number=%2B375447199961" rel="noopener noreferrer">
                 <IconViber></IconViber>
               </a>
             </div>
@@ -113,19 +101,27 @@ const workStore = useWorksStore();
         <div class="footer__site-map-block">
           <div class="footer__site-map-item">
             <h2>Наши работы</h2>
-            <ul v-for="item in workStore.categories">
-              <li>
-                <RouterLink :to="{path: '/works', query: {category: item}}">{{ t('category-' + item) }}</RouterLink>
+            <ul class="site-map-item__links" v-for="item in workStore.categories">
+              <li class="site-map-item__link">
+                <RouterLink :to="{ path: '/works', query: { category: item } }">{{ t('category-' + item) }}</RouterLink>
               </li>
             </ul>
           </div>
           <div class="footer__site-map-item">
             <h2>Информация</h2>
-            <ul>
-              <li><RouterLink to="/articles">Статьи</RouterLink></li>
-              <li><RouterLink to="/contacts">Контакты</RouterLink></li>
-              <li><RouterLink to="/">Отзывы</RouterLink></li>
-              <li><RouterLink to="/about/">О нас</RouterLink></li>
+            <ul class="site-map-item__links">
+              <li class="site-map-item__link">
+                <RouterLink to="/articles">Статьи</RouterLink>
+              </li>
+              <li class="site-map-item__link">
+                <RouterLink to="/contacts">Контакты</RouterLink>
+              </li>
+              <li class="site-map-item__link">
+                <RouterLink to="/">Отзывы</RouterLink>
+              </li>
+              <li class="site-map-item__link">
+                <RouterLink to="/about/">О нас</RouterLink>
+              </li>
             </ul>
           </div>
         </div>
@@ -220,6 +216,7 @@ footer {
           margin-bottom: 10px;
           color: $inverse-on-surface;
         }
+
         .social-links__block {
           display: flex;
           flex-direction: row;
@@ -235,9 +232,11 @@ footer {
               0% {
                 transform: translate(0, 0px);
               }
+
               50% {
                 transform: translate(0, -2px);
               }
+
               100% {
                 transform: translate(0, 0px);
               }
@@ -251,6 +250,7 @@ footer {
             }
 
             &:hover {
+
               img,
               svg {
                 animation: hover-effect ease-out 0.4s;
@@ -275,33 +275,35 @@ footer {
           margin-bottom: 12px;
         }
 
-        ul {
-          li {
-            margin-bottom: 16px;
+        .site-map-item__links {
+          .site-map-item__link {
+            margin-bottom: 8px;
 
             a {
+              position: relative;
+              display: inline-block;
+              width: auto;
+              padding-bottom: 8px;
               font-size: 1.5rem;
               font-weight: $font-regular;
               color: $inverse-on-surface-variant;
-              position: relative;
-
-              &::after {
-                content: '';
-
-                display: block;
-                position: absolute;
-                bottom: 0px;
-                left: 0;
-                height: 2px;
-                width: 0%;
-                background-color: $primary;
-                transform: translateY(5px);
-
-                transition: all 0.3s ease-in-out;
-              }
 
               &:hover {
-                color: $inverse-on-surface;
+                color: $inverse-on-surface;               
+              }
+              
+              &::after {
+                content: '';
+  
+                display: block;
+                position: absolute;
+                bottom: 2px;
+                left: 0;
+                height: 2px;
+                width: 0;
+                background-color: $primary;
+
+                transition: all 0.3s ease-in-out;
               }
 
               &:hover::after {
