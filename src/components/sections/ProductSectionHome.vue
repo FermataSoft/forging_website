@@ -7,14 +7,6 @@ const { t } = useI18n();
 
 <template>
   <SectionHeader>{{ t('SectionProductHeader') }}</SectionHeader>
-  <!-- <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 600 600" >
-    <clipPath id="hexagon" clipPathUnits="objectBoundingBox">
-      <path
-        d="M0,203.1v193.71c0,37.96,20.25,73.03,53.12,92.01l167.76,96.86c32.87,18.98,73.37,18.98,106.25,0l167.76-96.86c32.87-18.98,53.12-54.05,53.12-92.01V203.1c0-37.96-20.25-73.03-53.12-92.01L327.13,14.23c-32.87-18.98-73.37-18.98-106.25,0L53.12,111.09C20.25,130.07,0,165.14,0,203.1Z"
-      />
-    </clipPath>
-  </svg> -->
-
   <svg id="hexagon-mask" viewBox="0 0 1 1" width="100%" height="100%" preserveAspectRatio="none">
     <clipPath id="hexagon" clipPathUnits="objectBoundingBox">
       <path
@@ -148,6 +140,7 @@ h3 {
       flex-direction: row-reverse;
 
       .product-item-description {
+
         h3 {
           text-align: end;
         }
@@ -155,10 +148,11 @@ h3 {
     }
 
     .product-item-image {
-      height: 100%;
+      width: 100%;
+      flex: 1 1 auto;
 
       img {
-        height: 100%;
+        width: 100%;
         margin-left: calc(100% - 100% / 1.09); // Trouble with clip-path position
         clip-path: url(#hexagon);
         -webkit-clip-path: url(#hexagon);
@@ -171,6 +165,7 @@ h3 {
 
     .product-item-description {
       text-align: justify;
+      flex: 1 1.5 auto;
 
       p {
         font-size: 2rem;

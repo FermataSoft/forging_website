@@ -2,8 +2,8 @@
   <svg width="38" height="31" viewBox="0 0 38 31" fill="url(#email-gradient)" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="email-gradient" gradientTransform="rotate(90)">
-        <stop offset="0%" stop-color="#f7ff8e" />
-        <stop offset="100%" stop-color="#f1e566" />
+        <stop offset="0%" stop-color="#fff386" />
+        <stop offset="100%" stop-color="#f1de2a" />
       </linearGradient>
     </defs>
     <path
