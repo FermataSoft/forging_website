@@ -92,11 +92,13 @@ defineProps({
   {
     "ru-RU": {
       "ButtonOurWorks": "Наши работы",
-      "ButtonSubmit": "Отправить"
+      "ButtonSubmit": "Отправить",
+      "ButtonGoHomePage": "Вернуться на главную страницу"
     },
     "by-BY": {
       "ButtonOurWorks": "Нашы вырабы",
-      "ButtonSubmit": "Адправіць"
+      "ButtonSubmit": "Адправіць",
+      "ButtonGoHomePage": "Вярнуцца на галоўную старонку"
     }
   }
 </i18n>
