@@ -1,11 +1,8 @@
 <script setup>
-import { ref, onMounted, provide, watchEffect } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
+import { onMounted } from 'vue';
+import { RouterView } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
-import Navigation from './components/Navigation.vue';
-import FooterSection from './components/sections/FooterSection.vue';
-import ScrollTopButton from './components/elements/ScrollTopButton.vue';
 import { useLocaleStore } from './stores/LocaleStore';
 import { useWindowParamsStore } from './stores/WindowParamsStore';
 
@@ -38,38 +35,9 @@ localeStore.$subscribe(() => {
 </script>
 
 <template>
-  <Navigation></Navigation>
-  <div class="navbar-margin" v-if="$route.path != '/'"></div>
-  <RouterView class="router-view" v-slot="{ Component }">
-    <Transition name="fade" mode="out-in" appear>
-      <component :is="Component" :key="$route.path"></component>
-    </Transition>
-  </RouterView>
-
-  <FooterSection></FooterSection>
-
-  <ScrollTopButton></ScrollTopButton>
+  <main>
+    <component class="" :is="$route.meta.layout || 'div'">
+      <router-view></router-view>
+    </component>
+  </main>
 </template>
-
-<style scoped lang="scss">
-@import './assets/vars.scss';
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.1s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  // opacity: 0;
-}
-
-.navbar-margin {
-  height: 50px;
-  background-color: $inverse-surface;
-}
-
-.router-view {
-  min-height: 80vh;
-}
-</style>
