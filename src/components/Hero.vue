@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
   <div class="hero">
     <img class="hero-image" src="../images/hero/Main-page_hero-image.webp" alt="" />
     <div class="title-block">
-      <h1 class="title">Кованные<br>изделия</h1>
+      <h1 class="title">КАРКАСЫ И<br>ЛЕСТНИЦЫ<br>из металла</h1>
       <h2 class="subtitle">в городе Несвиж</h2>
     </div>
   </div>
@@ -41,7 +41,7 @@ gsap.registerPlugin(ScrollTrigger);
 
     .subtitle {
       margin-top: 4rem;
-      font-size: 4rem;
+      font-size: 5rem;
       font-weight: 400;
       color: $tertiary;
     }
