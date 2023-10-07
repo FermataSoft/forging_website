@@ -11,7 +11,7 @@ const route = useRoute();
 const router = useRouter();
 
 const categories = useWorksStore().categories;
-const currentCategorySelected = ref(route.query.category);
+const currentCategorySelected = ref(route.query.category || 'all');
 const isAscendingOrder = ref(true);
 const itemsPerPage = ref(10);
 const sortBy = ref('uploadDate');
