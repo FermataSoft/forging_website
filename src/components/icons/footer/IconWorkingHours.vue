@@ -9,7 +9,7 @@
     <defs>
       <linearGradient id="working-hours-gradient" gradientTransform="rotate(90)">
         <stop offset="0%" stop-color="#0bbcff" />
-        <stop offset="100%" stop-color="#003d8f" />
+        <stop offset="100%" stop-color="#1860be" />
       </linearGradient>
     </defs>
 
