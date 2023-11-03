@@ -1,52 +1,58 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
-import MainLayout from '../layouts/main.vue'
-import PageLayout from '../layouts/page.vue'
-import BlankLayout from '../layouts/blank.vue'
+import MainLayout from "../layouts/main.vue";
+import PageLayout from "../layouts/page.vue";
+import BlankLayout from "../layouts/blank.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: "/",
+      name: "home",
       meta: { layout: MainLayout },
-      component: () => import('../views/HomeView.vue'),
+      component: () => import("../views/HomeView.vue"),
     },
     {
-      path: '/works',
-      name: 'works',
+      path: "/works",
+      name: "works",
       meta: { layout: PageLayout },
-      component: () => import('../views/WorksView.vue')
+      component: () => import("../views/WorksView.vue"),
     },
     {
-      path: '/articles',
-      name: 'articles',
+      path: "/articles",
+      name: "articles",
       meta: { layout: PageLayout },
-      component: () => import('../views/ArticlesView.vue')
+      component: () => import("../views/ArticlesView.vue"),
     },
     {
-      path: '/contacts',
-      name: 'contacts',
+      path: "/articles/:id",
+      name: "article",
       meta: { layout: PageLayout },
-      component: () => import('../views/ContactsView.vue')
+      component: () => import('../views/Article.vue')
     },
     {
-      path: '/about',
-      name: 'about',
+      path: "/contacts",
+      name: "contacts",
       meta: { layout: PageLayout },
-      component: () => import('../views/AboutView.vue')
+      component: () => import("../views/ContactsView.vue"),
     },
     {
-      path: '/:pathMatch(.*)*',
-      name: '404',
+      path: "/about",
+      name: "about",
+      meta: { layout: PageLayout },
+      component: () => import("../views/AboutView.vue"),
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "404",
       meta: { layout: BlankLayout },
-      component: () => import('../404.vue')
-    }
+      component: () => import("../404.vue"),
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
-    return { top: 0 }
-  }
-})
+    return { top: 0 };
+  },
+});
 
-export default router
+export default router;
