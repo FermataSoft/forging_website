@@ -7,7 +7,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <router-link class="article-card" to="/">
+  <router-link class="article-card" to="/articles/1">
     <div class="article-card__image">
       <img src="../../wrapper_images/1000x1000.jpg" alt="">
     </div>
