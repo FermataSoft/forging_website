@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve, dirname } from 'node:path'
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
     VueI18nPlugin({
       include: resolve(dirname(fileURLToPath(import.meta.url)), '../src/locales/**'),
     }),
+    nodePolyfills(),
   ],
   resolve: {
     alias: {
