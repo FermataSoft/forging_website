@@ -36,7 +36,7 @@ localeStore.$subscribe(() => {
 
 <template>
   <main>
-    <component class="" :is="$route.meta.layout || 'div'">
+    <component :is="$route.meta.layout || 'div'">
       <router-view></router-view>
     </component>
   </main>

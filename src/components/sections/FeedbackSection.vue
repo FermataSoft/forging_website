@@ -87,6 +87,7 @@ function submitForm() {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
 
   h1 {
     font-size: 3.5rem;
@@ -99,17 +100,19 @@ function submitForm() {
   width: 450px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
   justify-content: center;
   margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
+  
 
   .feedback-form__item {
     width: 100%;
     position: relative;
     display: flex;
     flex-direction: column;
+    
 
     label {
       position: absolute;
@@ -126,7 +129,7 @@ function submitForm() {
     }
 
     input {
-      border: 1px solid $outline-variant;
+      border: 1px solid transparent;
       border-radius: 5px;
       width: 100%;
       height: 50px;
@@ -134,23 +137,25 @@ function submitForm() {
       font-weight: $font-light;
       color: $on-surface;
       font-size: 1.4rem;
-      padding: 10px 10px 4px 10px;
+      padding: 10px 10px 10px 10px;
       outline: none;
       box-shadow: none;
-      transition: 0.2s cubic-bezier(0, 0, 0.2, 1);
+      transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
+      box-shadow: inset -2px -2px 7px rgba(250, 250, 250, 0.7), inset 2px 2px 7px rgba(120, 120, 120, 0.3);
     }
 
     & textarea {
       padding: 10px 10px 4px 10px;
       outline: none;
-      border: 1px solid $outline-variant;
+      border: 1px solid transparent;
       border-radius: 5px;
       width: 100%;
       color: $on-surface;
       background-color: $surface;
       font-weight: $font-light;
       font-size: 1.4rem;
-      transition: 0.2s cubic-bezier(0, 0, 0.2, 1);
+      transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
+      box-shadow: inset -2px -2px 7px rgba(250, 250, 250, 0.7), inset 2px 2px 7px rgba(120, 120, 120, 0.3);
     }
 
     // Floating label
@@ -167,7 +172,7 @@ function submitForm() {
 
     input:not(:placeholder-shown)+label,
     textarea:not(:placeholder-shown)+label {
-      transform: translate(0, -7px) scale(0.8);
+      transform: translate(0, -13px) scale(0.8);
       font-size: 1.4rem;
       background-color: $surface;
       padding: 0 5px;
@@ -175,7 +180,7 @@ function submitForm() {
 
     input:focus+label,
     textarea:focus+label {
-      transform: translate(0, -7px) scale(0.8);
+      transform: translate(0, -13px) scale(0.8);
       font-size: 1.4rem;
       background-color: $surface;
       padding: 0 5px;
@@ -184,8 +189,9 @@ function submitForm() {
 
     input:focus,
     textarea:focus {
-      border: 1px solid $outline;
-      box-shadow: 0 5px 10px 0 rgba(101, 101, 101, 0.3);
+      border: 1px solid rgba(120, 120, 120, 0.2);
+      // box-shadow: 0 5px 10px 0 rgba(101, 101, 101, 0.3);
+      box-shadow: inset -0px -0px 5px rgba(200, 200, 200, 0.2), inset 2px 2px 3px rgba(120, 120, 120, 0.3);
       z-index: 1;
     }
 
