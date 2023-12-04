@@ -1,9 +1,9 @@
 <script setup>
-import { RouterView } from 'vue-router';
+import { RouterView } from "vue-router";
 
-import Navigation from '../components/Navigation.vue';
-import FooterSection from '../components/sections/FooterSection.vue';
-import ScrollTopButton from '../components/elements/ScrollTopButton.vue';
+import Navigation from "../components/Navigation.vue";
+import FooterSection from "../components/sections/FooterSection.vue";
+import ScrollTopButton from "../components/elements/ScrollTopButton.vue";
 </script>
 
 <template>
@@ -21,7 +21,7 @@ import ScrollTopButton from '../components/elements/ScrollTopButton.vue';
 </template>
 
 <style scoped lang="scss">
-@import '../assets/vars.scss';
+@import "../assets/vars.scss";
 
 .fade-enter-active,
 .fade-leave-active {
@@ -29,7 +29,6 @@ import ScrollTopButton from '../components/elements/ScrollTopButton.vue';
 
 .fade-enter-from,
 .fade-leave-to {
-
 }
 
 .router-view {

@@ -44,6 +44,7 @@ defineProps({
   transform: translate(0);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+  box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.822), 3px 3px 9px rgba(116, 116, 116, 0.3);
 }
 
 @mixin element-color($color) {
