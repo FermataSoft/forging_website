@@ -1,9 +1,46 @@
 <script setup>
+import { ref, onBeforeMount } from "vue";
 import { useI18n } from "vue-i18n";
 import SectionHeader from "../components/elements/SectionHeader.vue";
 import ArticleCard from "../components/elements/ArticleCard.vue";
+import initSqlJs from "sql.js";
 
 const { t } = useI18n();
+const content = ref([]);
+
+async function initDB() {
+  const sqlPromise = initSqlJs({
+    locateFile: (file) =>
+      "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.wasm",
+  });
+
+  const dataPromise = fetch("database.db").then((res) => res.arrayBuffer());
+  const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
+  const db = new SQL.Database(new Uint8Array(buf));
+
+  const contentDb = db.exec(`SELECT * FROM articles`);
+
+  return contentDb[0];
+}
+
+function contentToObj(contentDB) {
+  let contentObj = {};
+
+  contentDB.values.forEach((value) => {
+    contentDB.columns.forEach((columnName, index) => {
+      contentObj[columnName] = value[index];
+    });
+    content.value.push(contentObj);
+    contentObj = {};
+  });
+}
+
+onBeforeMount(() => {
+  initDB().then((result) => {
+    contentToObj(result);
+    console.log(content.value);
+  });
+});
 </script>
 
 <template>
@@ -11,20 +48,11 @@ const { t } = useI18n();
     <SectionHeader>{{ t("ArticlesHeader") }}</SectionHeader>
 
     <div class="articles">
-        <ArticleCard
-          :title="'gsdfgfsd'"
-          :text="'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae felis leo. Nunc viverra lacus urna. Vestibulum accumsan convallis quam non dictum. Maecenas lacinia ultricies convallis. Duis sagittis lorem vitae erat facilisis, ac mollis sapien finibus. Vestibulum ultricies consectetur porta. Ut tempus lorem ac turpis tempor, eu malesuada nibh aliquam. Ut egestas magna vel erat efficitur finibus. Nullam et lorem a odio lobortis rutrum sed ac tortor. Donec accumsan venenatis diam, quis viverra turpis rhoncus vel. Morbi pulvinar eget mi ut pretium.'"
-        >
-    </ArticleCard>
-
       <ArticleCard
-        :title="'gsdfgfsd'"
-        :text="'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae felis leo. Nunc viverra lacus urna. Vestibulum accumsan convallis quam non dictum. Maecenas lacinia ultricies convallis. Duis sagittis lorem vitae erat facilisis, ac mollis sapien finibus. Vestibulum ultricies consectetur porta. Ut tempus lorem ac turpis tempor, eu malesuada nibh aliquam. Ut egestas magna vel erat efficitur finibus. Nullam et lorem a odio lobortis rutrum sed ac tortor. Donec accumsan venenatis diam, quis viverra turpis rhoncus vel. Morbi pulvinar eget mi ut pretium.'"
-      >
-      </ArticleCard>
-      <ArticleCard
-        :title="'gsdfgfsd'"
-        :text="'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae felis leo. Nunc viverra lacus urna. Vestibulum accumsan convallis quam non dictum. Maecenas lacinia ultricies convallis. Duis sagittis lorem vitae erat facilisis, ac mollis sapien finibus. Vestibulum ultricies consectetur porta. Ut tempus lorem ac turpis tempor, eu malesuada nibh aliquam. Ut egestas magna vel erat efficitur finibus. Nullam et lorem a odio lobortis rutrum sed ac tortor. Donec accumsan venenatis diam, quis viverra turpis rhoncus vel. Morbi pulvinar eget mi ut pretium.'"
+        v-for="item in content"
+        :id="item.id"
+        :title="item.title"
+        :description="item.description"
       >
       </ArticleCard>
     </div>
@@ -46,8 +74,6 @@ const { t } = useI18n();
   width: 80%;
 }
 
-.articles__item {
-}
 </style>
 
 <i18n>
