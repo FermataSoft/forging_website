@@ -1,26 +1,27 @@
 <script setup>
 const props = defineProps({
+  id: Number,
   title: String,
-  text: String,
-  imagePath: String
-})
+  description: String,
+  contentObj: Object,
+});
 </script>
 
 <template>
-  <router-link class="article-card" to="/articles/1">
+  <router-link class="article-card" :to="`/articles/${id}`">
     <div class="article-card__image">
-      <img src="../../wrapper_images/1000x1000.jpg" alt="">
+      <img src="../../wrapper_images/1000x1000.jpg" alt="" />
     </div>
 
     <div class="article-card__text-block">
       <h1 class="article-card__title">{{ title }}</h1>
-      <p class="article-card__description">{{ text }}</p>
+      <p class="article-card__description">{{ description }}</p>
     </div>
   </router-link>
 </template>
 
 <style lang="scss" scoped>
-@import '../../assets/_vars.scss';
+@import "../../assets/_vars.scss";
 
 .article-card {
   width: 100%;
@@ -33,14 +34,18 @@ const props = defineProps({
   color: $on-surface;
   position: relative;
   overflow: hidden;
+  border-radius: 5px;
+  box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.45),
+    2px 2px 9px rgba(94, 104, 121, 0.3);
 
   &:hover {
     background-color: $surface;
-    box-shadow: 0 5px 10px 5px #e0e0e0;
+    box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.45),
+    3px 7px 9px rgba(94, 104, 121, 0.3);
 
     &:after {
       transform: translate(50%, -50%);
-    } 
+    }
   }
 
   &:after {
@@ -53,7 +58,7 @@ const props = defineProps({
     border-radius: 50%;
     transform: translate(100%, -50%);
     transition: all 0.3s 0.3s ease-in-out;
-    
+
     background-color: $primary;
   }
 }
