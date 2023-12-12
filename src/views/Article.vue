@@ -14,6 +14,7 @@ const content = ref({
 });
 
 const isPrevArticleShow = ref(false);
+const isNextArticleShow = ref(false);
 
 async function initDB() {
   const sqlPromise = initSqlJs({
@@ -31,24 +32,22 @@ async function initDB() {
   contentDbCount.value = contentDbCountQuery.get()[0];
 
   const contentDb = db.prepare(
-    `SELECT id, title, html_text FROM articles WHERE id = ${currentArticleID.value};`
+    `SELECT id, title, html_text, creation_date FROM articles WHERE id = ${currentArticleID.value};`
   );
   contentDb.step();
 
   const contentDbPrev = db.prepare(
-    `SELECT id, title FROM articles WHERE id = ${prepareDBQuery(
+    `SELECT id, title FROM articles WHERE id = ${definePrevId(
       contentDbCount.value,
-      currentArticleID.value,
-      "prev"
+      currentArticleID.value
     )};`
   );
   contentDbPrev.step();
 
   const contentDbNext = db.prepare(
-    `SELECT id, title FROM articles WHERE id = ${prepareDBQuery(
+    `SELECT id, title FROM articles WHERE id = ${defineNextId(
       contentDbCount.value,
-      currentArticleID.value,
-      "next"
+      currentArticleID.value
     )};`
   );
   contentDbNext.step();
@@ -57,20 +56,16 @@ async function initDB() {
     contentDb.getAsObject(),
     contentDbPrev.getAsObject(),
     contentDbNext.getAsObject(),
-    contentDbCount
+    contentDbCount.value,
   ];
 }
 
-function prepareDBQuery(count, current, order = "prev" ?? "next") {
-  count = +count;
-  current = +current;
+function defineNextId(count, current) {
+  return +current + 1 > +count ? 1 : +current + 1;
+}
 
-  switch (order) {
-    case "prev":
-      return current - 1 <= 0 ? count : current - 1;
-    case "next":
-      return current + 1 > count ? 1 : current + 1;
-  }
+function definePrevId(count, current) {
+  return +current - 1 <= 0 ? +count : +current - 1;
 }
 
 // function contentToObj(contentDB) {
@@ -87,11 +82,16 @@ function prepareDBQuery(count, current, order = "prev" ?? "next") {
 
 onMounted(() => {
   initDB().then((result) => {
-    [content.value["current"], content.value["prev"], content.value["next"], contentDbCount.value] =
-      result;
-    
-    if (content.value.next["id"] !== content.value.prev["id"]) isPrevArticleShow = true;
-    console.log(content.value);
+    [
+      content.value["current"],
+      content.value["prev"],
+      content.value["next"],
+      contentDbCount.value,
+    ] = result;
+
+    if (content.value.next["id"] !== content.value.prev["id"])
+      isPrevArticleShow.value = true;
+    if (contentDbCount.value > 1) isNextArticleShow.value = true;
   });
 });
 </script>
@@ -99,22 +99,107 @@ onMounted(() => {
 <template>
   <div class="article">
     <div class="article__content">
-      <h1>{{ content.current.title }}</h1>
-      <p v-html="content.current.html_text"></p>
+      <div class="article__content-header">
+        <h1 class="article__title">{{ content.current.title }}</h1>
+        <span class="article__creation-date">{{
+          new Date(+content.current.creation_date).toLocaleDateString()
+        }}</span>
+      </div>
+      <div class="article__content-block">
+        <p v-html="content.current.html_text"></p>
+      </div>
     </div>
 
     <div class="article__navigation-block">
-      <div class="article__navigation-prev" v-show="isPrevArticleShow">
-        <span>← Предыдущая</span>
-      </div>
-      
-      <div class="article__navigation-next">
-        <span>Следующая →</span>
-      </div>
+      <router-link
+        class="article__navigation-item article__navigation-prev"
+        :to="`/articles/${definePrevId(contentDbCount, currentArticleID)}`"
+        v-show="isPrevArticleShow"
+      >
+        ← Предыдущая статья
+      </router-link>
+      <router-link
+        class="article__navigation-item article__navigation-next"
+        :to="`/articles/${defineNextId(contentDbCount, currentArticleID)}`"
+        v-show="isNextArticleShow"
+      >
+        <span>Следующая статья →</span>
+      </router-link>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+@import "../assets/_vars.scss";
+.article {
+  width: $wrapper-width;
+  margin: 0 auto;
+  padding: 50px;
+}
+.article__content {
+  .article__content-header {
+    margin-bottom: 30px;
 
+    .article__title {
+      position: relative;
+      font-size: $header1;
+      font-weight: bold;
+      margin-bottom: 30px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        height: 7px;
+        width: 150px;
+        border-radius: 0 5px 5px 0;
+        background-color: $primary;
+      }
+    }
+
+    .article__creation-date {
+      font-size: $paragraph;
+      color: $secondary;
+    }
+  }
+
+  p {
+    font-size: $paragraph;
+    margin-bottom: 20px;
+    line-height: 2rem;
+  }
+
+  img {
+    margin: 20px;
+  }
+}
+.article__navigation-block {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+
+.article__navigation-item {
+  height: 100px;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  transition: all 0.2s;
+
+  font-size: $font-controls;
+  font-weight: $font-medium;
+  color: $on-surface;
+
+  &:hover {
+    background-color: $surface-container-low;
+  }
+}
+.article__navigation-prev {
+}
+.article__navigation-next {
+}
 </style>
