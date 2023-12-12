@@ -41,14 +41,14 @@ const props = defineProps({
   &:hover {
     background-color: $surface;
     box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.45),
-    3px 7px 9px rgba(94, 104, 121, 0.3);
+      3px 7px 9px rgba(94, 104, 121, 0.3);
 
-    &:after {
+    &::after {
       transform: translate(50%, -50%);
     }
   }
 
-  &:after {
+  &::after {
     content: "";
     position: absolute;
     width: 30px;
@@ -57,7 +57,7 @@ const props = defineProps({
     top: 50%;
     border-radius: 50%;
     transform: translate(100%, -50%);
-    transition: all 0.3s 0.3s ease-in-out;
+    transition: all 0.3s 0.1s ease-in-out;
 
     background-color: $primary;
   }
