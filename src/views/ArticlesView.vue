@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
+import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import SectionHeader from "../components/elements/SectionHeader.vue";
 import ArticleCard from "../components/elements/ArticleCard.vue";
@@ -14,7 +15,7 @@ async function initDB() {
       "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.wasm",
   });
 
-  const dataPromise = fetch("database.db").then((res) => res.arrayBuffer());
+  const dataPromise = fetch("../database.db").then((res) => res.arrayBuffer());
   const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
   const db = new SQL.Database(new Uint8Array(buf));
 
@@ -44,36 +45,39 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="wrapper">
-    <SectionHeader>{{ t("ArticlesHeader") }}</SectionHeader>
+  <div class="articles">
+    <div class="articles__wrapper" v-if="useRoute().path === '/articles'">
+      <SectionHeader>{{ t("ArticlesHeader") }}</SectionHeader>
 
-    <div class="articles">
-      <ArticleCard
-        v-for="item in content"
-        :id="item.id"
-        :title="item.title"
-        :description="item.description"
-      >
-      </ArticleCard>
+      <div class="articles__items">
+        <ArticleCard
+          v-for="item in content"
+          :id="item.id"
+          :title="item.title"
+          :description="item.description"
+        >
+        </ArticleCard>
+      </div>
     </div>
+
+    <router-view></router-view>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @import "../assets/_vars.scss";
 
-.wrapper {
+.articles {
   margin-bottom: 50px;
 }
 
-.articles {
+.articles__items {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
   width: 80%;
 }
-
 </style>
 
 <i18n>
