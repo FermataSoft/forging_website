@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import initSqlJs from "sql.js";
+import ButtonGoBack from "../components/elements/ButtonGoBack.vue";
 
 const routePath = useRoute().path;
 const currentArticleID = ref(routePath.slice(routePath.lastIndexOf("/") + 1));
@@ -98,6 +99,10 @@ onMounted(() => {
 
 <template>
   <div class="article">
+    <div class="article__top-bar">
+      <button-go-back></button-go-back>
+    </div>
+
     <div class="article__content">
       <div class="article__content-header">
         <h1 class="article__title">{{ content.current.title }}</h1>
@@ -134,8 +139,13 @@ onMounted(() => {
 .article {
   width: $wrapper-width;
   margin: 0 auto;
-  padding: 50px;
+  // padding: 20px;
 }
+
+.article__top-bar {
+  margin-bottom: 30px;
+}
+
 .article__content {
   .article__content-header {
     margin-bottom: 30px;
@@ -179,6 +189,7 @@ onMounted(() => {
   display: flex;
   flex-direction: row;
   justify-content: right;
+  margin-top: 50px;
 }
 
 .article__navigation-item {
