@@ -55,6 +55,7 @@ onBeforeMount(() => {
           :id="item.id"
           :title="item.title"
           :description="item.description"
+          :upload-date="item.creation_date"
         >
         </ArticleCard>
       </div>
@@ -69,14 +70,15 @@ onBeforeMount(() => {
 
 .articles {
   margin-bottom: 50px;
+  max-width: $wrapper-width;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .articles__items {
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 80%;
 }
 </style>
 
