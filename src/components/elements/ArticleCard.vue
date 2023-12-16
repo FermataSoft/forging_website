@@ -3,8 +3,16 @@ const props = defineProps({
   id: Number,
   title: String,
   description: String,
-  contentObj: Object,
+  uploadDate: Number,
 });
+
+const dateOptions = {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+}
+
+const formattedUploadDate = new Date(props.uploadDate).toLocaleString("ru", dateOptions)
 </script>
 
 <template>
@@ -17,6 +25,8 @@ const props = defineProps({
       <h1 class="article-card__title">{{ title }}</h1>
       <p class="article-card__description">{{ description }}</p>
     </div>
+
+    <span class="article-card__upload-date">{{ formattedUploadDate }}</span>
   </router-link>
 </template>
 
@@ -87,5 +97,13 @@ const props = defineProps({
 .article-card__description {
   font-size: 1.4rem;
   text-align: justify;
+}
+
+.article-card__upload-date {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+
+  font-size: 1.2rem;
 }
 </style>
