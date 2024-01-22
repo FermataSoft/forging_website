@@ -4,8 +4,6 @@ import Navigation from '../components/Navigation.vue';
 </script>
 
 <template>
-  <Navigation></Navigation>
-
   <RouterView class="router-view" v-slot="{ Component }">
       <component :is="Component" :key="$route.path"></component>
   </RouterView>
