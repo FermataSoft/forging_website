@@ -59,11 +59,11 @@ const devidedWorks = computed(() => {
 
 <template>
   <div class="works-block">
-    <div v-for="item in devidedWorks[currentPage]" :key="item.id" class="works-item">
+    <RouterLink class="works-block__item" :to="{ path: '/image/', hash: `#${item.id}`, query: { category: props.currentCategory } }" v-for="item in devidedWorks[currentPage]" :key="item.id" >
       <Transition name="fade-slide-up" appear mode="out-in">
-        <img :src="'/src/images/section_product/' + item.srcName" :alt="item.srcName" />
+        <img :src="'/images/' + item.srcName" :alt="item.srcName" />
       </Transition>
-    </div>
+    </RouterLink>
   </div>
 
   <Pagination
@@ -83,7 +83,7 @@ const devidedWorks = computed(() => {
 
   padding: 30px 40px;
 
-  .works-item {
+  .works-block__item {
     position: relative;
     border-radius: 5px;
     overflow: hidden;
