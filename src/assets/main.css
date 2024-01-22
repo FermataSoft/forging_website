@@ -95,3 +95,9 @@ body._locked {
   height: 1px;
   clip: rect(0 0 0 0);
 }
+
+/* Swiper main styles */
+:root {
+  --swiper-pagination-color: hsl(44, 100%, 70%);
+  --swiper-theme-color: hsl(44, 100%, 70%);
+}

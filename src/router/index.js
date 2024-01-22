@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+import HomeView from "../views/HomeView.vue"
 import MainLayout from "../layouts/main.vue";
 import PageLayout from "../layouts/page.vue";
 import BlankLayout from "../layouts/blank.vue";
@@ -11,13 +12,19 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: { layout: MainLayout },
-      component: () => import("../views/HomeView.vue"),
+      component: HomeView,
     },
     {
       path: "/works",
       name: "works",
       meta: { layout: PageLayout },
       component: () => import("../views/WorksView.vue"),
+    },
+    {
+      path: "/image/",
+      name: "image",
+      meta: { layout: BlankLayout },
+      component: () => import("../views/ImageView.vue")
     },
     {
       path: "/articles",
