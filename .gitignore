@@ -31,3 +31,4 @@ package-lock.json
 .env
 RUN.bat
 .env
+idea/websiteName.md

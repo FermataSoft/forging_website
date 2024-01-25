@@ -1,7 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue';
-import Pagination from '../../components/elements/Pagination.vue';
-import works from '../../assets/works.json';
+import { ref, computed, onMounted } from "vue";
+import Pagination from "../../components/elements/Pagination.vue";
+import { Database } from "../../api/db";
+
+const db = new Database();
 
 const props = defineProps({
   currentCategory: String,
@@ -10,7 +12,14 @@ const props = defineProps({
   isAscendingOrder: Boolean,
 });
 
+const images = ref([]);
 let currentPage = ref(1);
+
+onMounted(() => {
+  db.getContent("SELECT * FROM images;").then((result) => {
+    images.value = db.contentToObj(result);
+  });
+});
 
 function sliceIntoChunks(arr, chunkSize) {
   let res = [];
@@ -22,8 +31,9 @@ function sliceIntoChunks(arr, chunkSize) {
   return res;
 }
 
-function sortItems(arr, sortByField, ascendingOrder) {
-  if (typeof (arr[0] === String)) {
+function sortItems(arr, sortByField, ascendingOrder = true) {
+  if (typeof arr.map((value, index, array) => array[0]) === String) {
+    // strange behaviour arr[0][sortByField] not working
     return arr.sort((a, b) =>
       ascendingOrder
         ? a[sortByField].localeCompare(b[sortByField])
@@ -31,50 +41,67 @@ function sortItems(arr, sortByField, ascendingOrder) {
     );
   } else {
     return arr.sort((a, b) =>
-      ascendingOrder ? a[sortByField] - b[sortByField] : b[sortByField] - a[sortByField]
+      ascendingOrder
+        ? a[sortByField] - b[sortByField]
+        : b[sortByField] - a[sortByField]
     );
   }
 }
 
-const worksByCategory = computed(() => {
-  if (props.currentCategory === 'all') {
-    return Object.values(works);
+const imagesByCategory = computed(() => {
+  if (props.currentCategory === "all") {
+    return images.value;
   } else {
-    return Object.values(works).filter((item) => item.category === props.currentCategory);
+    return images.value.filter(
+      (item) => item.category === props.currentCategory
+    );
   }
 });
 
-const worksByCategoryCount = computed(() => {
-  return worksByCategory.value.length;
+const imagesByCategoryCount = computed(() => {
+  return imagesByCategory.value.length;
 });
 
-const sortedWorks = computed(() => {
-  return sortItems([...worksByCategory.value], props.sortBy, props.isAscendingOrder);
+const sortedImages = computed(() => {
+  return sortItems(
+    [...imagesByCategory.value],
+    props.sortBy,
+    props.isAscendingOrder
+  );
 });
 
-const devidedWorks = computed(() => {
-  return sliceIntoChunks([...sortedWorks.value], props.itemsPerPage);
+const devidedImages = computed(() => {
+  return sliceIntoChunks([...sortedImages.value], props.itemsPerPage);
 });
 </script>
 
 <template>
   <div class="works-block">
-    <RouterLink class="works-block__item" :to="{ path: '/image/', hash: `#${item.id}`, query: { category: props.currentCategory } }" v-for="item in devidedWorks[currentPage]" :key="item.id" >
+    <RouterLink
+      class="works-block__item"
+      :to="{
+        path: '/image/',
+        hash: `#${item.id}`,
+        query: { category: props.currentCategory },
+      }"
+      v-for="item in devidedImages[currentPage]"
+      :key="item.id"
+    >
       <Transition name="fade-slide-up" appear mode="out-in">
-        <img :src="'/images/' + item.srcName" :alt="item.srcName" />
+        <img :src="'/images/' + item.srcFilename" :alt="item.srcName" />
       </Transition>
     </RouterLink>
   </div>
 
   <Pagination
     @update="(currPage) => (currentPage = currPage - 1)"
-    :totalCount="worksByCategoryCount"
+    :totalCount="imagesByCategoryCount"
     :itemsPerPage="itemsPerPage"
   ></Pagination>
 </template>
 
 <style lang="scss" scoped>
-@import '../../assets/_vars.scss';
+@import "../../assets/_vars.scss";
 
 .works-block {
   display: grid;
@@ -129,6 +156,6 @@ const devidedWorks = computed(() => {
 .fade-slide-up-enter-from,
 .fade-slide-up-leave-to {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(5px);
 }
 </style>
