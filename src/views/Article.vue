@@ -209,8 +209,4 @@ onMounted(() => {
     background-color: $surface-container-low;
   }
 }
-.article__navigation-prev {
-}
-.article__navigation-next {
-}
 </style>

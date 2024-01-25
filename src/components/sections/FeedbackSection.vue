@@ -141,7 +141,7 @@ function submitForm() {
       outline: none;
       box-shadow: none;
       transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
-      box-shadow: inset -2px -2px 7px rgba(250, 250, 250, 0.7), inset 2px 2px 7px rgba(120, 120, 120, 0.3);
+      box-shadow: inset -2px -2px 5px rgba(250, 250, 250, 0.5), inset 2px 2px 5px rgba(120, 120, 120, 0.5);
     }
 
     & textarea {
@@ -155,7 +155,7 @@ function submitForm() {
       font-weight: $font-light;
       font-size: 1.4rem;
       transition: 0.1s cubic-bezier(0, 0, 0.2, 1);
-      box-shadow: inset -2px -2px 7px rgba(250, 250, 250, 0.7), inset 2px 2px 7px rgba(120, 120, 120, 0.3);
+      box-shadow: inset -2px -2px 5px rgba(250, 250, 250, 0.7), inset 2px 2px 5px rgba(120, 120, 120, 0.5);
     }
 
     // Floating label
@@ -191,7 +191,7 @@ function submitForm() {
     textarea:focus {
       border: 1px solid rgba(120, 120, 120, 0.2);
       // box-shadow: 0 5px 10px 0 rgba(101, 101, 101, 0.3);
-      box-shadow: inset -0px -0px 5px rgba(200, 200, 200, 0.2), inset 2px 2px 3px rgba(120, 120, 120, 0.3);
+      box-shadow: inset -0px -0px 5px rgba(200, 200, 200, 0.2), inset 2px 2px 3px rgba(120, 120, 120, 0.5);
       z-index: 1;
     }
 
