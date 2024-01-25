@@ -9,8 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
   <div class="hero">
     <img class="hero-image" src="../images/hero/Main-page_hero-image.webp" alt="" />
     <div class="title-block">
-      <h1 class="title">КАРКАСЫ И<br>ЛЕСТНИЦЫ<br>из металла</h1>
-      <h2 class="subtitle">в городе Несвиж</h2>
+      <h1 class="title">ИНТЕРЬЕР<br>СТАЛЬ</h1>
+      <h2 class="subtitle"></h2>
     </div>
   </div>
 </template>
@@ -29,20 +29,19 @@ gsap.registerPlugin(ScrollTrigger);
     top: 50%;
     left: 200px;
     transform: translateY(-50%);
-    text-align: right;
-    text-shadow: 0 0 60px hsla(0, 0%, 0%, 1);
+    text-align: left;
+    text-shadow: 0 0 30px hsl(0, 0%, 0%, 1);
 
     .title {
       font-size: 8rem;
-      line-height: 8rem;
-      font-weight: bold;
+      font-weight: 500;
       color: $primary;
     }
 
     .subtitle {
       margin-top: 4rem;
-      font-size: 5rem;
-      font-weight: 400;
+      font-size: 3rem;
+      font-weight: 200;
       color: $tertiary;
     }
   }

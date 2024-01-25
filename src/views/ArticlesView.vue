@@ -39,7 +39,6 @@ function contentToObj(contentDB) {
 onBeforeMount(() => {
   initDB().then((result) => {
     contentToObj(result);
-    console.log(content.value);
   });
 });
 </script>
