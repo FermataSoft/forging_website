@@ -14,7 +14,6 @@
     "pinia": "^2.0.30",
     "sql.js": "^1.8.0",
     "swiper": "^11.0.5",
-    "tinymce": "^6.7.2",
     "vee-validate": "^4.7.4",
     "vue": "^3.4.15",
     "vue-awesome-paginate": "^1.1.46",
