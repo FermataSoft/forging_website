@@ -1,66 +1,25 @@
 <script setup>
-import { useRoute, useRouter } from "vue-router";
-import { ref, watch, onMounted, onBeforeMount } from "vue";
-import initSqlJs from "sql.js";
-import appConfig from "../config.js";
+import { useRoute } from "vue-router";
+import { ref, onBeforeMount } from "vue";
+import appConfig from "../globals";
+import { Database } from "../api/db";
 
 const route = useRoute();
-const router = useRouter();
+const db = new Database();
+const swiperEl = ref(null);
 
 const DBTableName = "images";
-const initialImageIndex = ref(route.hash.slice(1) || "0");
+const initialImageIndex = ref(); // define index according to id from db array
 const currentCategory = ref(route.query.category || "all");
-const contentDbCount = ref(0); // lazy loading?
 const content = ref({});
-
 const slides = ref([]);
 
-async function initDB() {
-  const sqlPromise = initSqlJs({
-    locateFile: (file) =>
-      "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.wasm",
-  });
-
-  const dataPromise = fetch(appConfig.DatabasePath).then((res) =>
-    res.arrayBuffer()
-  );
-  const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
-  const db = new SQL.Database(new Uint8Array(buf));
-
-  const contentDbCountQuery = db.prepare(
-    `SELECT COUNT(*) FROM ${DBTableName};`
-  );
-  contentDbCountQuery.step();
-
-  contentDbCount.value = contentDbCountQuery.get()[0];
-
-  const contentDb = db.exec(getDBQuery(currentCategory.value));
-
-  return {
-    content: contentDb[0],
-  };
-}
 
 function getDBQuery(category) {
   if (category === "all") {
     return `SELECT * FROM ${DBTableName};`;
   }
-  return `SELECT * FROM ${DBTableName} WHERE category=${currentCategory.value};`;
-}
-
-function contentToObj(contentDB) {
-  let result = [];
-  let contentObj = {};
-
-  contentDB.values.forEach((value) => {
-    contentDB.columns.forEach((columnName, index) => {
-      contentObj[columnName] = value[index];
-    });
-    result.push(contentObj);
-    contentObj = {};
-  });
-
-  return result;
+  return `SELECT * FROM ${DBTableName} WHERE category="${currentCategory.value}";`;
 }
 
 function addVirtualSlides(content = []) {
@@ -74,35 +33,29 @@ function addVirtualSlides(content = []) {
   return result;
 }
 
-const swiperEl = ref(null);
-
 onBeforeMount(() => {
-  initDB().then((result) => {
-    content.value = contentToObj(result.content);
-    slides.value = addVirtualSlides(content.value);
-
-    swiperEl.value.swiper.on("slideChange", () => {
-      router.replace({
-        query: { category: currentCategory.value },
-        hash:
-          "#" +
-          swiperEl.value.swiper.slides[
-            swiperEl.value.swiper.activeIndex
-          ].getAttribute("data-hash"),
-      });
+  const query = getDBQuery(currentCategory.value)
+  db.getContent(query)
+    .then((result) => (content.value = db.contentToObj(result)))
+    .then(() => {
+      slides.value = addVirtualSlides(content.value);
+      initialImageIndex.value = slides.value.findIndex(
+        (value) => value.id == route.hash.slice(1)
+      );
+      swiperEl.value.swiper.slideTo(initialImageIndex.value);
     });
-  });
 });
 </script>
 
 <template>
   <div class="image-view">
-    <ButtonClose path-to="/works"></ButtonClose>
+    <ButtonClose
+      :path-to="{ path: '/works', query: { category: currentCategory } }"
+    ></ButtonClose>
     <swiper-container
       class="swiper"
       ref="swiperEl"
       :keyboard="true"
-      :initial-slide="initialImageIndex"
       :slides-per-view="1"
       :speed="500"
       :navigation="true"
@@ -110,6 +63,9 @@ onBeforeMount(() => {
         type: 'progressbar',
       }"
       virtual
+      :hash-navigation="true"
+      :hash-navigation-replace-state="true"
+      :hash-navigation-watch-state="true"
     >
       <swiper-slide
         class="swiper-slide"

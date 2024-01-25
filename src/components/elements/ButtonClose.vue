@@ -4,11 +4,12 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const props = defineProps({
-  pathTo: String,
+  pathTo: Object,
 });
 
-function goToPage(path = "/") {
-  router.push(path);
+async function goToPage(path) {
+  await router.push(path).then()
+  history.replaceState(history.state, '')
 }
 </script>
 
@@ -35,7 +36,7 @@ function goToPage(path = "/") {
   width: $size;
   height: $size;
   cursor: pointer;
-  
+
   &:before,
   &:after {
     content: "";
