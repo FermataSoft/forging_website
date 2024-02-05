@@ -18,7 +18,7 @@ const formattedUploadDate = new Date(props.uploadDate).toLocaleString("ru", date
 <template>
   <router-link class="article-card" :to="`/articles/${id}`">
     <div class="article-card__image">
-      <img src="../../wrapper_images/1000x1000.jpg" alt="" />
+      <img src="/wrapper_images/1000x1000.jpg" alt="" />
     </div>
 
     <div class="article-card__text-block">
@@ -35,7 +35,7 @@ const formattedUploadDate = new Date(props.uploadDate).toLocaleString("ru", date
 
 .article-card {
   width: 100%;
-  background-color: $surface-container-lowest;
+  background-color: $surface;
   padding: 20px 30px;
   display: flex;
   flex-direction: row;
@@ -45,8 +45,8 @@ const formattedUploadDate = new Date(props.uploadDate).toLocaleString("ru", date
   position: relative;
   overflow: hidden;
   border-radius: 5px;
-  box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.45),
-    2px 2px 9px rgba(94, 104, 121, 0.3);
+  box-shadow: 0px -5px 3px rgba(255, 255, 255, 0.2),
+    2px 2px 9px rgba(94, 104, 121, 0.5);
 
   &:hover {
     background-color: $surface;
