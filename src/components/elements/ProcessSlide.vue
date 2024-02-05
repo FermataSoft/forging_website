@@ -18,60 +18,86 @@ defineProps({
 </script>
 
 <template>
-  <div class="wrapper">
-    <div class="header-block">
-      <h1 class="number">{{ number }}</h1>
-      <h2 class="header">{{ header }}</h2>
+  <div class="process-slide">
+    <div class="process-slide__text-block">
+      <h1 class="process-slide__text-block-number">{{ number }}</h1>
+      <h2 class="process-slide__text-block-header">{{ header }}</h2>
     </div>
-    <SlidesDevider></SlidesDevider>
-    <div class="slide-image-wrapper">
-      <img :src="`/src/images/section_process/${image}`" alt=""/>
+    <SlidesDevider class="process-slide__devider"></SlidesDevider>
+    <div class="process-slide__image-block">
+      <img
+        class="process-slide__image"
+        :src="`/src/images/section_process/${image}`"
+        alt=""
+      />
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @import "../../assets/_vars.scss";
-.wrapper {
+.process-slide {
   width: 100%;
   height: calc(100vh - 50px);
-  padding: 0 50px;
+  // padding: 0 50px;
+  position: relative;
 
-  // background-color: coral;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 100px;
+}
 
-  .header-block {
-    max-width: 30%;
-    text-align: right;
-    font-weight: $font-bold;
+.process-slide__text-block {
+  position: relative;
+  background-color: $secondary;
+  height: 100%;
+  width: 40%;
+  text-align: right;
+  font-weight: $font-bold;
+  padding-right: 100px;
+  z-index: 3;
 
-    .number {
-      font-size: 16rem;
-      -webkit-text-fill-color: transparent;
-      -webkit-text-stroke: 8px $primary;
-      letter-spacing: -5px;
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-    .header {
-      font-size: 4rem;
-      color: $on-surface;
-    }
+  .process-slide__text-block-number {
+    font-size: 16rem;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 8px $primary;
+    letter-spacing: -5px;
   }
 
-  .slide-image-wrapper {
-    height: auto;
-    width: 50%;
-    overflow: hidden;
+  .process-slide__text-block-header {
+    font-size: 4rem;
+    color: $inverse-on-surface;
+  }
+}
 
-    img {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-    }
+.process-slide__devider {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%) scale(1.2);
+  color: $secondary;
+  z-index: 4;
+  mix-blend-mode: difference;
+  filter: invert(1);
+}
+
+.process-slide__image-block {
+  height: 100%;
+  width: 60%;
+  padding: 50px;
+  overflow: hidden;
+  // background-color: $surface;
+  z-index: 3;
+
+  .process-slide__image {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
   }
 }
 </style>
