@@ -30,7 +30,7 @@ watch(currentCategorySelected, (curr, prev) => {
 
 <template>
   <Transition name="view">
-    <div class="wrapper">
+    <div class="works-view">
       <div class="navbar-margin"></div>
       <div class="menu-block">
         <div class="filters-menu__block">
@@ -85,9 +85,10 @@ watch(currentCategorySelected, (curr, prev) => {
 <style scoped lang="scss">
 @import '../assets/_vars.scss';
 
-.wrapper {
+.works-view {
   width: 100%;
   display: flex;
+  background-color: $surface-container-highest;
 }
 
 main {
@@ -101,9 +102,9 @@ main {
   // height: 100%;
   width: 300px;
   padding: 20px;
-  z-index: 999;
-  background-color: $surface-container-low;
-  // border-right: 3px solid $outline-variant;
+  z-index: 3;
+  background-color: $surface;
+  border-right: 1px solid $outline-variant;
 }
 
 .sort-menu {
@@ -112,10 +113,11 @@ main {
   left: 0;
   width: 100%;
   padding: 10px;
-  background-color: $surface-container-lowest;
+  background-color: $surface;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  border-bottom: 1px solid $outline-variant;
 
   span {
     font-size: 1.4rem;
@@ -184,9 +186,7 @@ main {
 
     label {
       width: 100%;
-      height: 3rem;
-      line-height: 3rem;
-      padding-left: 8px;
+      padding: 12px 0px 12px 8px;
       font-size: 1.4rem;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -198,7 +198,6 @@ main {
       position: absolute;
       width: 0%;
       height: 100%;
-      top: 0;
       left: 0;
       border-radius: 3px;
       background-color: $primary;

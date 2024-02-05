@@ -78,6 +78,6 @@ async function goToPage(path) {
 }
 
 .button-close__icon {
-  @include cross(30px, rgb(221, 221, 221), $primary, 2px);
+  @include cross(30px, rgb(221, 221, 221), $primary, 3px);
 }
 </style>

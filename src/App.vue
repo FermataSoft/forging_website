@@ -41,3 +41,11 @@ localeStore.$subscribe(() => {
     </component>
   </main>
 </template>
+
+<style lang="scss" scoped>
+@import "./assets/vars";
+
+main {
+  background-color: $surface-container-highest;
+}
+</style>
