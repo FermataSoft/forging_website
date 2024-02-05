@@ -2,7 +2,6 @@
 import { ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useLocaleStore } from '../stores/LocaleStore';
-import { useWindowParamsStore } from '../stores/WindowParamsStore';
 
 const { locale } = useI18n();
 

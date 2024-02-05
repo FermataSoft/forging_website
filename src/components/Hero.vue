@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 <template>
   <div class="hero">
-    <img class="hero-image" src="../images/hero/Main-page_hero-image.webp" alt="" />
+    <img class="hero-image" src="../images/hero/Main-page_hero-image_2×.png" alt="" />
     <div class="title-block">
       <h1 class="title">ИНТЕРЬЕР<br>СТАЛЬ</h1>
       <h2 class="subtitle"></h2>

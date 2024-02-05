@@ -14,12 +14,13 @@ $color6: #FFD460;
 $surface: hsl(0, 0%, 100%);
 $on-surface: hsl(0, 0%, 14%);
 $on-surface-variant: hsl(0, 0%, 10%);
-$surface-container-lowest: hsl(0, 0%, 97%);
-$surface-container-low: hsl(0, 0%, 95%);
-$surface-container: hsl(0, 0%, 90%);
-$surface-container-high: hsl(0, 0%, 85%);
-$surface-container-highest: hsl(0, 0%, 80%);
+$surface-container-lowest: hsl(0, 0%, 90%);
+$surface-container-low: hsl(0, 0%, 92%);
+$surface-container: hsl(0, 0%, 95%);
+$surface-container-high: hsl(0, 0%, 96%);
+$surface-container-highest: hsl(0, 0%, 98%);
 $inverse-surface: hsl(0, 0%, 14%);
+$inverse-surface-lower: hsl(0, 0%, 10%);
 $inverse-on-surface: hsl(0, 0%, 100%);
 $inverse-on-surface-variant: hsl(0, 0%, 80%);
 
@@ -121,3 +122,4 @@ $mobile: 767px;
     }
   }
 }
+
