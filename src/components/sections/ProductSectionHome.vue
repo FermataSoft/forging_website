@@ -18,7 +18,7 @@ const { t } = useI18n();
   <div class="product-section">
     <div class="product-section-block">
       <div class="product-item-image">
-        <img src="../../images/section_product/stairs.webp" alt="" />
+        <img src="/images/stairs.webp" alt="" />
       </div>
       <div class="product-item-description">
         <h3>Лестницы</h3>
@@ -32,7 +32,7 @@ const { t } = useI18n();
 
     <div class="product-section-block">
       <div class="product-item-image">
-        <img src="../../images/section_product/stair_railing.webp" alt="" />
+        <img src="/images/stair_railing.webp" alt="" />
       </div>
       <div class="product-item-description">
         <h3>Лестничные ограждения</h3>
@@ -46,7 +46,7 @@ const { t } = useI18n();
 
     <div class="product-section-block">
       <div class="product-item-image">
-        <img src="../../images/section_product/gates.webp" alt="" />
+        <img src="/images/gates.webp" alt="" />
       </div>
       <div class="product-item-description">
         <h3>Ворота</h3>
@@ -60,7 +60,7 @@ const { t } = useI18n();
 
     <div class="product-section-block">
       <div class="product-item-image">
-        <img src="../../images/section_product/gate.webp" alt="" />
+        <img src="/images/gate.webp" alt="" />
       </div>
       <div class="product-item-description">
         <h3>Калитки</h3>
@@ -72,9 +72,9 @@ const { t } = useI18n();
       </div>
     </div>
 
-    <div class="product-section-block">
+    <!-- <div class="product-section-block">
       <div class="product-item-image">
-        <img src="../../images/section_product/pipe.webp" alt="" />
+        <img src="/images/pipe.webp" alt="" />
       </div>
       <div class="product-item-description">
         <h3>Дымники</h3>
@@ -84,11 +84,11 @@ const { t } = useI18n();
           dignissimos minima excepturi esse et perspiciatis.
         </p>
       </div>
-    </div>
+    </div> -->
 
-    <div class="product-section-block">
+    <!-- <div class="product-section-block">
       <div class="product-item-image">
-        <img src="../../images/section_product/address_plate.webp" alt="" />
+        <img src="/images/address_plate.webp" alt="" />
       </div>
       <div class="product-item-description">
         <h3>Адресные таблички</h3>
@@ -98,7 +98,7 @@ const { t } = useI18n();
           dignissimos minima excepturi esse et perspiciatis.
         </p>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -119,20 +119,17 @@ h3 {
 .product-section {
   .product-section-block {
     position: relative;
-    height: 80vh;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 100px;
-
-    margin-bottom: 100px;
+    gap: 50px;
 
     &:not(:last-child)::after {
       content: url('../icons/header_elements/Devider.png');
 
       position: absolute;
-      bottom: -85px;
+      bottom: -30px;
       left: auto;
     }
 
@@ -152,7 +149,7 @@ h3 {
       flex: 1 1 auto;
 
       img {
-        width: 100%;
+        max-width: 500px;
         margin-left: calc(100% - 100% / 1.09); // Trouble with clip-path position
         clip-path: url(#hexagon);
         -webkit-clip-path: url(#hexagon);
