@@ -1,9 +1,12 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ProcessSlide from "../elements/ProcessSlide.vue";
 
 const { t } = useI18n();
+gsap.registerPlugin(ScrollTrigger);
 
 const slides = ref([
   {
@@ -32,14 +35,72 @@ const slides = ref([
     image: "Delivery@1080w.webp",
   },
 ]);
-onMounted(() => {});
+
+const containerElement = ref(null);
+const headerElement = ref(null);
+let GSAPContext = null;
+
+function initAnimations(context, ...animations) {
+  GSAPContext = gsap.context((self) => {
+    animations.forEach(animation => {
+      animation();
+    })
+  }, context)
+}
+
+function pinHeader() {
+  ScrollTrigger.create({
+    trigger: headerElement.value,
+    start: "-15px top",
+    end: () => "+=" + containerElement.value.offsetHeight + " bottom",
+    pin: headerElement.value,
+    pinSpacing: false,
+    pinType: "fixed",
+    onUpdate: (self) => {console.log(self);},
+  });
+}
+
+function animateSlides() {
+  const slidesElements = gsap.utils.toArray(".process-section__slide");
+  const count = slidesElements.length - 1;
+  const duration = 1;
+
+  let tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".process-section__slides",
+      start: "-=100 top",
+      end: () => "+=" + document.querySelector(".process-section__slides").offsetWidth,
+      scrub: 1,
+      pin: true,
+      snap: "labels",
+    },
+  });
+
+  slidesElements.forEach((slide, i) => tl.add("label" + i, i * (duration / count)));
+
+  tl.to(slidesElements, {
+    yPercent: -100 * count,
+    duration: duration,
+    ease: "none"
+  });
+}
+
+onMounted(() => {
+  initAnimations(containerElement.value, animateSlides, pinHeader) // order of animations is important
+});
+
+onUnmounted(() => {
+  GSAPContext.revert(); // delete gsap
+});
 </script>
 
 <template>
-  <div class="process-section">
-    <SectionHeader class="process-section__header" inverseColor>{{
-      t("SectionProcessHeader")
-    }}</SectionHeader>
+  <div class="process-section" ref="containerElement">
+    <div class="process_section__header" ref="headerElement">
+      <SectionHeader inverseColor noMargin>{{
+        t("SectionProcessHeader")
+      }}</SectionHeader>
+    </div>
     <div class="process-section__slides">
       <ProcessSlide
         v-for="slide in slides"
@@ -57,12 +118,25 @@ onMounted(() => {});
 @import "../../assets/vars";
 .process-section {
   width: 100%;
+  height: 500%;
   background-color: $inverse-surface;
   margin-top: 50px;
 }
 
-.process-section__header {
-  color: $inverse-on-surface;
+.process_section__header {
+  width: 100%;
+  height: auto;
+  padding-bottom: 20px;
+  background-color: $inverse-surface;
+  z-index: 4;
+}
+
+.process-section__slides {
+  height: calc(100vh - 70px);
+  overflow: hidden;
+}
+
+.process-section__slide {
 }
 </style>
 

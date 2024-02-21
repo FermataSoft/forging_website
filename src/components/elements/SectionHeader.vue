@@ -1,16 +1,17 @@
 <script setup>
 import IconHeaderAfter from "../icons/header_elements/IconHeaderAfter.vue";
-import IconHeaderBefore from "../icons/header_elements/IconHeaderBefore.vue"
+import IconHeaderBefore from "../icons/header_elements/IconHeaderBefore.vue";
 
 const props = defineProps({
   inverseColor: Boolean,
+  noMargin: Boolean
 });
 </script>
 
 <template>
   <h1
     class="section-header"
-    :class="{ 'section-header_inverse-color': inverseColor }"
+    :class="{ 'section-header--inverse-color': inverseColor, 'section-header--no-margin': noMargin }"
   >
     <IconHeaderBefore class="section-header__icon-before"></IconHeaderBefore>
     <slot></slot>
@@ -29,20 +30,37 @@ const props = defineProps({
   color: $on-surface;
   text-align: center;
 
+  @include breakpoint(md) {
+    font-size: 3rem;
+  }
+
   .section-header__icon-before {
     margin-right: 10px;
   }
   .section-header__icon-after {
     margin-left: 10px;
   }
+
+  .section-header__icon-before,
+  .section-header__icon-after {
+    transform: scale(1) translateY(3px);
+
+    @include breakpoint(md) {
+      transform: scale(0.9) translateY(3px);
+    }
+  }
 }
 
-.section-header_inverse-color {
+.section-header--inverse-color {
   color: $inverse-on-surface;
 
   &::before,
   &::after {
     color: $inverse-on-surface;
   }
+}
+
+.section-header--no-margin {
+  margin: 0;
 }
 </style>
