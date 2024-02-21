@@ -40,8 +40,7 @@ defineProps({
 @import "../../assets/_vars.scss";
 .process-slide {
   width: 100%;
-  height: calc(100vh - 50px);
-  // padding: 0 50px;
+  height: calc(100vh - 70px);
   position: relative;
 
   display: flex;
