@@ -1,0 +1,119 @@
+<script setup>
+defineProps({
+  invalid: true,
+});
+</script>
+
+<template>
+  <div class="checkbox-wrapper" :class="{ invalid: invalid }">
+    <input
+      id="checkbox"
+      type="checkbox"
+      class="promoted-input-checkbox"
+      @blur="$emit('blur')"
+      @click="$emit('toggle', $event.target.checked)"
+    />
+    <svg><use xlink:href="#checkmark-28" /></svg>
+    <label for="checkbox">
+      <slot></slot>
+    </label>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+      <symbol id="checkmark-28" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          fill="none"
+          d="M22.9 3.7l-15.2 16.6-6.6-7.1"
+        ></path>
+      </symbol>
+    </svg>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+@import "../../assets/_vars.scss";
+
+.checkbox-wrapper {
+  --size: 20px;
+  position: relative;
+}
+
+.checkbox-wrapper *,
+.checkbox-wrapper *:before,
+.checkbox-wrapper *:after {
+  box-sizing: border-box;
+}
+
+.checkbox-wrapper .promoted-input-checkbox {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.checkbox-wrapper input:checked ~ svg {
+  height: calc(var(--size) * 0.6);
+  -webkit-animation: draw-checkbox-28 ease-in-out 0.2s forwards;
+  animation: draw-checkbox-28 ease-in-out 0.2s forwards;
+}
+
+.checkbox-wrapper label:active::after {
+  background-color: #e6e6e6;
+}
+
+.checkbox-wrapper label {
+  color: $secondary;
+  font-size: 1.4rem;
+  line-height: var(--size);
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox-wrapper label:after {
+  content: "";
+  height: var(--size);
+  width: var(--size);
+  margin-right: 8px;
+  float: left;
+  border: 2px solid $secondary;
+  border-radius: 3px;
+  transition: 0.15s all ease-out;
+}
+
+.checkbox-wrapper svg {
+  stroke: $secondary;
+  stroke-width: 3px;
+  height: 0;
+  width: calc(var(--size) * 0.6);
+  position: absolute;
+  left: calc(var(--size) * 0.21);
+  top: calc(var(--size) * 0.2);
+  stroke-dasharray: 33;
+}
+
+.checkbox-wrapper.invalid label:after {
+  border: 2px solid $error;
+}
+
+@-webkit-keyframes draw-checkbox-28 {
+  0% {
+    stroke-dashoffset: 33;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw-checkbox-28 {
+  0% {
+    stroke-dashoffset: 33;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+</style>
