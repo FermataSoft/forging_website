@@ -8,11 +8,12 @@ defineProps({
     type: String,
     required: true,
   },
+  disabled: true,
 });
 </script>
 
 <template>
-  <button>{{ t(text) }}</button>
+  <button :disabled="disabled">{{ t(text) }}</button>
 </template>
 
 <style lang="scss" scoped>
@@ -31,6 +32,11 @@ button {
   transform: translate(0);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+
+  &:disabled {
+    background-color: $disabled;
+    cursor: default;
+  }
 }
 
 @mixin element-color($color) {
