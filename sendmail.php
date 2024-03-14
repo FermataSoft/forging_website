@@ -3,41 +3,54 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require './plugins/PHPMailer-6.6.3/src/Exception.php';
-require './plugins/PHPMailer-6.6.3/src/PHPMailer.php';
-require './plugins/PHPMailer-6.6.3/src/SMTP.php';
+require './plugins/PHPMailer-master/src/Exception.php';
+require './plugins/PHPMailer-master/src/PHPMailer.php';
+require './plugins/PHPMailer-master/src/SMTP.php';
 
 $mail = new PHPMailer(true);
 $mail->CharSet = 'UTF-8';
-$mail->setLanguage('ru', './plugins/PHPMailer-6.6.3/language/');
+$mail->setLanguage('en', './plugins/PHPMailer-master/language/');
 $mail->IsHTML(true);
 
-// От кого письмо
-$mail->setFrom('officialpage@andrvi.com', 'AndrVi Official Page');
-// Кому отправить
-$mail->addAddress('***REMOVED***');
-// Тема письма
-$mail->Subject = 'AndrVi Official Page [SubmitForm]';
+try {
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.yandex.ru';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = '***REMOVED***';
+    $mail->Password   = '***REMOVED***';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port       = 465;
 
-$body = 'Данное письмо отправлено с сайта andrvi.com';
+    // От кого письмо
+    $mail->setFrom('***REMOVED***', 'Интерьер Сталь');
+    // Кому отправить
+    $mail->addAddress('***REMOVED***');
 
-if (trim(!empty($_POST['name']))) {
-    $body .= '<p><strong>Имя:</strong> ' . $_POST['name'] . '</p>';
-}
-if (trim(!empty($_POST['email']))) {
-    $body .= '<p?><strong>E-mail:</strong> ' . $_POST['email'] . '</p>';
-}
-if (trim(!empty($_POST['message']))) {
-    $body .= '<p><strong>Сообщение:</strong> ' . $_POST['message'] . '</p>';
-}
+    // Content
+    $mail->isHTML(true);
+    $mail->Subject = 'Интерьер Сталь [Форма обратной связи]';
+    $body = 'Данное письмо отправлено с сайта interierstal.by';
 
-$mail->Body = $body;
+    if (trim(!empty($_POST['name']))) {
+        $body .= '<p><strong>Имя:</strong> ' . $_POST['name'] . '</p>';
+    }
+    if (trim(!empty($_POST['email']))) {
+        $body .= '<p><strong>E-mail:</strong> ' . $_POST['email'] . '</p>';
+    }
+    if (trim(!empty($_POST['subject']))) {
+        $body .= '<p><strong>Тема:</strong> ' . $_POST['subject'] . '</p>';
+    }
+    if (trim(!empty($_POST['message']))) {
+        $body .= '<p><strong>Сообщение:</strong> ' . $_POST['message'] . '</p>';
+    }
 
-// Отправка
-if (!$mail->send()) {
+    $mail->Body = $body;
+    $mail->send();
+
+    $message = 'Сообщение отправлено!';
+} catch (Exception $e) {
     $message = 'Ошибка отправки';
-} else {
-    $message = 'Данные отправлены!';
+    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 
 $response = ['message' => $message];
