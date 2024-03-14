@@ -1,5 +1,7 @@
 <script setup>
-defineProps({
+const checked = defineModel();
+
+const props = defineProps({
   invalid: true,
 });
 </script>
@@ -7,11 +9,11 @@ defineProps({
 <template>
   <div class="checkbox-wrapper" :class="{ invalid: invalid }">
     <input
+      class="promoted-input-checkbox"
       id="checkbox"
       type="checkbox"
-      class="promoted-input-checkbox"
+      v-model="checked"
       @blur="$emit('blur')"
-      @click="$emit('toggle', $event.target.checked)"
     />
     <svg><use xlink:href="#checkmark-28" /></svg>
     <label for="checkbox">
@@ -36,11 +38,11 @@ defineProps({
 .checkbox-wrapper {
   --size: 20px;
   position: relative;
+  text-align: left;
 }
 
 .checkbox-wrapper *,
-.checkbox-wrapper *:before,
-.checkbox-wrapper *:after {
+.checkbox-wrapper *:before {
   box-sizing: border-box;
 }
 
@@ -61,7 +63,7 @@ defineProps({
   animation: draw-checkbox-28 ease-in-out 0.2s forwards;
 }
 
-.checkbox-wrapper label:active::after {
+.checkbox-wrapper label:active::before {
   background-color: #e6e6e6;
 }
 
@@ -73,7 +75,7 @@ defineProps({
   position: relative;
 }
 
-.checkbox-wrapper label:after {
+.checkbox-wrapper label::before {
   content: "";
   height: var(--size);
   width: var(--size);
@@ -95,7 +97,7 @@ defineProps({
   stroke-dasharray: 33;
 }
 
-.checkbox-wrapper.invalid label:after {
+.checkbox-wrapper.invalid label::before {
   border: 2px solid $error;
 }
 
