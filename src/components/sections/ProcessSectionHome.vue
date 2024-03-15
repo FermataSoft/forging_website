@@ -36,16 +36,17 @@ const slides = ref([
   },
 ]);
 
+const actualParentContainerHeight = ref(0);
 const containerElement = ref(null);
 const headerElement = ref(null);
 let GSAPContext = null;
 
 function initAnimations(context, ...animations) {
   GSAPContext = gsap.context((self) => {
-    animations.forEach(animation => {
+    animations.forEach((animation) => {
       animation();
-    })
-  }, context)
+    });
+  }, context);
 }
 
 function pinHeader() {
@@ -54,9 +55,9 @@ function pinHeader() {
     start: "-15px top",
     end: () => "+=" + containerElement.value.offsetHeight + " bottom",
     pin: headerElement.value,
+    pinnedContainer: containerElement.value,
     pinSpacing: false,
     pinType: "fixed",
-    onUpdate: (self) => {console.log(self);},
   });
 }
 
@@ -69,24 +70,32 @@ function animateSlides() {
     scrollTrigger: {
       trigger: ".process-section__slides",
       start: "-=100 top",
-      end: () => "+=" + document.querySelector(".process-section__slides").offsetWidth,
+      end: () =>
+        "+=" + document.querySelector(".process-section__slides").offsetHeight,
       scrub: 1,
       pin: true,
-      snap: "labels",
+      snap: {
+        snapTo: "labels",
+        duration: 0.5,
+        delay: 0.2,
+      },
     },
   });
 
-  slidesElements.forEach((slide, i) => tl.add("label" + i, i * (duration / count)));
+  slidesElements.forEach((slide, i) =>
+    tl.add("label" + i, i * (duration / count))
+  );
 
   tl.to(slidesElements, {
     yPercent: -100 * count,
     duration: duration,
-    ease: "none"
+    ease: "none",
   });
 }
 
 onMounted(() => {
-  initAnimations(containerElement.value, animateSlides, pinHeader) // order of animations is important
+  initAnimations(containerElement.value, animateSlides, pinHeader); // order of animations is important
+  actualParentContainerHeight.value = containerElement.value.offsetHeight;
 });
 
 onUnmounted(() => {
