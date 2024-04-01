@@ -1,5 +1,11 @@
 <script setup>
+import { ref, getCurrentInstance } from "vue";
+
+const instance = getCurrentInstance();
+const uid = ref(instance.uid);
 const checked = defineModel();
+
+const emits = defineEmits(["input", "blur"]);
 
 const props = defineProps({
   invalid: true,
@@ -10,13 +16,13 @@ const props = defineProps({
   <div class="checkbox-wrapper" :class="{ invalid: invalid }">
     <input
       class="promoted-input-checkbox"
-      id="checkbox"
+      :id="uid"
       type="checkbox"
       v-model="checked"
       @blur="$emit('blur')"
     />
     <svg><use xlink:href="#checkmark-28" /></svg>
-    <label for="checkbox">
+    <label :for="uid">
       <slot></slot>
     </label>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
@@ -81,7 +87,7 @@ const props = defineProps({
   width: var(--size);
   margin-right: 8px;
   float: left;
-  border: 2px solid $secondary;
+  border: 2px solid $outline;
   border-radius: 3px;
   transition: 0.15s all ease-out;
 }
