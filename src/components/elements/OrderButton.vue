@@ -15,7 +15,7 @@
   justify-content: center;
 
   background-color: $primary;
-  width: 120px;
+  padding: 0 20px;
   height: 30px;
   border-radius: 3px;
 
