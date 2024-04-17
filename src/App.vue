@@ -1,21 +1,21 @@
 <script setup>
-import { onMounted } from 'vue';
-import { RouterView } from 'vue-router';
-import { useI18n } from 'vue-i18n';
+import { onMounted } from "vue";
+import { RouterView } from "vue-router";
+import { useI18n } from "vue-i18n";
 
-import { useLocaleStore } from './stores/LocaleStore';
-import { useWindowParamsStore } from './stores/WindowParamsStore';
+import { useLocaleStore } from "./stores/LocaleStore";
+import { useWindowParamsStore } from "./stores/WindowParamsStore";
 
 const windowParamsStore = useWindowParamsStore();
 
 onMounted(() => {
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     windowParamsStore.$patch({
       scrollYPos: window.scrollY,
     });
   });
 
-  window.addEventListener('resize', () => {
+  window.addEventListener("resize", () => {
     windowParamsStore.$patch({
       windowHeight: window.innerHeight,
     });
@@ -30,7 +30,7 @@ localeStore.$subscribe(() => {
   let currentLocale = localeStore.currentLocale;
 
   locale.value = currentLocale;
-  localStorage.setItem('locale', currentLocale);
+  localStorage.setItem("locale", currentLocale);
 });
 </script>
 
