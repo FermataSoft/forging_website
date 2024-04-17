@@ -1,8 +1,5 @@
 <script setup>
-import IconAddress from '../components/icons/footer/IconAddress.vue';
-import IconMail from '../components/icons/footer/IconMail.vue';
-import IconPhone from '../components/icons/footer/IconPhone.vue';
-import IconWorkingHours from '../components/icons/footer/IconWorkingHours.vue';
+import Contacts from "../components/sections/Contacts.vue"
 import IconTelegram from '../components/icons/footer/IconTelegram.vue';
 import IconInstagram from '../components/icons/footer/IconInstagram.vue';
 import IconVK from '../components/icons/footer/IconVK.vue';
@@ -12,63 +9,7 @@ import IconViber from '../components/icons/footer/IconViber.vue';
 <template>
   <div class="wrapper">
     <SectionHeader>Контакты</SectionHeader>
-    <div class="footer__contact-block">
-      <div class="footer__contact-item">
-        <IconAddress></IconAddress>
-        <div class="footer__text-block">
-          <h2>Адрес</h2>
-          <!-- todo  ссылка на яндекс-карты с точкой -->
-          <p>РБ, г. Несвиж, ул. XXXXXXXXXX</p>
-        </div>
-      </div>
-
-      <div class="footer__contact-item">
-        <IconMail></IconMail>
-        <div class="footer__text-block">
-          <h2>Email</h2>
-          <p>
-            <a href="mailto:***REMOVED***">email@test.ru</a>
-          </p>
-        </div>
-      </div>
-
-      <div class="footer__contact-item">
-        <IconWorkingHours></IconWorkingHours>
-        <div class="footer__text-block">
-          <h2 lang-id="footer__working-hours">Время работы</h2>
-          <div class="footer__subtext-block">
-            <div class="footer__subtext_left">
-              <p>пн - пт:</p>
-              <p>сб - вс:</p>
-            </div>
-            <div class="footer__subtext_right">
-              <p>08:00 - 17:00</p>
-              <p>09:00 - 16:00</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer__contact-item">
-        <IconPhone></IconPhone>
-        <div class="footer__text-block">
-          <h2>Телефоны</h2>
-          <div class="footer__subtext-block">
-            <div class="footer__subtext_left">
-              <p>А1</p>
-              <p>МТС</p>
-            </div>
-            <div class="footer__subtext_right">
-              <p>
-                <a href="tel:+375447199961">+375 (44) 719-99-61</a>
-              </p>
-              <p>+375 (XX) XXX-XX-XX</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <Contacts :monochromeIcons="true"></Contacts>
     <div class="social-links">
       <h2>Мы в социальных сетях:</h2>
       <div class="social-links__block">
@@ -81,8 +22,6 @@ import IconViber from '../components/icons/footer/IconViber.vue';
         <a href="https://t.me/+375447199961" target="_blank" rel="noopener noreferrer">
           <IconTelegram></IconTelegram>
         </a>
-
-        <!-- !!! -->
         <a class="link-viber" href="viber://chat?number=%2B375447199961" rel="noopener noreferrer">
           <IconViber></IconViber>
         </a>
@@ -156,6 +95,10 @@ import IconViber from '../components/icons/footer/IconViber.vue';
     font-size: 2.5rem;
     margin-bottom: 10px;
     color: #000;
+
+    @include breakpoint(sm) {
+      font-size: 2rem;
+    }
   }
 
   .social-links__block {
@@ -164,6 +107,10 @@ import IconViber from '../components/icons/footer/IconViber.vue';
     flex-direction: row;
     justify-content: center;
     gap: 20px;
+
+    @include breakpoint(sm) {
+      margin-top: 20px;
+    }
 
     a {
       width: 30px;
@@ -209,5 +156,11 @@ import IconViber from '../components/icons/footer/IconViber.vue';
   height: 400px;
   margin-top: 50px;
   margin-bottom: 50px;
+
+  @include breakpoint(sm) {
+    width: 100%;
+    height: 300px;
+    padding: 0 30px;
+  }
 }
 </style>

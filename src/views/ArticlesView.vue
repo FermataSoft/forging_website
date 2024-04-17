@@ -11,10 +11,8 @@ const { t } = useI18n();
 const content = ref([]);
 const db = new Database();
 
-onBeforeMount(() => {
-  db.getContent("SELECT * FROM articles;").then((result) => {
-    content.value = db.contentToObj(result);
-  });
+onBeforeMount(async () => {
+  content.value = await db.getContent("SELECT * FROM articles;");
 });
 </script>
 
@@ -43,10 +41,15 @@ onBeforeMount(() => {
 @import "../assets/_vars.scss";
 
 .articles {
+  width: 100%;
   margin-bottom: 50px;
   max-width: $wrapper-width;
   margin-left: auto;
   margin-right: auto;
+
+  @include breakpoint(lg) {
+    padding: 0 20px;
+  }
 }
 
 .articles__items {

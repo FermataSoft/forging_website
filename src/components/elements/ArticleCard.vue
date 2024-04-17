@@ -7,13 +7,16 @@ const props = defineProps({
 });
 
 const dateOptions = {
-  year: 'numeric',
-  month: 'numeric',
-  day: 'numeric',
-}
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+};
 
-const formattedUploadDate = new Date(props.uploadDate).toLocaleString("ru", dateOptions)
-</script>
+const formattedUploadDate = new Date(props.uploadDate).toLocaleString(
+  "ru",
+  dateOptions
+);
+</script> 
 
 <template>
   <router-link class="article-card" :to="`/articles/${id}`">
@@ -31,10 +34,11 @@ const formattedUploadDate = new Date(props.uploadDate).toLocaleString("ru", date
 </template>
 
 <style lang="scss" scoped>
-@import "../../assets/_vars.scss";
+@import "@/assets/_vars.scss";
 
 .article-card {
   width: 100%;
+  height: 250px;
   background-color: $surface;
   padding: 20px 30px;
   display: flex;
@@ -47,6 +51,12 @@ const formattedUploadDate = new Date(props.uploadDate).toLocaleString("ru", date
   border-radius: 5px;
   box-shadow: 0px -5px 3px rgba(255, 255, 255, 0.2),
     2px 2px 9px rgba(94, 104, 121, 0.5);
+
+  @include breakpoint(sm) {
+    height: 120px;
+    padding: 20px 10px;
+    gap: 20px;
+  }
 
   &:hover {
     background-color: $surface;
@@ -78,6 +88,10 @@ const formattedUploadDate = new Date(props.uploadDate).toLocaleString("ru", date
   overflow: hidden;
   flex-shrink: 0;
 
+  @include breakpoint(sm) {
+    height: 60px;
+  }
+
   img {
     height: 100%;
     object-fit: cover;
@@ -89,14 +103,23 @@ const formattedUploadDate = new Date(props.uploadDate).toLocaleString("ru", date
 }
 
 .article-card__title {
-  font-size: 1.6rem;
-  font-weight: bold;
+  font-size: $header3;
+  font-weight: $font-bold;
   margin-bottom: 20px;
+
+  @include breakpoint(sm) {
+    font-size: $header3-mobile;
+    font-weight: $font-medium;
+  }
 }
 
 .article-card__description {
   font-size: 1.4rem;
   text-align: justify;
+
+  @include breakpoint(sm) {
+    display: none;
+  }
 }
 
 .article-card__upload-date {
@@ -105,5 +128,10 @@ const formattedUploadDate = new Date(props.uploadDate).toLocaleString("ru", date
   right: 20px;
 
   font-size: 1.2rem;
+
+  @include breakpoint(sm) {
+    left: 10px;
+    bottom: 10px
+  }
 }
 </style>

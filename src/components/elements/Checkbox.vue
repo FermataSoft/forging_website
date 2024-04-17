@@ -45,6 +45,10 @@ const props = defineProps({
   --size: 20px;
   position: relative;
   text-align: left;
+
+  @include breakpoint(xs) {
+  --size: 16px;
+  }
 }
 
 .checkbox-wrapper *,
@@ -79,6 +83,10 @@ const props = defineProps({
   line-height: var(--size);
   cursor: pointer;
   position: relative;
+
+  @include breakpoint(xs) {
+    font-size: 1rem;
+  }
 }
 
 .checkbox-wrapper label::before {

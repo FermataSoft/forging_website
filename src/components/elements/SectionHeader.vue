@@ -34,11 +34,24 @@ const props = defineProps({
     font-size: 3rem;
   }
 
+  @include breakpoint(sm) {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+  }
+
   .section-header__icon-before {
     margin-right: 10px;
+
+    @include breakpoint(sm) {
+      margin-right: 0;
+    }
   }
   .section-header__icon-after {
     margin-left: 10px;
+
+    @include breakpoint(sm) {
+      margin-left: 0;
+    }
   }
 
   .section-header__icon-before,
@@ -47,6 +60,10 @@ const props = defineProps({
 
     @include breakpoint(md) {
       transform: scale(0.9) translateY(3px);
+    }
+
+    @include breakpoint(sm) {
+      transform: scale(0.5) translateY(10px);
     }
   }
 }

@@ -110,6 +110,17 @@ const devidedImages = computed(() => {
 
   padding: 30px 40px;
 
+  @include breakpoint(lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @include breakpoint(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include breakpoint(sm) {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px 20px;
+  }
+
   .works-block__item {
     position: relative;
     border-radius: 5px;
