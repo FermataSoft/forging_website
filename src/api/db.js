@@ -1,5 +1,4 @@
 import initSqlJs from "sql.js";
-import appConfig from "../globals";
 
 export class Database {
     async getContent(query = null) {
@@ -7,8 +6,9 @@ export class Database {
             throw new Error("db query is undefined")
         }
 
-        return new Promise((resolve, reject) => {
-            this._init(query).then((result) => resolve(result))
+        return new Promise(resolve => {
+            this._init(query).then((result) => resolve(result)
+            )
         })
     }
 
@@ -35,16 +35,31 @@ export class Database {
                 "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.wasm",
         });
 
-        const dataPromise = fetch(appConfig.DatabasePath).then((res) =>
+        const dataPromise = fetch(import.meta.env.VITE_DATABASE_PATH).then((res) =>
             res.arrayBuffer()
         );
         const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
         const db = new SQL.Database(new Uint8Array(buf));
 
-        const contentDb = db.exec(query);
+        const stmt = db.prepare(query);
+        const contentDb = []
 
-        return {
-            content: contentDb[0],
-        };
+        while (stmt.step()) {
+            const row = stmt.getAsObject();
+            contentDb.push(row)
+        }
+
+        if (contentDb.length === 0) {
+            throw new DatabaseError("Database returned empty object. Check database query");
+        }
+
+        return contentDb.length === 1 ? contentDb[0] : contentDb;
+    }
+}
+
+class DatabaseError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "DatabaseError";
     }
 }
