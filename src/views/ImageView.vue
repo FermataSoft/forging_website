@@ -1,7 +1,6 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { ref, onBeforeMount } from "vue";
-import appConfig from "../globals";
 import { Database } from "../api/db";
 
 const route = useRoute();
@@ -14,7 +13,6 @@ const currentCategory = ref(route.query.category || "all");
 const content = ref({});
 const slides = ref([]);
 
-
 function getDBQuery(category) {
   if (category === "all") {
     return `SELECT * FROM ${DBTableName};`;
@@ -24,6 +22,10 @@ function getDBQuery(category) {
 
 function addVirtualSlides(content = []) {
   let result = [];
+  if (!Array.isArray(content)) {
+    content = [content];
+  }
+
   for (let item of content) {
     result.push({
       id: item.id,
@@ -34,9 +36,9 @@ function addVirtualSlides(content = []) {
 }
 
 onBeforeMount(() => {
-  const query = getDBQuery(currentCategory.value)
+  const query = getDBQuery(currentCategory.value);
   db.getContent(query)
-    .then((result) => (content.value = db.contentToObj(result)))
+    .then((result) => (content.value = result))
     .then(() => {
       slides.value = addVirtualSlides(content.value);
       initialImageIndex.value = slides.value.findIndex(
@@ -100,26 +102,50 @@ onBeforeMount(() => {
 swiper-container::part(button-prev),
 swiper-container::part(button-next) {
   color: $on-secondary;
-  opacity: 0.5;
-  width: 10%;
+  opacity: 0.3;
+  // width: 10%;
   height: 5rem;
   transition: all 0.3s ease;
+  background-color: $secondary;
+  padding: 30px 40px;
+  border-radius: 10px;
 
-  &:hover {
+  @include breakpoint(xs) {
     opacity: 1;
-    color: $primary;
-    transform: scale(1.05);
+    height: 3rem;
+    padding: 30px 20px;
+    background-color: hsla(0, 0%, 21%, 0.2);
+
+    &:active {
+      color: $primary;
+    }
+  }
+
+  @include device(screen) {
+    &:hover {
+      opacity: 1;
+      color: $primary;
+      transform: scale(1.05);
+    }
   }
 }
 
 swiper-container::part(button-next) {
   right: 25px;
   justify-content: end;
+
+  @include breakpoint(xs) {
+    right: 5px;
+  }
 }
 
 swiper-container::part(button-prev) {
   left: 25px;
   justify-content: start;
+
+  @include breakpoint(xs) {
+    left: 5px;
+  }
 }
 
 swiper-container::part(pagination) {

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import ButtonSubmit from "../elements/ButtonSubmit.vue";
+import ButtonSubmit from "../elements/ButtonAccent.vue";
 import Checkbox from "../elements/Checkbox.vue";
 import { useForm } from "../../composables/form";
 import FormLoader from "../elements/FormLoader.vue";
@@ -256,7 +256,7 @@ function toFormData(obj = {}) {
   border: 2px solid $outline-variant;
   border-radius: 5px;
   width: 100%;
-  min-height: 50px;
+  min-height: 40px;
   background-color: $surface;
   font-family: $font-main;
   font-weight: $font-regular;
@@ -264,15 +264,20 @@ function toFormData(obj = {}) {
   font-size: 1.4rem;
   outline: none;
   box-shadow: none;
-  box-shadow: inset 2px 2px 5px rgba(120, 120, 120, 0.3);
+  box-shadow: inset 2px 2px 5px rgba(160, 160, 160, 0.1);
 }
 
 .feedback {
   width: 450px;
-  margin-top: 30px;
+  // margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
+
+  @include breakpoint(xs) {
+    padding: 0 20px;
+    width: 100%;
+  }
 
   .feedback__items {
     position: relative;
@@ -301,12 +306,13 @@ function toFormData(obj = {}) {
     }
 
     input {
-      padding: 5px 10px;
+      padding: 0px 10px;
       @include inputsVisual(0);
     }
 
     textarea {
       padding: 5px 10px;
+      max-height: 200px;
       @include inputsVisual(0);
     }
 
@@ -326,7 +332,7 @@ function toFormData(obj = {}) {
 
     input:placeholder-shown + label,
     textarea:placeholder-shown + label {
-      transform: translate(0, 15px) scale(1);
+      transform: translate(0, 10px) scale(1);
       font-size: 1.4rem;
     }
 

@@ -2,16 +2,48 @@
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import OrderButton from "./elements/OrderButton.vue";
 import LanguageDropdownMenu from "./LanguageDropdownMenu.vue";
+import { useModalsStore } from "@/stores/ModalsStore.js";
+import { useUIStore } from "@/stores/UIStore.js";
+import { useI18n } from "vue-i18n";
 
-const isBurgerMenuActive = ref(false);
-const windowWidth = ref(window.innerWidth);
+const modalsStore = useModalsStore();
+const UIStore = useUIStore();
 const scrollPos = ref(0);
 const scrollTrigger = 80;
 const scrollbarWidth = ref();
+const { t } = useI18n();
+const items = [
+  {
+    to: "/",
+    i18nId: "nav-home",
+    text: "Главная",
+  },
+  {
+    to: { path: "/works", query: { category: "all" } },
+    i18nId: "nav-works",
+    text: "Наши работы",
+  },
+  {
+    to: "/articles",
+    i18nId: "nav-articles",
+    text: "Статьи",
+  },
+  {
+    to: "/contacts",
+    i18nId: "nav-contacts",
+    text: "Контакты",
+  },
+  {
+    to: "/about",
+    i18nId: "nav-about",
+    text: "О нас",
+  },
+];
 
 onMounted(() => {
   window.addEventListener("scroll", scrollHandler);
-  scrollbarWidth.value = window.innerWidth - document.documentElement.clientWidth
+  scrollbarWidth.value =
+    window.innerWidth - document.documentElement.clientWidth;
 });
 
 onUnmounted(() => {
@@ -22,17 +54,25 @@ function scrollHandler() {
   scrollPos.value = window.scrollY;
 }
 
+function toggleBurgerMenu() {
+  if (isSmallResolution()) {
+    UIStore.isBurgerMenuActive = toggleState(UIStore.isBurgerMenuActive);
+  }
+}
+
+function isSmallResolution() {
+  return window.innerWidth < 820;
+}
+
 function toggleState(state) {
   return state ? false : true;
 }
 
-watch(isBurgerMenuActive, (newVal, oldVal) => {
-  if (newVal && windowWidth.value < 820) {
-    document.body.style.paddingRight = `${scrollbarWidth.value}px`;
-    document.body.style.overflow = "hidden";
+UIStore.$subscribe((mutation, state) => {
+  if (state.isBurgerMenuActive) {
+    document.body.classList.add("--locked");
   } else {
-    document.body.style.paddingRight = "0px";
-    document.body.style.overflow = "auto";
+    document.body.classList.remove("--locked");
   }
 });
 </script>
@@ -42,52 +82,39 @@ watch(isBurgerMenuActive, (newVal, oldVal) => {
     class="navbar"
     :class="{
       'navbar--scrolled': $route.path != '/' || scrollPos > scrollTrigger,
-      'navbar__wrapper--mobile-active': isBurgerMenuActive,
+      'navbar__wrapper--mobile-active': UIStore.isBurgerMenuActive,
     }"
   >
+    <div class="navbar__overlay" @click="toggleBurgerMenu"></div>
     <div class="navbar__wrapper">
-      <div class="logo-wrapper">
+      <RouterLink to="./" class="logo-wrapper" @click="toggleBurgerMenu">
         <img class="logo" src="../favicon/android-chrome-512x512.png" alt="" />
-      </div>
+      </RouterLink>
 
       <nav>
-        <div class="nav__item">
-          <RouterLink to="/" @click="isBurgerMenuActive = false"
-            >Главная</RouterLink
-          >
-        </div>
-        <div class="nav__item">
-          <RouterLink
-            :to="{ path: '/works', query: { category: 'all' } }"
-            @click="isBurgerMenuActive = false"
-            >Наши работы</RouterLink
-          >
-        </div>
-        <div class="nav__item">
-          <RouterLink to="/articles" @click="isBurgerMenuActive = false"
-            >Статьи</RouterLink
-          >
-        </div>
-        <div class="nav__item">
-          <RouterLink to="/contacts" @click="isBurgerMenuActive = false"
-            >Контакты</RouterLink
-          >
-        </div>
-        <div class="nav__item">
-          <RouterLink to="/about" @click="isBurgerMenuActive = false"
-            >О нас</RouterLink
-          >
+        <div class="nav__item" v-for="(item, index) in items">
+          <RouterLink :to="item.to" :key="index" @click="toggleBurgerMenu">{{
+            t(item.i18nId)
+          }}</RouterLink>
         </div>
       </nav>
-      <OrderButton>Заказать</OrderButton>
+      <OrderButton
+        @click="
+          () => {
+            modalsStore.order = true;
+            UIStore.isBurgerMenuActive = false;
+          }
+        "
+        >{{ t("button-contact") }}</OrderButton
+      >
       <LanguageDropdownMenu
         class="navbar__language-dropdown-menu"
       ></LanguageDropdownMenu>
     </div>
     <div
       class="navbar__burger-menu"
-      :class="{ 'navbar__burger-menu--active': isBurgerMenuActive }"
-      @click="() => (isBurgerMenuActive = toggleState(isBurgerMenuActive))"
+      :class="{ 'navbar__burger-menu--active': UIStore.isBurgerMenuActive }"
+      @click="toggleBurgerMenu"
     >
       <span></span>
     </div>
@@ -101,10 +128,21 @@ watch(isBurgerMenuActive, (newVal, oldVal) => {
   position: fixed;
   display: block;
   height: $navbar-height;
-  width: 100%;
+  width: calc(100vw - $scrollbar-width);
   z-index: 5;
-  transition: all 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
   background-color: transparent;
+
+  .navbar__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 3;
+    transition: opacity 0.3s ease-in;
+  }
 
   .navbar__wrapper {
     position: relative;
@@ -115,17 +153,29 @@ watch(isBurgerMenuActive, (newVal, oldVal) => {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 60px;
+    gap: 50px;
+    z-index: 4;
 
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out;
+
+    @media (max-width: 920px) {
+      gap: 20px;
+    }
+
+    @include breakpoint(lg) {
+      padding: 0 20px;
+    }
 
     @include breakpoint(md) {
-      max-width: 100vw;
+      max-width: 100%;
       flex-direction: column;
-      height: 100vh;
+      // ! 100vh
+      height: auto;
       background-color: $inverse-surface;
       padding: 20px;
-      transform: translateY(-100%);
+      padding-bottom: 70px;
+      border-radius: 0 0 30px 30px;
+      transform: translate(0, -100%);
     }
 
     .logo-wrapper {
@@ -138,6 +188,10 @@ watch(isBurgerMenuActive, (newVal, oldVal) => {
       .logo {
         width: 30px;
         height: auto;
+
+        @include breakpoint(md) {
+          width: 50px;
+        }
       }
     }
 
@@ -221,16 +275,35 @@ watch(isBurgerMenuActive, (newVal, oldVal) => {
   }
 }
 
+.navbar__wrapper--mobile-active {
+  @include breakpoint(md) {
+    .navbar__wrapper {
+      transform: translateY(0%) scale(1);
+    }
+
+    .navbar__overlay {
+      visibility: visible;
+      width: 100%;
+      height: 100%;
+      opacity: 0.3;
+    }
+  }
+}
+
 @include breakpoint(md) {
   .navbar__burger-menu {
     display: block;
     position: absolute;
-    right: 20px;
+    right: 40px;
     top: 15px;
     width: 25px;
     height: 20px;
     z-index: 4;
     cursor: pointer;
+
+    @include device(touch) {
+      right: 20px;
+    }
 
     &::before,
     &::after {
@@ -303,10 +376,25 @@ watch(isBurgerMenuActive, (newVal, oldVal) => {
   background-color: $inverse-surface;
   box-shadow: 0px 2px 10px hsla(0, 0%, 0%, 0.2);
 }
-
-.navbar__wrapper--mobile-active .navbar__wrapper {
-  @include breakpoint(md) {
-    transform: translateY(0%);
-  }
-}
 </style>
+
+<i18n>
+  {
+    ru-RU: {
+      "nav-home": "Главная",
+      "nav-works": "Наши работы",
+      "nav-articles": "Статьи",
+      "nav-contacts": "Контакты",
+      "nav-about": "О нас",
+      "button-contact": "Связаться с нами",
+    },
+    by-BY: {
+      "nav-home": "Галоўная",
+      "nav-works": "Нашы працы",
+      "nav-articles": "Артыкулы",
+      "nav-contacts": "Кантакты",
+      "nav-about": "Пра нас",
+      "button-contact": "Звязацца з намі"
+    }
+  }
+</i18n>
