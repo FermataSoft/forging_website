@@ -1,20 +1,26 @@
 <script setup>
-import { ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import IconSort from '../components/elements/IconSort.vue';
-import WorksBlock from '../components/sections/WorksBlock.vue';
-import { useI18n } from 'vue-i18n';
-import { useWorksStore } from '../stores/WorksStore';
+import { computed, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import IconSort from "../components/elements/IconSort.vue";
+import WorksBlock from "../components/sections/WorksBlock.vue";
+import { useI18n } from "vue-i18n";
+import { useWorksStore } from "../stores/WorksStore";
+import { useWindowParamsStore } from "../stores/WindowParamsStore";
 
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
+const { windowWidth } = useWindowParamsStore();
 const categories = useWorksStore().categories;
-const currentCategorySelected = ref(route.query.category || 'all');
-const isAscendingOrder = ref(true);
-const itemsPerPage = ref(10);
-const sortBy = ref('uploadDate');
+const currentCategorySelected = ref(route.query.category || "all");
+const itemsPerPage = ref(20);
+const sortBy = ref("uploadDateNewFirst");
+const isMenuOpened = ref(false);
+const BUTTON_MENU_OPEN = ref(null);
+const isAscendingOrder = computed(() => {
+  return ["uploadDateNewFirst"].includes(sortBy.value);
+});
 
 watch(
   () => route.query,
@@ -24,66 +30,99 @@ watch(
 );
 
 watch(currentCategorySelected, (curr, prev) => {
-  router.push({query: {category: curr}})
+  router.push({ query: { category: curr } });
 });
+
+function hideMenu(event) {
+  if (windowWidth < 630 && event.target !== BUTTON_MENU_OPEN.value) {
+    isMenuOpened.value = false;
+  }
+}
 </script>
 
 <template>
   <Transition name="view">
-    <div class="works-view">
+    <div class="works-view" @click="hideMenu($event)">
       <div class="navbar-margin"></div>
-      <div class="menu-block">
+      <nav class="menu-block" :class="{ 'menu-block--hidden': !isMenuOpened }">
         <div class="filters-menu__block">
           <div class="filters-menu__item">
             <h2>Категории</h2>
             <ul class="menu__checkbox-container">
               <li v-for="item in categories" class="menu__checkbox-item">
-                <!-- <RouterLink :to="'/works/' + item">{{ t('category-' + item) }}</RouterLink> -->
                 <span class="menu__checkbox"></span>
-                <input class="_invisible" type="radio" name="menu" :checked="item === currentCategorySelected" :id="item"
-                  :value="item" v-model="currentCategorySelected" />
+                <input
+                  class="_invisible"
+                  type="radio"
+                  name="menu"
+                  :checked="item === currentCategorySelected"
+                  :id="item"
+                  :value="item"
+                  v-model="currentCategorySelected"
+                />
                 <span class="menu__background"></span>
-                <label :for="item">{{ t('category-' + item) }}</label>
+                <label :for="item">{{ t("category-" + item) }}</label>
               </li>
             </ul>
           </div>
         </div>
-      </div>
+      </nav>
 
       <main>
         <div class="sort-menu">
           <div class="sort-menu-left">
-            <span>{{ t('show-count') }}:</span>
-            <select name="show-count" id="show-count" v-model.number="itemsPerPage">
-              <option selected value="10">10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-            </select>
+            <button
+              class="works__sort-menu-categories-button"
+              ref="BUTTON_MENU_OPEN"
+              v-if="windowWidth <= 630"
+              @click="isMenuOpened = true"
+            >
+              Категории
+            </button>
           </div>
           <div class="sort-menu-right">
-            <span>{{ t('sort-by') }}:</span>
-            <select name="sort" id="sort" v-model="sortBy">
-              <option value="uploadDate">по дате загрузки</option>
-              <option value="category">по категориям</option>
+            <select
+              name="show-count"
+              id="show-count"
+              v-model.number="itemsPerPage"
+            >
+              <option selected value="20">{{ t("show-count") + " 20" }}</option>
+              <option value="50">{{ t("show-count") + " 50" }}</option>
+              <option value="100">{{ t("show-count") + " 100" }}</option>
             </select>
+            <select name="sort" id="sort" v-model="sortBy">
+              <option value="uploadDateNewFirst">сначала новые</option>
+              <option value="uploadDateOldFirst">сначала старые</option>
+            </select>
+
             <div class="sort-order-button">
               <label>
-                <input type="checkbox" id="sort-order" v-model="isAscendingOrder" />
-                <IconSort :is-ascending-order="isAscendingOrder"></IconSort>
+                <input
+                  type="checkbox"
+                  id="sort-order"
+                  v-model="isAscendingOrder"
+                />
+                <!-- <IconSort :is-ascending-order="isAscendingOrder"></IconSort> -->
               </label>
             </div>
           </div>
         </div>
 
-        <WorksBlock :current-category="currentCategorySelected" :items-per-page="itemsPerPage" :sort-by="sortBy"
-          :is-ascending-order="isAscendingOrder"></WorksBlock>
+        <WorksBlock
+          :current-category="currentCategorySelected"
+          :items-per-page="itemsPerPage"
+          :sort-by="sortBy"
+          :is-ascending-order="isAscendingOrder"
+        ></WorksBlock>
+
+        <div style="height: 3000px"></div>
       </main>
     </div>
   </Transition>
 </template>
 
 <style scoped lang="scss">
-@import '../assets/_vars.scss';
+@import "../assets/_vars.scss";
 
 .works-view {
   width: 100%;
@@ -96,21 +135,31 @@ main {
 }
 
 .menu-block {
-  // position: absolute;
-  // left: 0;
-  // top: 50px;
-  // height: 100%;
-  width: 300px;
+  width: 350px;
   padding: 20px;
   z-index: 3;
   background-color: $surface;
   border-right: 1px solid $outline-variant;
+  transition: all 0.3s ease;
+
+  @include breakpoint(sm) {
+    position: absolute;
+    left: 0;
+    top: $navbar-height;
+    border-right: 0 solid $outline-variant;
+    border-radius: 0 0 10px 0;
+    box-shadow: 0 0 10px #6e6e6e;
+
+    &.menu-block--hidden {
+      left: -100%;
+    }
+  }
 }
 
 .sort-menu {
-  position: relative;
-  top: 0;
-  left: 0;
+  position: fixed;
+  top: $navbar-height;
+  right: 0;
   width: 100%;
   padding: 10px;
   background-color: $surface;
@@ -121,6 +170,24 @@ main {
 
   span {
     font-size: 1.4rem;
+  }
+
+  .works__sort-menu-categories-button {
+    height: 100%;
+    background-color: $primary;
+    padding: 10px;
+    border-radius: 3px;
+    color: $on-primary;
+    font-weight: $font-medium;
+    font-family: $font-main;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    @media screen {
+      &:hover {
+        background-color: $primary-variant;
+      }
+    }
   }
 
   .sort-menu-left {
@@ -137,7 +204,7 @@ main {
     justify-content: end;
     gap: 10px;
 
-    input[type='checkbox'] {
+    input[type="checkbox"] {
       width: 0;
       height: 0;
       display: none;
@@ -145,10 +212,13 @@ main {
   }
 }
 
+body.--locked .sort-menu {
+  right: 15px;
+}
+
 .filters-menu__item {
   h2 {
-    font-size: 1.6rem;
-    font-weight: $font-bold;
+    font-size: $header2;
   }
 }
 
@@ -194,7 +264,7 @@ main {
     }
 
     .menu__background {
-      content: '';
+      content: "";
       position: absolute;
       width: 0%;
       height: 100%;
@@ -205,12 +275,12 @@ main {
       z-index: 2;
     }
 
-    input[type='radio']:checked~label {
+    input[type="radio"]:checked ~ label {
       padding-left: 15px;
-      font-weight: $font-bold;
+      // font-weight: $font-bold;
     }
 
-    input[type='radio']:checked~.menu__background {
+    input[type="radio"]:checked ~ .menu__background {
       width: 100%;
     }
 
@@ -225,6 +295,14 @@ main {
 select {
   padding: 0.3rem;
   border-radius: 5px;
+  background-color: $surface-container-highest;
+  border: 1px solid $outline-variant;
+  height: 100%;
+
+  @include breakpoint(xs) {
+    font-size: 1.2rem;
+    padding: 0;
+  }
 }
 
 .view-enter-active,

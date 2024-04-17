@@ -22,6 +22,7 @@
   font-size: 1.4rem;
   font-weight: $font-medium;
   color: $on-primary;
+  text-wrap: nowrap;
 
   cursor: pointer;
 
@@ -29,6 +30,10 @@
 
   &:hover {
     box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  @include breakpoint(xs) {
+    padding: 20px 40px;
   }
 }
 </style>
