@@ -1,0 +1,7 @@
+idea
+node_modules
+psd
+env.local
+test.js
+.gitignore
+.git
