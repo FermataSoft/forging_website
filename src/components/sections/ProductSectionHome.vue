@@ -204,16 +204,24 @@ h3 {
 
 .product-section__devider {
   color: $secondary;
+  width: 150px;
+
+  @include breakpoint(lg) {
+    width: 100px;
+  }
 }
 
 .product-section {
+  width: 100%;
+  overflow: hidden;
+
   .product-section__item {
     position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 30px;
+    gap: 50px;
+    text-align: justify;
 
     @include breakpoint(lg) {
       padding: 0 50px;
@@ -221,12 +229,16 @@ h3 {
 
     @include breakpoint(md) {
       flex-direction: column;
-      gap: 20px;
+      gap: 10px;
       margin-bottom: 20px;
     }
 
     &.product-section__item--reversed {
       flex-direction: row-reverse;
+
+      h3 {
+        text-align: end;
+      }
 
       @include breakpoint(md) {
         flex-direction: column;
@@ -243,12 +255,15 @@ h3 {
       }
     }
 
-    $items-shadow: drop-shadow(8px 15px 7px rgba(0, 0, 0, 0.2))
+    // $items-shadow: drop-shadow(8px 15px 7px rgba(0, 0, 0, 0.2))
+    //   drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.5));
+    $items-shadow: drop-shadow(4px 5px 3px rgba(0, 0, 0, 0.3))
       drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.5));
     $items-shadow-hover: drop-shadow(4px 5px 3px rgba(0, 0, 0, 0.3))
       drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.5));
+
     .product-item__item-image {
-      width: 100%;
+      // width: 100%;
       // flex: 1 1 auto;
       filter: $items-shadow;
       -webkit-filter: $items-shadow;
@@ -259,13 +274,13 @@ h3 {
       cursor: pointer;
       transform: translate(1px, 3px);
 
-      &.product-item__item-image--centered {
-        filter: $items-shadow-hover;
-        transform: translate(0, 0);
-      }
+      // &.product-item__item-image--centered {
+      //   filter: $items-shadow-hover;
+      //   transform: translate(0, 0);
+      // }
 
       img {
-        max-width: 500px;
+        max-width: 450px;
         // margin-left: calc(
         //   100% - 100% / 1.09
         // ); // Trouble with clip-path position
@@ -275,24 +290,45 @@ h3 {
         @include breakpoint(lg) {
           max-width: 350px;
         }
+
+        @include breakpoint(xs) {
+          max-width: 250px;
+        }
       }
     }
 
     &:nth-child(2n) {
-      text-align: left;
+      text-align: start;
     }
 
     &:nth-child(2n) img {
-      margin-left: 0; // Trouble with clip-path position
+      // margin-left: 0; // Trouble with clip-path position
     }
 
     .product-item__item-description {
       text-align: justify;
       flex: 1 1.5 auto;
 
+      h3 {
+        font-size: 2.4rem;
+        font-weight: $font-medium;
+
+        @include breakpoint(md) {
+          text-align: center;
+        }
+
+        @include breakpoint(sm) {
+          font-size: 1.6rem;
+        }
+      }
+
       p {
-        font-size: 2rem;
+        font-size: $paragraph-lg;
         margin-top: 20px;
+
+        @include breakpoint(sm) {
+          font-size: 1.2rem;
+        }
       }
     }
   }

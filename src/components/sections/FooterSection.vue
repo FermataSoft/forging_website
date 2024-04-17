@@ -134,7 +134,7 @@ const workStore = useWorksStore();
 </template>
 
 <style lang="scss" scoped>
-@import '../../assets/_vars.scss';
+@import "../../assets/_vars.scss";
 
 .footer-bottom-position {
   position: fixed;
@@ -153,8 +153,9 @@ footer {
   }
 
   .wrapper {
-    max-width: $wrapper-width;
+    max-width: calc($wrapper-width + 50px);
     margin: 0 auto;
+    padding: 0 25px;
   }
 
   .footer__top-block {
@@ -164,53 +165,31 @@ footer {
     align-items: flex-start;
     padding: 50px 0 25px 0;
 
-    .footer__contact-block {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    @include breakpoint(md) {
+      justify-content: center;
+    }
+
+    .footer__information-block {
+      display: flex;
+      flex-direction: column;
       gap: 50px;
 
-      .footer__contact-item {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 15px;
-
-        svg {
-          width: 30px;
-          fill: $accent-gradient;
-        }
-
-        .footer__text-block {
-          color: $surface;
-
-          h2 {
-            font-size: 2rem;
-            font-weight: $font-bold;
-            margin-bottom: 10px;
-          }
-
-          p {
+      .footer__ip-information {
             font-size: 1.4rem;
-          }
+        font-weight: $font-light;
+        line-height: 2rem;
+        color: $inverse-on-surface-variant;
 
-          a {
-            font-size: 1.4rem;
-            color: $inverse-on-surface;
-
-            &:hover {
-              color: $primary;
-            }
-          }
-
-          .footer__subtext-block {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-          }
+        @include breakpoint(sm) {
+          font-size: 1.2rem;
         }
       }
 
       .social-links {
+        @include breakpoint(md) {
+          align-self: center;
+        }
+
         h2 {
           font-size: 1.6rem;
           margin-bottom: 10px;
@@ -246,15 +225,12 @@ footer {
             svg {
               width: 100%;
               height: auto;
-              // transition: transform 0.3s ease-in-out, color 0.3s;
             }
 
             &:hover {
-
               img,
               svg {
                 animation: hover-effect ease-out 0.4s;
-                // transform: translate(0, -2px);
               }
             }
           }
@@ -267,12 +243,24 @@ footer {
       flex-direction: row;
       gap: 100px;
 
+      @include breakpoint(lg) {
+        gap: 25px;
+      }
+
+      @include breakpoint(md) {
+        display: none;
+      }
+
+      ul {
+        list-style: none;
+      }
+
       .footer__site-map-item {
         h2 {
           font-size: 2rem;
-          font-weight: $font-bold;
+          font-weight: $font-medium;
           color: $inverse-on-surface;
-          margin-bottom: 12px;
+          margin-bottom: 1.6rem;
         }
 
         .site-map-item__links {
@@ -287,13 +275,14 @@ footer {
               font-size: 1.5rem;
               font-weight: $font-regular;
               color: $inverse-on-surface-variant;
+              transition: color 0.2s;
 
               &:hover {
                 color: $inverse-on-surface;               
               }
               
               &::after {
-                content: '';
+                content: "";
   
                 display: block;
                 position: absolute;
@@ -320,12 +309,21 @@ footer {
 .copyright-text {
   font-size: 1.4rem;
   font-weight: $font-light;
-  color: $inverse-on-surface;
-  padding-bottom: 20px;
+  color: $inverse-on-surface-variant;
+  text-align: center;
+  padding-bottom: 10px;
+
+  @include breakpoint(sm) {
+    font-size: 1.2rem;
+  }
 
   a {
-    color: $primary;
+    color: $inverse-on-surface;
     font-weight: $font-regular;
+
+    &:hover {
+      color: $primary;
+    }
   }
 }
 </style>

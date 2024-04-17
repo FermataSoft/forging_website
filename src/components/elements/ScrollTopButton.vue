@@ -38,7 +38,7 @@ span {
 }
 
 .btn-scrollTop {
-  z-index: 9999;
+  z-index: 4;
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -80,6 +80,10 @@ span {
     background-color: $primary;
     filter: invert(0);
   }
+}
+
+body.--locked .btn-scrollTop {
+  right: calc(20px + $scrollbar-width);
 }
 
 .v-enter-active,

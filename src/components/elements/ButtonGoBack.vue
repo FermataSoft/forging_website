@@ -21,6 +21,7 @@ const { t } = useI18n();
 }
 
 .button-go-back {
+  position: relative;
   padding: 15px 20px;
   width: auto;
   display: flex;
@@ -29,11 +30,28 @@ const { t } = useI18n();
   border-radius: 7px;
   transition: all 0.1s ease;
 
-  &:hover {
-    background-color: $surface-container-low;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 1px;
+    width: calc(100% - 14px);
+    background-color: $outline-variant;
+  }
 
-    .button-go-back__arrow {
-      transform: translateX(-5px) rotate(180deg);
+  @include breakpoint(sm) {
+    padding: 12px 10px;
+  }
+
+  @media screen {
+    &:hover {
+      background-color: $surface-container-low;
+
+      .button-go-back__arrow {
+        transform: translateX(-5px) rotate(180deg);
+      }
     }
   }
 }
@@ -55,6 +73,10 @@ const { t } = useI18n();
   font-size: $font-controls;
   font-weight: $font-medium;
   color: $on-surface;
+
+  @include breakpoint(sm) {
+    font-size: $font-controls-mobile;
+  }
 }
 </style>
 

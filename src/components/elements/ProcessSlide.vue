@@ -41,6 +41,7 @@ defineProps({
 .process-slide {
   width: 100%;
   height: calc(100vh - 70px);
+  height: calc(100svh - 70px);
   position: relative;
 
   display: flex;
@@ -81,6 +82,7 @@ defineProps({
     padding-left: 50px;
     padding-right: 50px;
   }
+
   .process-slide__text-block-number {
     font-size: 16rem;
     -webkit-text-fill-color: transparent;
@@ -97,6 +99,11 @@ defineProps({
       font-size: 10rem;
       -webkit-text-stroke: 5px $primary;
     }
+
+    @include breakpoint(sm) {
+      font-size: 8rem;
+      -webkit-text-stroke: 4px $primary;
+    }
   }
 
   .process-slide__text-block-header {
@@ -106,6 +113,10 @@ defineProps({
 
     @include breakpoint(lg) {
       font-size: 3rem;
+    }
+
+    @include breakpoint(sm) {
+      font-size: 2rem;
     }
   }
 
@@ -154,7 +165,7 @@ defineProps({
   }
 
   @include breakpoint(sm) {
-    transform: translate(-50%, -50%) scale(0.8) rotate(90deg);
+    transform: translate(-50%, -50%) scale(0.7) rotate(90deg);
   }
 }
 
