@@ -390,7 +390,7 @@ UIStore.$subscribe((mutation, state) => {
     },
     by-BY: {
       "nav-home": "Галоўная",
-      "nav-works": "Нашы працы",
+      "nav-works": "Нашы вырабы",
       "nav-articles": "Артыкулы",
       "nav-contacts": "Кантакты",
       "nav-about": "Пра нас",
