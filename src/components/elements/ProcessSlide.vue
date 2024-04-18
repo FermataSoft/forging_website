@@ -1,9 +1,14 @@
 <script setup>
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import SlidesDevider from "../elements/SlidesDevider.vue";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
-defineProps({
+gsap.registerPlugin(ScrollTrigger);
+
+const props = defineProps({
   number: {
-    type: String,
+    type: Number,
     required: true,
   },
   header: {
@@ -14,23 +19,61 @@ defineProps({
     type: String,
     required: true,
   },
+  actualParentContainerHeight: Number,
 });
+
+onMounted(() => {
+  animate();
+});
+
+onUnmounted(() => {
+  GSAPContext.revert();
+});
+
+let GSAPContext = null;
+const containerElement = ref(null);
+const numberElement = ref(null);
+const headerElement = ref(null);
+const imageElement = ref(null);
+
+function animate() {
+  ScrollTrigger.defaults({
+    toggleActions: "play none none reverse",
+  });
+
+  GSAPContext = gsap.context((self) => {
+    gsap.from([numberElement.value, headerElement.value, imageElement.value], {
+      y: 100,
+      opacity: 0,
+      stagger: 0.3,
+      scrollTrigger: {
+        trigger: containerElement.value,
+        start: "center bottom",
+      },
+    });
+  }, containerElement.value);
+}
 </script>
 
 <template>
-  <div class="process-slide">
+  <div class="process-slide" ref="containerElement">
     <div class="process-slide__text-block">
       <div class="process-slide__text-block-background--dark"></div>
       <div class="process-slide__text-block-background--light"></div>
       <SlidesDevider class="process-slide__devider"></SlidesDevider>
-      <h1 class="process-slide__text-block-number">{{ number }}</h1>
-      <h2 class="process-slide__text-block-header">{{ header }}</h2>
+      <h1 class="process-slide__text-block-number" ref="numberElement">
+        {{ number }}
+      </h1>
+      <h2 class="process-slide__text-block-header" ref="headerElement">
+        {{ header }}
+      </h2>
     </div>
     <div class="process-slide__image-block">
       <img
         class="process-slide__image"
         :src="`./images/section_process/${image}`"
         alt=""
+        ref="imageElement"
       />
     </div>
   </div>
