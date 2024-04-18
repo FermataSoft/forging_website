@@ -23,18 +23,18 @@ const router = createRouter({
     {
       path: "/image/",
       name: "image",
-      meta: { layout: BlankLayout },
+      meta: { layout: BlankLayout, transition: "fade" },
       component: () => import("../views/ImageView.vue")
     },
     {
       path: "/articles",
       name: "articles",
-      meta: { layout: PageLayout },
+      meta: { layout: PageLayout, transition: "fade" },
       component: () => import("../views/ArticlesView.vue"),
       children: [
         {
           path: ":id",
-          meta: { layout: PageLayout },
+          meta: { layout: PageLayout, transition: "fade" },
           component: () => import('../views/Article.vue'),
         }
       ]
@@ -42,13 +42,13 @@ const router = createRouter({
     {
       path: "/contacts",
       name: "contacts",
-      meta: { layout: PageLayout },
+      meta: { layout: PageLayout, transition: "fade" },
       component: () => import("../views/ContactsView.vue"),
     },
     {
       path: "/about",
       name: "about",
-      meta: { layout: PageLayout },
+      meta: { layout: PageLayout, transition: "fade" },
       component: () => import("../views/AboutView.vue"),
     },
     {
