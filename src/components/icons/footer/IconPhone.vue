@@ -1,5 +1,17 @@
+<script setup>
+defineProps({
+  monochrome: false,
+});
+</script>
+
 <template>
-  <svg width="34" height="57" viewBox="0 0 34 57" fill="url(#phone-gradient)" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    :class="{ monochrome: monochrome, gradient: !monochrome }"
+    width="34"
+    height="57"
+    viewBox="0 0 34 57"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <defs>
       <linearGradient id="phone-gradient" gradientTransform="rotate(90)">
         <stop offset="0%" stop-color="#5dfc51" />
@@ -11,3 +23,16 @@
     />
   </svg>
 </template>
+
+<style lang="scss" scoped>
+@import "@/assets/vars";
+
+.gradient {
+  fill: url("#phone-gradient");
+  fill: $primary;
+}
+
+.monochrome {
+  fill: $secondary;
+}
+</style>
