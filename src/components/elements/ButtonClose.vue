@@ -8,15 +8,15 @@ const props = defineProps({
 });
 
 async function goToPage(path) {
-  await router.push(path).then()
-  history.replaceState(history.state, '')
+  await router.push(path).then();
+  history.replaceState(history.state, "");
 }
 </script>
 
 <template>
-  <div class="button-close" @click="goToPage(props.pathTo)">
+  <button class="button-close" @click="goToPage(props.pathTo)">
     <div class="button-close__icon"></div>
-  </div>
+  </button>
 </template>
 
 <style lang="scss" scoped>
@@ -57,12 +57,22 @@ async function goToPage(path) {
     transform: rotate(-45deg);
   }
 
-  &:hover {
-    opacity: 1;
-
+  &:active {
     &:before,
     &:after {
+      opacity: 1;
       background: $color-hover;
+    }
+  }
+
+  @include device(screen) {
+    &:hover {
+      opacity: 1;
+
+      &:before,
+      &:after {
+        background: $color-hover;
+      }
     }
   }
 
@@ -75,9 +85,12 @@ async function goToPage(path) {
   top: 25px;
   right: 25px;
   z-index: 4;
+  background-color: $secondary;
+  padding: 10px;
+  border-radius: 50%;
 }
 
 .button-close__icon {
-  @include cross(30px, rgb(221, 221, 221), $primary, 3px);
+  @include cross(25px, $surface, $primary, 3px);
 }
 </style>
