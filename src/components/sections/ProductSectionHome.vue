@@ -91,99 +91,69 @@ onUnmounted(() => {
   <div class="product-section" ref="container">
     <div class="product-section__item">
       <div class="product-item__item-image">
+        <img src="/images/metal_frame.webp" alt="" />
+      </div>
+      <div class="product-item__item-description">
+        <h3 class="product-item__item-description-title">
+          Металлические каркасы
+        </h3>
+        <p class="product-item__item-description-text">
+          Изготавливаем различные металлические каркасы для лестниц: с
+          косоурами, с тетивами, консольные, винтовые, комбинированные по
+          индивидуальному заказу.
+        </p>
+      </div>
+    </div>
+
+    <Devider class="product-section__devider"></Devider>
+
+    <div class="product-section__item product-section__item--reversed">
+      <div class="product-item__item-image">
         <img src="/images/stairs.webp" alt="" />
       </div>
       <div class="product-item__item-description">
         <h3 class="product-item__item-description-title">Лестницы</h3>
         <p class="product-item__item-description-text">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis
-          dolorem molestias commodi sed quae autem a distinctio, blanditiis
-          nobis explicabo quis impedit illum illo dignissimos minima excepturi
-          esse et perspiciatis.
+          Создаем дизайн лестницы под ваш интерьер. Максимально эффективно
+          используем имеющееся пространство. Изготавливаем конфигурации: прямой
+          марш; Г-образный (поворот на 90°), П-образный (поворот на 180°).
         </p>
       </div>
     </div>
 
-    <Devider class="product-section__devider" size="md"></Devider>
+    <Devider class="product-section__devider"></Devider>
 
-    <div class="product-section__item product-section__item--reversed">
+    <div class="product-section__item">
       <div class="product-item__item-image">
         <img src="/images/stair_railing.webp" alt="" />
       </div>
       <div class="product-item__item-description">
         <h3 class="product-item__item-description-title">
-          Лестничные ограждения
+          Лестничные перила и ограждения
         </h3>
         <p class="product-item__item-description-text">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis
-          dolorem molestias commodi sed quae autem a distinctio, blanditiis
-          nobis explicabo quis impedit illum illo dignissimos minima excepturi
-          esse et perspiciatis.
+          Изготавливаем перила и ограждения для наружных и внутренних лестниц.
+          Ограждения могут быть коваными или литыми. Наши ограждения и перила
+          отлично дополнят ваш интерьер.
         </p>
       </div>
     </div>
 
-    <Devider class="product-section__devider" size="md"></Devider>
-
-    <div class="product-section__item">
-      <div class="product-item__item-image">
-        <img src="/images/gates.webp" alt="" />
-      </div>
-      <div class="product-item__item-description">
-        <h3 class="product-item__item-description-title">Ворота</h3>
-        <p class="product-item__item-description-text">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis
-          dolorem molestias commodi sed quae autem a distinctio, blanditiis
-          nobis explicabo quis impedit illum illo dignissimos minima excepturi
-          esse et perspiciatis.
-        </p>
-      </div>
-    </div>
-
-    <Devider class="product-section__devider" size="md"></Devider>
+    <Devider class="product-section__devider"></Devider>
 
     <div class="product-section__item product-section__item--reversed">
       <div class="product-item__item-image">
         <img src="/images/gate.webp" alt="" />
       </div>
       <div class="product-item__item-description">
-        <h3 class="product-item__item-description-title">Калитки</h3>
+        <h3 class="product-item__item-description-title">Изделия из металла</h3>
         <p class="product-item__item-description-text">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis
-          dolorem molestias commodi sed quae autem a distinctio, blanditiis
-          nobis explicabo quis impedit illum illo dignissimos minima excepturi
-          esse et perspiciatis.
+          Изделия из металла любой сложности по честным ценам. Наши изделия
+          сочетают в себе качество и стиль. Мы используем только
+          высококачественные материалы и современное профессиональное оборудование.
         </p>
       </div>
     </div>
-
-    <!-- <div class="product-section-block">
-      <div class="product-item-image">
-        <img src="/images/pipe.webp" alt="" />
-      </div>
-      <div class="product-item-description">
-        <h3>Дымники</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis dolorem molestias
-          commodi sed quae autem a distinctio, blanditiis nobis explicabo quis impedit illum illo
-          dignissimos minima excepturi esse et perspiciatis.
-        </p>
-      </div>
-    </div> -->
-
-    <!-- <div class="product-section-block">
-      <div class="product-item-image">
-        <img src="/images/address_plate.webp" alt="" />
-      </div>
-      <div class="product-item-description">
-        <h3>Адресные таблички</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis dolorem molestias
-          commodi sed quae autem a distinctio, blanditiis nobis explicabo quis impedit illum illo
-          dignissimos minima excepturi esse et perspiciatis.
-        </p>
-      </div>
-    </div> -->
   </div>
 </template>
 
