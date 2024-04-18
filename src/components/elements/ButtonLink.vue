@@ -39,6 +39,7 @@ defineProps({
 
   font-size: 1.6rem;
   font-weight: $font-bold;
+  font-family: $font-main;
   color: $on-primary;
 
   transform: translate(0);
@@ -92,12 +93,12 @@ defineProps({
 <i18n>
   {
     "ru-RU": {
-      "ButtonOurWorks": "Наши работы",
+      "ButtonOurWorks": "Примеры работ",
       "ButtonSubmit": "Отправить",
       "ButtonGoHomePage": "Вернуться на главную страницу"
     },
     "by-BY": {
-      "ButtonOurWorks": "Нашы вырабы",
+      "ButtonOurWorks": "Прыклады работ",
       "ButtonSubmit": "Адправіць",
       "ButtonGoHomePage": "Вярнуцца на галоўную старонку"
     }
