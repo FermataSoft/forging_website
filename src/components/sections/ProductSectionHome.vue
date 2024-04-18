@@ -57,8 +57,7 @@ function animate() {
         },
         y: 20,
         opacity: 0,
-        delay: 0.5,
-        duration: 0.5,
+        duration: 0.3,
       });
     });
   }, container.value);
@@ -197,11 +196,6 @@ onUnmounted(() => {
   height: 0;
 }
 
-h3 {
-  font-size: 3rem;
-  font-weight: $font-regular;
-}
-
 .product-section__devider {
   color: $secondary;
   width: 150px;
@@ -242,16 +236,6 @@ h3 {
 
       @include breakpoint(md) {
         flex-direction: column;
-      }
-
-      .product-item__item-description {
-        h3 {
-          text-align: end;
-
-          @include breakpoint(md) {
-            text-align: center;
-          }
-        }
       }
     }
 
@@ -306,7 +290,6 @@ h3 {
     }
 
     .product-item__item-description {
-      text-align: justify;
       flex: 1 1.5 auto;
 
       h3 {
