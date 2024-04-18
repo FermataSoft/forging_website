@@ -20,9 +20,8 @@ defineProps({
 @import '../../assets/_vars.scss';
 
 button {
-  width: 200px;
   background-color: $primary;
-  padding: 20px 40px;
+  padding: 15px 40px;
   border-radius: 5px;
 
   font-size: 1.6rem;
@@ -75,7 +74,7 @@ button {
     "ru-RU": {
       "ButtonOurWorks": "Наши работы",
       "ButtonSubmit": "Отправить"
-    },
+    },  
     "by-BY": {
       "ButtonOurWorks": "Нашы вырабы",
       "ButtonSubmit": "Адправіць"
