@@ -1,9 +1,21 @@
+<script setup>
+defineProps({
+  monochrome: false
+});
+</script>
+
 <template>
-  <svg width="23" height="39" viewBox="0 0 23 39" xmlns="http://www.w3.org/2000/svg" fill="url(#marker-gradient)">
+  <svg
+    :class="{monochrome: monochrome, gradient: !monochrome}"
+    width="23"
+    height="39"
+    viewBox="0 0 23 39"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <defs>
       <linearGradient id="marker-gradient" gradientTransform="rotate(90)">
-        <stop offset="0%" stop-color="#ff0b0b"/>
-        <stop offset="100%" stop-color="#8f0000"/>
+        <stop offset="0%" stop-color="#ff0b0b" />
+        <stop offset="100%" stop-color="#8f0000" />
       </linearGradient>
     </defs>
     <path
@@ -15,10 +27,14 @@
   </svg>
 </template>
 
-<style scoped lang="scss">
-@import '../../../assets/_vars.scss';
+<style lang="scss" scoped>
+@import "@/assets/vars";
 
-svg {
-   fill: url($accent-gradient);
+.gradient {
+  fill: url("#marker-gradient");
+}
+
+.monochrome {
+  fill: $secondary;
 }
 </style>
