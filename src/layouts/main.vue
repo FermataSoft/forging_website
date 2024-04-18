@@ -4,6 +4,7 @@ import { RouterView } from "vue-router";
 import Navigation from "../components/Navigation.vue";
 import FooterSection from "../components/sections/FooterSection.vue";
 import ScrollTopButton from "../components/elements/ScrollTopButton.vue";
+import Order from "../components/modals/Order.vue";
 </script>
 
 <template>
@@ -18,6 +19,7 @@ import ScrollTopButton from "../components/elements/ScrollTopButton.vue";
   <FooterSection></FooterSection>
 
   <ScrollTopButton></ScrollTopButton>
+  <Order></Order>
 </template>
 
 <style scoped lang="scss">
