@@ -1,18 +1,17 @@
 <script setup>
-import { RouterView } from 'vue-router';
+import { RouterView } from "vue-router";
 
-import Navigation from '../components/Navigation.vue';
-import FooterSection from '../components/sections/FooterSection.vue';
-import ScrollTopButton from '../components/elements/ScrollTopButton.vue';
-
-
+import Navigation from "../components/Navigation.vue";
+import FooterSection from "../components/sections/FooterSection.vue";
+import ScrollTopButton from "../components/elements/ScrollTopButton.vue";
+import Order from "../components/modals/Order.vue";
 </script>
 
 <template>
   <Navigation></Navigation>
   <div class="navbar-margin"></div>
-  <RouterView class="router-view" v-slot="{ Component }">
-    <Transition name="fade" mode="out-in" appear>
+  <RouterView class="router-view" v-slot="{ Component, route }">
+    <Transition :name="route.meta.transition" mode="out-in" appear>
       <component :is="Component" :key="$route.path"></component>
     </Transition>
   </RouterView>
@@ -20,10 +19,11 @@ import ScrollTopButton from '../components/elements/ScrollTopButton.vue';
   <FooterSection></FooterSection>
 
   <ScrollTopButton></ScrollTopButton>
+  <Order></Order>
 </template>
 
 <style scoped lang="scss">
-@import '../assets/vars.scss';
+@import "../assets/vars.scss";
 
 .navbar-margin-enter-active,
 .navbar-margin-leave-active {
