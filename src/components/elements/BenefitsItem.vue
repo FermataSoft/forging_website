@@ -36,6 +36,10 @@ defineProps({
 
   transition: all 0.3s ease-in-out;
 
+  @include breakpoint(sm) {
+    height: 100px;
+  }
+
   &:hover {
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.25);
   }
