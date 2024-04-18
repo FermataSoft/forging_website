@@ -175,7 +175,7 @@ footer {
       gap: 50px;
 
       .footer__ip-information {
-            font-size: 1.4rem;
+        font-size: 1.4rem;
         font-weight: $font-light;
         line-height: 2rem;
         color: $inverse-on-surface-variant;
@@ -278,12 +278,11 @@ footer {
               transition: color 0.2s;
 
               &:hover {
-                color: $inverse-on-surface;               
+                color: $inverse-on-surface;
               }
-              
+
               &::after {
                 content: "";
-  
                 display: block;
                 position: absolute;
                 bottom: 2px;
