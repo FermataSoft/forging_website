@@ -3,10 +3,11 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/all";
 import ProcessSlide from "../elements/ProcessSlide.vue";
 
 const { t } = useI18n();
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const slides = ref([
   {
@@ -61,7 +62,7 @@ function pinHeader() {
   });
 }
 
-function animateSlides() {
+/* function animateSlidesArchive() {
   const slidesElements = gsap.utils.toArray(".process-section__slide");
   const count = slidesElements.length - 1;
   const duration = 1;
@@ -91,16 +92,67 @@ function animateSlides() {
     duration: duration,
     ease: "none",
   });
-}
+} */
 
 onMounted(() => {
   initAnimations(containerElement.value, animateSlides, pinHeader); // order of animations is important
-  actualParentContainerHeight.value = containerElement.value.offsetHeight;
+  // actualParentContainerHeight.value = containerElement.value.offsetHeight;
 });
 
 onUnmounted(() => {
   GSAPContext.revert(); // delete gsap
 });
+
+const slideEls = ref([]);
+
+function animateSlides() {
+  let current = 0;
+  let panels = gsap.utils.toArray(".process-section__slide");
+  let observer = ScrollTrigger.normalizeScroll({
+    preventDefault: true,
+    type: "touch",
+    momentum: (self) => Math.min(0.3, Math.abs(self.velocityY / 1000)),
+  });
+  let scrollTween;
+
+  observer.disable();
+
+  function goToSection(panel, i) {
+    scrollTween = gsap.to(".process-section__slide", {
+      scrollTo: { y: i * panel.offsetHeight, autoKill: false },
+      duration: 1,
+      onComplete: () => {
+        scrollTween = null;
+      },
+      overwrite: true,
+    });
+  }
+
+  panels.forEach((panel, i) => {
+    ScrollTrigger.create({
+      trigger: panel,
+      scrub: 0.1,
+      start: "top center",
+      end: "bottom 20%",
+      onToggle: (self) =>
+        self.isActive && !scrollTween && goToSection(panel, i),
+    });
+  });
+
+  // just in case the user forces the scroll to an inbetween spot (like a momentum scroll on a Mac that ends AFTER the scrollTo tween finishes):
+  ScrollTrigger.create({
+    trigger: containerElement.value,
+    start: "top top",
+    end: "+=" + containerElement.value.offsetHeight + " bottom",
+    snap: 1 / (panels.length - 1),
+    onEnter: () => {
+      observer.enable();
+    },
+    onLeave: () => {
+      observer.disable();
+    }
+  });
+}
 </script>
 
 <template>
@@ -112,9 +164,10 @@ onUnmounted(() => {
     </div>
     <div class="process-section__slides">
       <ProcessSlide
+        class="process-section__slide"
         v-for="slide in slides"
         :key="slide.number"
-        class="process-section__slide"
+        ref="slideEls"
         :number="slide.number"
         :header="t(slide.headerI18n)"
         :image="slide.image"
@@ -127,7 +180,7 @@ onUnmounted(() => {
 @import "../../assets/vars";
 .process-section {
   width: 100%;
-  height: 500%;
+  // height: 500%;
   background-color: $inverse-surface;
   margin-top: 50px;
 }
@@ -141,11 +194,13 @@ onUnmounted(() => {
 }
 
 .process-section__slides {
-  height: calc(100vh - 70px);
-  overflow: hidden;
+  // height: calc(100vh - 70px);
+  // overflow: hidden;
+  scroll-snap-type: mandatory;
 }
 
 .process-section__slide {
+  scroll-snap-align: center;
 }
 </style>
 
