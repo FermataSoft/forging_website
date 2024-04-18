@@ -1,8 +1,15 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  invertColor: false,
+});
+</script>
 
 <template>
   <button class="button-close">
-    <div class="button-close__icon"></div>
+    <div
+      class="button-close__icon"
+      :class="{ '--invert-color': props.invertColor }"
+    ></div>
   </button>
 </template>
 
@@ -15,7 +22,7 @@
   $color-hover: currentColor,
   $thickness: 1px
 ) {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   border: 0;
   background: none;
@@ -62,15 +69,18 @@
     .button-close__icon {
       &:before,
       &:after {
-        background: $surface;
+        background: $on-secondary;
       }
     }
   }
 }
 
 .button-close__icon {
-  @include cross(25px, $secondary, $surface, 2px);
   display: block;
-  margin: 0 auto;
+  @include cross(25px, $secondary, $on-secondary, 2px);
+
+  &.--invert-color {
+    @include cross(25px, $on-secondary, $secondary, 2px);
+  }
 }
 </style>
