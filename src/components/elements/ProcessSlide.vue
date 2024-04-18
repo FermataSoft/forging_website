@@ -29,7 +29,7 @@ defineProps({
     <div class="process-slide__image-block">
       <img
         class="process-slide__image"
-        :src="`/src/images/section_process/${image}`"
+        :src="`./images/section_process/${image}`"
         alt=""
       />
     </div>
