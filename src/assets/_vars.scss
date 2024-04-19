@@ -1,6 +1,7 @@
 /* Main STYLES */
 $wrapper-width: 1250px;
-$navbar-height: 50px;
+$navbar-height: 55px;
+$scrollbar-width: 15px;
 
 // PALLETE
 $color1: #232323;
@@ -25,10 +26,12 @@ $inverse-on-surface: hsl(0, 0%, 100%);
 $inverse-on-surface-variant: hsl(0, 0%, 80%);
 
 $outline: hsl(0, 0%, 75%);
+$outline-darker: hsl(0, 0%, 60%);
 $outline-variant: hsl(0, 0%, 80%);
 
 // Accent colors
-$primary: hsl(44, 100%, 70%);
+$primary: #ffd666;
+$primary-opacity: rgb(255, 214, 102, 20%);
 $primary10:hsl(44, 100%, 10%);
 $primary20:hsl(44, 90%, 20%);
 $primary30:hsl(44, 80%, 30%);
@@ -45,8 +48,9 @@ $primary-container: hsl(0, 0%, 14%);
 $on-primary-container: hsl(44, 100%, 70%);
 $primary-variant:hsl(44, 85%, 65%);
 
-$secondary: hsl(0, 0%, 14%);
+$secondary: #242424;
 $on-secondary: hsl(0, 0%, 100%);
+$secondary-opacity70: rgb(36, 36, 36, 70%);
 $secondary-container: hsl(0, 0%, 90%);
 $on-secondary-container: hsl(0, 0%, 14%);
 $secondary-container-variant: hsl(0, 0%, 80%);
@@ -62,19 +66,28 @@ $on-error: hsl(0, 100%, 95%);
 $error-container: hsl(360, 78%, 62%);
 $on-error-container: hsl(360, 78%, 20%);
 
+$disabled: hsl(0, 0%, 75%);
+
 // Gradients
 $add-dark-blue: linear-gradient(252.85deg, #0e0e25 0%, #0e0e25 100%);
 $accent-gradient: linear-gradient(to right, #ffa751, #ffe259);
 
 // FONT SIZES
 $header1: 24px;
+$header1-mobile: 20px;
 $header2: 20px;
+$header2-mobile: 16px;
 $header3: 16px;
+$header3-mobile: 14px;
 $header4: 14px;
+$header4-mobile: 12px;
 
 $paragraph: 14px;
+$paragraph-lg: 16px;
+$paragraph-mobile: 12px;
 
 $font-controls: 14px;
+$font-controls-mobile: 12px;
 
 // FONTS
 // $font-extraLight: 200;
@@ -118,6 +131,24 @@ $mobile: 767px;
   }
   @if $point == xs {
     @media (max-width: 500px) {
+      @content;
+    }
+  }
+  @else {
+    @media (max-width: $point) {
+      @content;
+    }
+  }
+}
+
+@mixin device($device) {
+  @if $device == touch {
+    @media (hover: none) and (pointer: coarse) {
+      @content;
+    }
+  }
+  @if $device == screen {
+    @media (hover: hover) and (pointer: fine) {
       @content;
     }
   }
