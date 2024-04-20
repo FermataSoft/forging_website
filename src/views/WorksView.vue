@@ -212,8 +212,10 @@ main {
   }
 }
 
-body.--locked .sort-menu {
-  right: 15px;
+@include device(screen) {
+  body.--locked .sort-menu {
+    right: 15px;
+  }
 }
 
 .filters-menu__item {
