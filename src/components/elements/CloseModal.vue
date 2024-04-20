@@ -65,11 +65,13 @@ const props = defineProps({
   z-index: 5;
   cursor: pointer;
 
-  &:hover {
-    .button-close__icon {
-      &:before,
-      &:after {
-        background: $on-secondary;
+  @include device(screen) {
+    &:hover {
+      .button-close__icon {
+        &:before,
+        &:after {
+          background: $on-secondary;
+        }
       }
     }
   }
