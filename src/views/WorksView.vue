@@ -3,6 +3,7 @@ import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import IconSort from "../components/elements/IconSort.vue";
 import WorksBlock from "../components/sections/WorksBlock.vue";
+import CloseModal from "@/components/elements/CloseModal.vue";
 import { useI18n } from "vue-i18n";
 import { useWorksStore } from "../stores/WorksStore";
 import { useWindowParamsStore } from "../stores/WindowParamsStore";
@@ -36,35 +37,42 @@ watch(currentCategorySelected, (curr, prev) => {
 function hideMenu(event) {
   if (windowWidth < 630 && event.target !== BUTTON_MENU_OPEN.value) {
     isMenuOpened.value = false;
+    document.body.classList.remove("--locked");
+  }
+}
+
+function openMenu(event) {
+  if (windowWidth < 630) {
+    isMenuOpened.value = true;
+    document.body.classList.add("--locked");
   }
 }
 </script>
 
 <template>
   <Transition name="view">
-    <div class="works-view" @click="hideMenu($event)">
+    <div class="works-view" @click.stop="hideMenu($event)">
       <div class="navbar-margin"></div>
       <nav class="menu-block" :class="{ 'menu-block--hidden': !isMenuOpened }">
+        <CloseModal class="menu-block__close-button"></CloseModal>
         <div class="filters-menu__block">
-          <div class="filters-menu__item">
-            <h2>Категории</h2>
-            <ul class="menu__checkbox-container">
-              <li v-for="item in categories" class="menu__checkbox-item">
-                <span class="menu__checkbox"></span>
-                <input
-                  class="_invisible"
-                  type="radio"
-                  name="menu"
-                  :checked="item === currentCategorySelected"
-                  :id="item"
-                  :value="item"
-                  v-model="currentCategorySelected"
-                />
-                <span class="menu__background"></span>
-                <label :for="item">{{ t("category-" + item) }}</label>
-              </li>
-            </ul>
-          </div>
+          <h2>Категории</h2>
+          <ul class="menu__checkbox-container">
+            <li v-for="item in categories" class="menu__checkbox-item">
+              <span class="menu__checkbox"></span>
+              <input
+                class="_invisible"
+                type="radio"
+                name="menu"
+                :checked="item === currentCategorySelected"
+                :id="item"
+                :value="item"
+                v-model="currentCategorySelected"
+              />
+              <span class="menu__background"></span>
+              <label :for="item">{{ t("category-" + item) }}</label>
+            </li>
+          </ul>
         </div>
       </nav>
 
@@ -75,7 +83,7 @@ function hideMenu(event) {
               class="works__sort-menu-categories-button"
               ref="BUTTON_MENU_OPEN"
               v-if="windowWidth <= 630"
-              @click="isMenuOpened = true"
+              @click="openMenu($event)"
             >
               Категории
             </button>
@@ -135,6 +143,7 @@ main {
 }
 
 .menu-block {
+  position: relative;
   width: 350px;
   padding: 20px;
   z-index: 3;
@@ -146,14 +155,29 @@ main {
     position: absolute;
     left: 0;
     top: $navbar-height;
+    width: 100%;
+    max-height: calc(100vh - $navbar-height);
+    max-height: calc(100svh - $navbar-height);
     border-right: 0 solid $outline-variant;
-    border-radius: 0 0 10px 0;
+    border-radius: 0 0 10px 10px;
     box-shadow: 0 0 10px #6e6e6e;
 
     &.menu-block--hidden {
       left: -100%;
     }
+
+    .menu-block__close-button {
+      display: block;
+    }
   }
+}
+
+.menu-block__close-button {
+  position: absolute;
+  display: none;
+  top: 20px;
+  right: 20px;
+  background: none;
 }
 
 .sort-menu {
@@ -218,7 +242,7 @@ main {
   }
 }
 
-.filters-menu__item {
+.filters-menu__block {
   h2 {
     font-size: $header2;
   }
@@ -230,6 +254,15 @@ main {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  @include breakpoint(xs) {
+    margin-top: 30px;
+    padding-right: 10px;
+    height: calc(100vh - $navbar-height - 150px);
+    height: calc(100svh - $navbar-height - 94px);
+    overflow-y: scroll;
+    @include scrollbar();
+  }
 
   .menu__checkbox-item {
     position: relative;
