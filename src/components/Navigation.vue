@@ -82,7 +82,7 @@ UIStore.$subscribe((mutation, state) => {
     class="navbar"
     :class="{
       'navbar--scrolled': $route.path != '/' || scrollPos > scrollTrigger,
-      'navbar__wrapper--mobile-active': UIStore.isBurgerMenuActive,
+      'navbar--mobile-active': UIStore.isBurgerMenuActive,
     }"
   >
     <div class="navbar__overlay" @click="toggleBurgerMenu"></div>
@@ -128,11 +128,18 @@ UIStore.$subscribe((mutation, state) => {
   position: fixed;
   display: block;
   height: $navbar-height;
-  width: calc(100vw - $scrollbar-width);
   z-index: 5;
   transition: background-color 0.2s, box-shadow 0.2s;
   background-color: transparent;
 
+  @include device(screen) {
+    width: calc(100vw - $scrollbar-width);
+  }
+
+  @include device(touch) {
+    width: 100vw;
+  }
+  
   .navbar__overlay {
     position: fixed;
     top: 0;
@@ -173,6 +180,7 @@ UIStore.$subscribe((mutation, state) => {
       height: auto;
       background-color: $inverse-surface;
       padding: 20px;
+      gap: 50px;
       padding-bottom: 70px;
       border-radius: 0 0 30px 30px;
       transform: translate(0, -100%);
@@ -275,7 +283,7 @@ UIStore.$subscribe((mutation, state) => {
   }
 }
 
-.navbar__wrapper--mobile-active {
+.navbar--mobile-active {
   @include breakpoint(md) {
     .navbar__wrapper {
       transform: translateY(0%) scale(1);
@@ -302,7 +310,7 @@ UIStore.$subscribe((mutation, state) => {
     cursor: pointer;
 
     @include device(touch) {
-      right: 20px;
+      right: 25px;
     }
 
     &::before,
