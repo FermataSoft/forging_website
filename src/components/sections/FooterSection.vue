@@ -1,16 +1,13 @@
 <script setup>
-import { computed, ref, onMounted } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useWorksStore } from '../../stores/WorksStore';
+import { computed, ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
+import { useWorksStore } from "../../stores/WorksStore";
 
-import IconAddress from '../icons/footer/IconAddress.vue';
-import IconWorkingHours from '../icons/footer/IconWorkingHours.vue';
-import IconMail from '../icons/footer/IconMail.vue';
-import IconPhone from '../icons/footer/IconPhone.vue';
-import IconTelegram from '../icons/footer/IconTelegram.vue';
-import IconViber from '../icons/footer/IconViber.vue';
-import IconInstagram from '../icons/footer/IconInstagram.vue';
-import IconVK from '../icons/footer/IconVK.vue';
+import Contacts from "@/components/sections/Contacts.vue";
+import IconTelegram from "../icons/footer/IconTelegram.vue";
+import IconViber from "../icons/footer/IconViber.vue";
+import IconInstagram from "../icons/footer/IconInstagram.vue";
+import IconVK from "../icons/footer/IconVK.vue";
 
 const { t } = useI18n();
 
@@ -21,77 +18,46 @@ const workStore = useWorksStore();
   <footer>
     <div class="wrapper">
       <div class="footer__top-block">
-        <div class="footer__contact-block">
-          <div class="footer__contact-item">
-            <IconAddress></IconAddress>
-            <div class="footer__text-block">
-              <h2>Адрес</h2>
-              <!-- todo  ссылка на яндекс-карты с точкой -->
-              <p>РБ, г. Несвиж, ул. XXXXXXXXXX</p>
-            </div>
-          </div>
-
-          <div class="footer__contact-item">
-            <IconMail></IconMail>
-            <div class="footer__text-block">
-              <h2>Email</h2>
-              <p>
-                <a href="mailto:subneck@gmail.com">email@test.ru</a>
-              </p>
-            </div>
-          </div>
-
-          <div class="footer__contact-item">
-            <IconWorkingHours></IconWorkingHours>
-            <div class="footer__text-block">
-              <h2 lang-id="footer__working-hours">Время работы</h2>
-              <div class="footer__subtext-block">
-                <div class="footer__subtext_left">
-                  <p>пн - пт:</p>
-                  <p>сб - вс:</p>
-                </div>
-                <div class="footer__subtext_right">
-                  <p>08:00 - 17:00</p>
-                  <p>09:00 - 16:00</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="footer__contact-item">
-            <IconPhone></IconPhone>
-            <div class="footer__text-block">
-              <h2>Телефоны</h2>
-              <div class="footer__subtext-block">
-                <div class="footer__subtext_left">
-                  <p>А1</p>
-                  <p>МТС</p>
-                </div>
-                <div class="footer__subtext_right">
-                  <p>
-                    <a href="tel:+375447199961">+375 (44) 719-99-61</a>
-                  </p>
-                  <p>+375 (XX) XXX-XX-XX</p>
-                </div>
-              </div>
-            </div>
+        <div class="footer__information-block">
+          <Contacts fontColor="light"></Contacts>
+          <div class="footer__ip-information">
+            <p>ИП Близнюк Светлана Юрьевна</p>
+            <p>Регистрирующий орган: Несвижский райисполком</p>
+            <p>Дата регистрации: 03.02.2022</p>
+            <p>УНП: 693163402</p>
           </div>
           <div class="social-links">
             <h2>Мы в социальных сетях:</h2>
             <div class="social-links__block">
-              <a href="https://www.instagram.com/bliznyuksasha/" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.instagram.com/bliznyuksasha/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <IconInstagram></IconInstagram>
               </a>
-              <a class="link-vk" href="https://www.instagram.com/bliznyuksasha/" target="_blank"
-                rel="noopener noreferrer">
+              <a
+                class="link-vk"
+                href="https://www.instagram.com/bliznyuksasha/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <IconVK></IconVK>
               </a>
-              <a href="https://t.me/+375447199961" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://t.me/+375447199961"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <IconTelegram></IconTelegram>
               </a>
 
               <!-- !!! -->
-              <a class="link-viber" href="viber://chat?number=%2B375447199961" rel="noopener noreferrer">
+              <a
+                class="link-viber"
+                href="viber://chat?number=%2B375447199961"
+                rel="noopener noreferrer"
+              >
                 <IconViber></IconViber>
               </a>
             </div>
@@ -101,9 +67,15 @@ const workStore = useWorksStore();
         <div class="footer__site-map-block">
           <div class="footer__site-map-item">
             <h2>Наши работы</h2>
-            <ul class="site-map-item__links" v-for="item in workStore.categories">
+            <ul
+              class="site-map-item__links"
+              v-for="item in workStore.categories"
+            >
               <li class="site-map-item__link">
-                <RouterLink :to="{ path: '/works', query: { category: item } }">{{ t('category-' + item) }}</RouterLink>
+                <RouterLink
+                  :to="{ path: '/works', query: { category: item } }"
+                  >{{ t("category-" + item) }}</RouterLink
+                >
               </li>
             </ul>
           </div>
@@ -117,9 +89,6 @@ const workStore = useWorksStore();
                 <RouterLink to="/contacts">Контакты</RouterLink>
               </li>
               <li class="site-map-item__link">
-                <RouterLink to="/">Отзывы</RouterLink>
-              </li>
-              <li class="site-map-item__link">
                 <RouterLink to="/about/">О нас</RouterLink>
               </li>
             </ul>
@@ -127,7 +96,10 @@ const workStore = useWorksStore();
         </div>
       </div>
       <p class="copyright-text">
-        Copyright © 2023 <a href="">Fermata Soft</a>. Все права защищены.
+        Copyright © 2023
+        <a href="https://www.linkedin.com/in/olegandreev/" target="_blank"
+          >Fermata Soft</a
+        >. Все права защищены.
       </p>
     </div>
   </footer>
