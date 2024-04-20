@@ -128,6 +128,7 @@ UIStore.$subscribe((mutation, state) => {
   position: fixed;
   display: block;
   height: $navbar-height;
+  width: 100%;
   z-index: 5;
   transition: background-color 0.2s, box-shadow 0.2s;
   background-color: transparent;
@@ -137,7 +138,7 @@ UIStore.$subscribe((mutation, state) => {
   }
 
   @include device(touch) {
-    width: 100vw;
+    width: 100%;
   }
   
   .navbar__overlay {
@@ -302,16 +303,12 @@ UIStore.$subscribe((mutation, state) => {
   .navbar__burger-menu {
     display: block;
     position: absolute;
-    right: 40px;
+    right: 25px;
     top: 15px;
     width: 25px;
     height: 20px;
     z-index: 4;
     cursor: pointer;
-
-    @include device(touch) {
-      right: 25px;
-    }
 
     &::before,
     &::after {
