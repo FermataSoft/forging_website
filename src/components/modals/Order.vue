@@ -50,9 +50,9 @@ modalsStore.$subscribe((mutation, state) => {
 <style lang="scss" scoped>
 @import "@/assets/vars";
 
-@media (hover: hover) and (pointer: fine) {
+@include device(screen) {
   body.--locked .order {
-    width: calc(100% - 15px);
+    width: calc(100% - $scrollbar-width);
   }
 }
 
@@ -77,7 +77,6 @@ modalsStore.$subscribe((mutation, state) => {
   position: absolute;
   top: 50%;
   left: 50%;
-  // width: 500px;
   max-height: calc(100vh - 20px);
   transform: translate(-50%, -50%);
 
@@ -127,16 +126,12 @@ modalsStore.$subscribe((mutation, state) => {
   padding-bottom: 10px;
 
   @include breakpoint(xs) {
-    padding: 20px;
+    padding: 20px 0 10px 0;
   }
 
   .order__modal-header {
     font-size: $header2;
     text-align: center;
-
-    @include breakpoint(xs) {
-      margin-bottom: 5px;
-    }
   }
 }
 
@@ -145,7 +140,7 @@ modalsStore.$subscribe((mutation, state) => {
   transform: translate(0, -1px);
   padding-bottom: 30px;
   height: 500px;
-  max-height: calc(100vh - 140px);
+  max-height: calc(100vh - 200px);
   overflow-y: scroll;
   overflow-x: hidden;
 
