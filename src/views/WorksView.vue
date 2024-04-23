@@ -52,7 +52,6 @@ function openMenu(event) {
 <template>
   <Transition name="view">
     <div class="works-view" @click.stop="hideMenu($event)">
-      <div class="navbar-margin"></div>
       <nav class="menu-block" :class="{ 'menu-block--hidden': !isMenuOpened }">
         <CloseModal class="menu-block__close-button"></CloseModal>
         <div class="filters-menu__block">
@@ -116,14 +115,14 @@ function openMenu(event) {
           </div>
         </div>
 
+        <div class="works-view__sort-menu-margin"></div>
         <WorksBlock
+          class="works-view__works-block"
           :current-category="currentCategorySelected"
           :items-per-page="itemsPerPage"
           :sort-by="sortBy"
           :is-ascending-order="isAscendingOrder"
         ></WorksBlock>
-
-        <div style="height: 3000px"></div>
       </main>
     </div>
   </Transition>
@@ -131,6 +130,8 @@ function openMenu(event) {
 
 <style scoped lang="scss">
 @import "../assets/_vars.scss";
+
+$sort-menu-height: 50px;
 
 .works-view {
   width: 100%;
@@ -185,12 +186,14 @@ main {
   top: $navbar-height;
   right: 0;
   width: 100%;
+  height: $sort-menu-height;
   padding: 10px;
   background-color: $surface;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid $outline-variant;
+  z-index: 2;
 
   span {
     font-size: 1.4rem;
@@ -199,7 +202,7 @@ main {
   .works__sort-menu-categories-button {
     height: 100%;
     background-color: $primary;
-    padding: 10px;
+    padding: 0 10px;
     border-radius: 3px;
     color: $on-primary;
     font-weight: $font-medium;
@@ -338,6 +341,11 @@ select {
     font-size: 1.2rem;
     padding: 0;
   }
+}
+
+.works-view__sort-menu-margin {
+  height: $sort-menu-height;
+  width: 100%;
 }
 
 .view-enter-active,
