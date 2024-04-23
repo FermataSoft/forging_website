@@ -1,29 +1,47 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { ref, onBeforeMount } from "vue";
-import { Database } from "../api/db";
+import { useFetch } from "@vueuse/core";
 
 const route = useRoute();
-const db = new Database();
 const swiperEl = ref(null);
 
 const DBTableName = "images";
 const initialImageIndex = ref(); // define index according to id from db array
 const currentCategory = ref(route.query.category || "all");
-const content = ref({});
 const slides = ref([]);
+
+onBeforeMount(async () => {
+  const query = getDBQuery(currentCategory.value);
+  console.log(query);
+
+  const { isFetching, error, data } = await useFetch(
+    `/database.php?action=fetch-all&query=${query}`,
+    {
+      refetch: true,
+    }
+  )
+    .get()
+    .json();
+
+  slides.value = addVirtualSlides(data.value);
+  initialImageIndex.value = slides.value.findIndex(
+    (value) => value.id == route.hash.slice(1)
+  );
+  swiperEl.value.swiper.slideTo(initialImageIndex.value);
+});
 
 function getDBQuery(category) {
   if (category === "all") {
-    return `SELECT * FROM ${DBTableName};`;
+    return `SELECT * FROM ${DBTableName}`;
   }
-  return `SELECT * FROM ${DBTableName} WHERE category="${currentCategory.value}";`;
+  return `SELECT * FROM ${DBTableName} WHERE category="${currentCategory.value}"`;
 }
 
 function addVirtualSlides(content = []) {
   let result = [];
   if (!Array.isArray(content)) {
-    content = [content];
+    content = [...content];
   }
 
   for (let item of content) {
@@ -34,19 +52,6 @@ function addVirtualSlides(content = []) {
   }
   return result;
 }
-
-onBeforeMount(() => {
-  const query = getDBQuery(currentCategory.value);
-  db.getContent(query)
-    .then((result) => (content.value = result))
-    .then(() => {
-      slides.value = addVirtualSlides(content.value);
-      initialImageIndex.value = slides.value.findIndex(
-        (value) => value.id == route.hash.slice(1)
-      );
-      swiperEl.value.swiper.slideTo(initialImageIndex.value);
-    });
-});
 </script>
 
 <template>
@@ -103,7 +108,6 @@ swiper-container::part(button-prev),
 swiper-container::part(button-next) {
   color: $on-secondary;
   opacity: 0.3;
-  // width: 10%;
   height: 5rem;
   transition: all 0.3s ease;
   background-color: $secondary;

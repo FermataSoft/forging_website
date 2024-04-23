@@ -1,9 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import Pagination from "../../components/elements/Pagination.vue";
-import { Database } from "../../api/db";
-
-const db = new Database();
+import { useFetch } from "@vueuse/core";
 
 const props = defineProps({
   currentCategory: String,
@@ -15,10 +13,24 @@ const props = defineProps({
 const images = ref([]);
 let currentPage = ref(1);
 
-onMounted(() => {
-  db.getContent("SELECT * FROM images;").then((result) => {
-    images.value = db.contentToObj(result);
-  });
+onMounted(async () => {
+  const { isFetching, error, data } = await useFetch("database.php?action=fetch-all", {
+    refetch: true,
+  })
+  .get()
+  .json();
+  images.value = data.value;
+});
+
+// Normalize value according to column name in DB
+const normalizedSortBy = computed(() => {
+  switch (props.sortBy) {
+    case "uploadDateNewFirst":
+    case "uploadDateOldFirst":
+      return "uploadDate";
+    default:
+      return props.sortBy;
+  }
 });
 
 function sliceIntoChunks(arr, chunkSize) {
@@ -65,7 +77,7 @@ const imagesByCategoryCount = computed(() => {
 const sortedImages = computed(() => {
   return sortItems(
     [...imagesByCategory.value],
-    props.sortBy,
+    normalizedSortBy.value,
     props.isAscendingOrder
   );
 });
@@ -144,8 +156,6 @@ const devidedImages = computed(() => {
     }
 
     &:hover {
-      // transform: translateY(-3px);
-
       &::before {
         opacity: 1;
         transform: translateY(0);
