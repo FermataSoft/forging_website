@@ -40,7 +40,7 @@ async function submit() {
   const formData = toFormData(form.fields);
   form.sending = true;
 
-  let response = await fetch("sendmail.php", {
+  let response = await fetch("/api/sendmail.php", {
     method: "POST",
     body: formData,
   });
