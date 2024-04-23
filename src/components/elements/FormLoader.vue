@@ -17,6 +17,8 @@
 <style lang="scss" scoped>
 @import "@/assets/_vars.scss";
 
+$size: 10rem;
+
 .form-loader {
   display: block;
   width: 100%;
@@ -33,13 +35,12 @@
   .form-loader__background {
     width: 100%;
     height: 100%;
-    opacity: 0.7;
-    background-color: $surface-container-highest;
+    backdrop-filter: blur(1px);
   }
 
   .form-loader__animation {
-    width: 7rem;
-    height: 7rem;
+    width: $size;
+    height: $size;
     font-size: 10px;
     position: absolute;
     top: 50%;
