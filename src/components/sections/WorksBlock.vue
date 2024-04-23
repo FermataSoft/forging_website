@@ -14,7 +14,7 @@ const images = ref([]);
 let currentPage = ref(1);
 
 onMounted(async () => {
-  const { isFetching, error, data } = await useFetch("database.php?action=fetch-all", {
+  const { isFetching, error, data } = await useFetch("/api/database.php?action=fetch-all", {
     refetch: true,
   })
   .get()
