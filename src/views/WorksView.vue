@@ -12,7 +12,7 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
-const { windowWidth } = useWindowParamsStore();
+const windowWidth = ref(0);
 const categories = useWorksStore().categories;
 const currentCategorySelected = ref(route.query.category || "all");
 const itemsPerPage = ref(20);
@@ -35,18 +35,22 @@ watch(currentCategorySelected, (curr, prev) => {
 });
 
 function hideMenu(event) {
-  if (windowWidth < 630 && event.target !== BUTTON_MENU_OPEN.value) {
+  if (windowWidth.value < 630 && event.target !== BUTTON_MENU_OPEN.value) {
     isMenuOpened.value = false;
     document.body.classList.remove("--locked");
   }
 }
 
 function openMenu(event) {
-  if (windowWidth < 630) {
+  if (windowWidth.value < 630) {
     isMenuOpened.value = true;
     document.body.classList.add("--locked");
   }
 }
+
+useWindowParamsStore().$subscribe((mutation, state) => {
+  windowWidth.value = state.windowWidth;
+})
 </script>
 
 <template>
@@ -153,7 +157,7 @@ main {
   transition: all 0.3s ease;
 
   @include breakpoint(sm) {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: $navbar-height;
     width: 100%;
@@ -164,7 +168,11 @@ main {
     box-shadow: 0 0 10px #6e6e6e;
 
     &.menu-block--hidden {
-      left: -100%;
+      left: -102%;
+    }
+
+    @include device(screen) {
+      width: calc(100% - $scrollbar-width);
     }
 
     .menu-block__close-button {
@@ -176,9 +184,17 @@ main {
 .menu-block__close-button {
   position: absolute;
   display: none;
-  top: 20px;
-  right: 20px;
+  top: 15px;
+  right: 15px;
   background: none;
+  border-radius: 50%;
+  padding: 3px;
+
+  @include device(screen) {
+        &:hover {
+          background-color: $secondary;
+        }
+      }
 }
 
 .sort-menu {
@@ -187,7 +203,6 @@ main {
   right: 0;
   width: 100%;
   height: $sort-menu-height;
-  padding: 10px;
   background-color: $surface;
   display: flex;
   flex-direction: row;
@@ -202,13 +217,17 @@ main {
   .works__sort-menu-categories-button {
     height: 100%;
     background-color: $primary;
-    padding: 0 10px;
+    padding: 0 20px;
     border-radius: 3px;
     color: $on-primary;
     font-weight: $font-medium;
     font-family: $font-main;
     cursor: pointer;
     transition: all 0.2s;
+
+    @include breakpoint(xs) {
+      padding: 0 10px;
+    }
 
     @media screen {
       &:hover {
@@ -230,6 +249,7 @@ main {
     align-items: center;
     justify-content: end;
     gap: 10px;
+    padding: 10px;
 
     input[type="checkbox"] {
       width: 0;
@@ -242,6 +262,7 @@ main {
 @include device(screen) {
   body.--locked .sort-menu {
     right: 15px;
+    padding-left: 15px;
   }
 }
 
@@ -285,10 +306,6 @@ main {
       width: 3px;
       background-color: $secondary;
       z-index: 3;
-
-      // background-repeat: no-repeat;
-      // background-position: center center;
-      // background-size: 60% 60%;
       transition: all 0.3s ease;
     }
 
