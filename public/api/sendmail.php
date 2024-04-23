@@ -1,15 +1,15 @@
 <?php
-
+// $_SERVER['DOCUMENT_ROOT'] . "/pathTo"
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require './plugins/PHPMailer-master/src/Exception.php';
-require './plugins/PHPMailer-master/src/PHPMailer.php';
-require './plugins/PHPMailer-master/src/SMTP.php';
+require __DIR__ . '/plugins/PHPMailer-master/src/Exception.php';
+require __DIR__ . '/plugins/PHPMailer-master/src/PHPMailer.php';
+require __DIR__ . '/plugins/PHPMailer-master/src/SMTP.php';
 
 $mail = new PHPMailer(true);
 $mail->CharSet = 'UTF-8';
-$mail->setLanguage('ru', './plugins/PHPMailer-master/language/');
+$mail->setLanguage('ru', __DIR__ . '/plugins/PHPMailer-master/language/');
 $mail->IsHTML(true);
 
 try {
