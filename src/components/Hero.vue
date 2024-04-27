@@ -1,9 +1,4 @@
-<script setup>
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-</script>
+<script setup></script>
 
 <template>
   <div class="hero">
