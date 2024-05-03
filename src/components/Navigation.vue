@@ -1,10 +1,14 @@
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from "vue";
+import { ref, onMounted, onUnmounted, defineAsyncComponent } from "vue";
 import OrderButton from "./elements/OrderButton.vue";
 import LanguageDropdownMenu from "./LanguageDropdownMenu.vue";
 import { useModalsStore } from "@/stores/ModalsStore.js";
 import { useUIStore } from "@/stores/UIStore.js";
 import { useI18n } from "vue-i18n";
+
+const OrderModal = defineAsyncComponent(() =>
+  import("../components/modals/Order.vue")
+);
 
 const modalsStore = useModalsStore();
 const UIStore = useUIStore();
@@ -107,6 +111,9 @@ UIStore.$subscribe((mutation, state) => {
         "
         >{{ t("button-contact") }}</OrderButton
       >
+      <Teleport to="body">
+        <OrderModal></OrderModal>
+      </Teleport>
       <LanguageDropdownMenu
         class="navbar__language-dropdown-menu"
       ></LanguageDropdownMenu>
@@ -140,7 +147,7 @@ UIStore.$subscribe((mutation, state) => {
   @include device(touch) {
     width: 100%;
   }
-  
+
   .navbar__overlay {
     position: fixed;
     top: 0;
