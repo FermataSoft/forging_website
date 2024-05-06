@@ -1,29 +1,34 @@
 <script setup>
+import { watch } from "vue";
 import Feedback from "@/components/forms/Feedback.vue";
-import { useModalsStore } from "@/stores/ModalsStore.js";
 import SocialLinks from "../sections/SocialLinks.vue";
 import CloseModal from "../elements/CloseModal.vue";
 import { useWindowParamsStore } from "@/stores/WindowParamsStore.js";
 
-const modalsStore = useModalsStore();
 const windowParamsStore = useWindowParamsStore();
 
-modalsStore.$subscribe((mutation, state) => {
-  if (state.order) {
-    document.body.classList.add("--locked");
-  } else {
-    document.body.classList.remove("--locked");
-  }
+const props = defineProps({
+  isActive: Boolean,
 });
+
+const emits = defineEmits(["close"]);
+
+watch(
+  () => props.isActive,
+  (newVal) => {
+    if (newVal) {
+      document.body.classList.add("--locked");
+    } else {
+      document.body.classList.remove("--locked");
+    }
+  }
+);
 </script>
 
 <template>
   <Transition>
-    <div class="order" v-if="modalsStore.order">
-      <div
-        class="order__background"
-        @click.self="modalsStore.order = false"
-      ></div>
+    <div class="order" v-if="isActive">
+      <div class="order__background" @click.self="$emit('close')"></div>
 
       <div class="order__modal-wrapper">
         <div class="order__modal">
@@ -39,7 +44,7 @@ modalsStore.$subscribe((mutation, state) => {
         </div>
         <CloseModal
           class="order__close-button"
-          @click="modalsStore.order = false"
+          @click="$emit('close')"
           :invertColor="windowParamsStore.windowWidth <= 500"
         />
       </div>
@@ -63,6 +68,7 @@ modalsStore.$subscribe((mutation, state) => {
   width: 100%;
   height: 100svh;
   z-index: 5;
+  font-family: $font-main;
 }
 
 .order__background {
