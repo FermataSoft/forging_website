@@ -48,15 +48,16 @@ function animate() {
     let descriptionElements = gsap.utils.toArray(
       ".product-item__item-description"
     );
-    descriptionElements.forEach((element) => {
+    descriptionElements.forEach((element, index) => {
       gsap.from(element, {
         scrollTrigger: {
-          trigger: element,
+          trigger: images[index],
           start: "center 80%",
           end: "bottom center",
         },
         y: 20,
         opacity: 0,
+        delay: 0.3,
         duration: 0.3,
       });
     });
