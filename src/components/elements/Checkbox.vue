@@ -41,6 +41,8 @@ const props = defineProps({
 <style lang="scss" scoped>
 @import "../../assets/_vars.scss";
 
+$border-width: 1px;
+
 .checkbox-wrapper {
   --size: 20px;
   position: relative;
@@ -95,7 +97,7 @@ const props = defineProps({
   width: var(--size);
   margin-right: 8px;
   float: left;
-  border: 2px solid $outline;
+  border: $border-width solid $outline-darker;
   border-radius: 3px;
   transition: 0.15s all ease-out;
 }
@@ -112,7 +114,7 @@ const props = defineProps({
 }
 
 .checkbox-wrapper.invalid label::before {
-  border: 2px solid $error;
+  border: $border-width solid $error;
 }
 
 @-webkit-keyframes draw-checkbox-28 {
