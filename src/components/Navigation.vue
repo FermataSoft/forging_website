@@ -2,7 +2,6 @@
 import { ref, onMounted, onUnmounted, defineAsyncComponent } from "vue";
 import OrderButton from "./elements/OrderButton.vue";
 import LanguageDropdownMenu from "./LanguageDropdownMenu.vue";
-import { useModalsStore } from "@/stores/ModalsStore.js";
 import { useUIStore } from "@/stores/UIStore.js";
 import { useI18n } from "vue-i18n";
 
@@ -10,7 +9,7 @@ const OrderModal = defineAsyncComponent(() =>
   import("../components/modals/Order.vue")
 );
 
-const modalsStore = useModalsStore();
+const isModalActive = ref(false);
 const UIStore = useUIStore();
 const scrollPos = ref(0);
 const scrollTrigger = 80;
@@ -105,14 +104,14 @@ UIStore.$subscribe((mutation, state) => {
       <OrderButton
         @click="
           () => {
-            modalsStore.order = true;
+            isModalActive = true;
             UIStore.isBurgerMenuActive = false;
           }
         "
         >{{ t("button-contact") }}</OrderButton
       >
       <Teleport to="body">
-        <OrderModal></OrderModal>
+        <OrderModal :isActive="isModalActive" @close="isModalActive = false"></OrderModal>
       </Teleport>
       <LanguageDropdownMenu
         class="navbar__language-dropdown-menu"
