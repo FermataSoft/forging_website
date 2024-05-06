@@ -1,10 +1,9 @@
 <script setup>
-import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import ButtonSubmit from "../elements/ButtonAccent.vue";
 import Checkbox from "../elements/Checkbox.vue";
 import { useForm } from "../../composables/form";
-import FormLoader from "../elements/FormLoader.vue";
+import FormLoader from "../elements/Loader.vue";
 
 const { t } = useI18n();
 
@@ -252,8 +251,10 @@ function toFormData(obj = {}) {
 <style lang="scss" scoped>
 @import "../../assets/_vars.scss";
 
+$border-width: 1px;
+
 @mixin inputsVisual($height: 0) {
-  border: 2px solid $outline-variant;
+  border: $border-width solid $outline-variant;
   border-radius: 5px;
   width: 100%;
   min-height: 40px;
@@ -353,7 +354,7 @@ function toFormData(obj = {}) {
 
     input:focus,
     textarea:focus {
-      border: 2px solid $outline-darker;
+      border: $border-width solid $outline-darker;
       z-index: 1;
     }
 
@@ -387,7 +388,7 @@ function toFormData(obj = {}) {
 .invalid input:not(:focus),
 .invalid textarea:not(:focus) {
   border-color: $error !important;
-  border: 2px solid $error;
+  border: $border-width solid $error;
 }
 </style>
 
