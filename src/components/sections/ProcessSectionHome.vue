@@ -5,7 +5,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/all";
 import ProcessSlide from "../elements/ProcessSlide.vue";
+import { useWindowParamsStore } from "@/stores/WindowParamsStore.js";
 
+const windowParams = useWindowParamsStore();
 const { t } = useI18n();
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -37,7 +39,6 @@ const slides = ref([
   },
 ]);
 
-const actualParentContainerHeight = ref(0);
 const containerElement = ref(null);
 const headerElement = ref(null);
 let GSAPContext = null;
@@ -103,6 +104,12 @@ onUnmounted(() => {
   GSAPContext.revert(); // delete gsap
 });
 
+windowParams.$subscribe((mutation) => {
+  if (mutation.payload.windowHeight) {
+    ScrollTrigger.refresh();
+  }
+});
+
 const slideEls = ref([]);
 
 function animateSlides() {
@@ -143,14 +150,14 @@ function animateSlides() {
   ScrollTrigger.create({
     trigger: containerElement.value,
     start: "top top",
-    end: "+=" + containerElement.value.offsetHeight + " bottom",
+    end: "bottom bottom",
     snap: 1 / (panels.length - 1),
     onEnter: () => {
       observer.enable();
     },
     onLeave: () => {
       observer.disable();
-    }
+    },
   });
 }
 </script>
