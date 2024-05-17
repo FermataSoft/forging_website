@@ -8,6 +8,6 @@ This website is a freelance project. Website promotes forging company in Nesvizh
  - Scss
  - Vue Router
  - Pinia
+ - VueUse
  - Vue-i18n
- - Vee-validate
  - Vue-awesome-paginate
