@@ -120,38 +120,42 @@ function animateSlides() {
     type: "touch",
     momentum: (self) => Math.min(0.3, Math.abs(self.velocityY / 1000)),
   });
-  let scrollTween;
+  // let scrollTween;
 
   observer.disable();
 
-  function goToSection(panel, i) {
-    scrollTween = gsap.to(".process-section__slide", {
-      scrollTo: { y: i * panel.offsetHeight, autoKill: false },
-      duration: 1,
-      onComplete: () => {
-        scrollTween = null;
-      },
-      overwrite: true,
-    });
-  }
+  // function goToSection(panel, i) {
+  //   scrollTween = gsap.to(".process-section__slide", {
+  //     scrollTo: { y: i * panel.offsetHeight, autoKill: false },
+  //     duration: 1,
+  //     onComplete: () => {
+  //       scrollTween = null;
+  //     },
+  //     overwrite: true,
+  //   });
+  // }
 
-  panels.forEach((panel, i) => {
-    ScrollTrigger.create({
-      trigger: panel,
-      scrub: 0.1,
-      start: "top center",
-      end: "bottom 20%",
-      onToggle: (self) =>
-        self.isActive && !scrollTween && goToSection(panel, i),
-    });
-  });
+  // panels.forEach((panel, i) => {
+  //   ScrollTrigger.create({
+  //     trigger: panel,
+  //     scrub: 0.1,
+  //     start: "top center",
+  //     end: "bottom 20%",
+  //     onToggle: (self) =>
+  //       self.isActive && !scrollTween && goToSection(panel, i),
+  //   });
+  // });
 
   // just in case the user forces the scroll to an inbetween spot (like a momentum scroll on a Mac that ends AFTER the scrollTo tween finishes):
   ScrollTrigger.create({
     trigger: containerElement.value,
     start: "top top",
     end: "bottom bottom",
-    snap: 1 / (panels.length - 1),
+    snap: {
+      snapTo: 1 / (panels.length - 1),
+      duration: { min: 0.3, max: 0.7 },
+      ease: "power1.inOut"
+    },
     onEnter: () => {
       observer.enable();
     },
@@ -163,7 +167,7 @@ function animateSlides() {
 </script>
 
 <template>
-  <div class="process-section" ref="containerElement">
+  <div class=" process-section" ref="containerElement">
     <div class="process_section__header" ref="headerElement">
       <SectionHeader inverseColor noMargin>{{
         t("SectionProcessHeader")
