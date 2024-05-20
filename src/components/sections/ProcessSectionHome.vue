@@ -42,6 +42,16 @@ const slides = ref([
 const containerElement = ref(null);
 const headerElement = ref(null);
 let GSAPContext = null;
+const slideEls = ref([]);
+
+onMounted(() => {
+  initAnimations(containerElement.value, pinHeader, animateSlides); // order of animations is important
+  // actualParentContainerHeight.value = containerElement.value.offsetHeight;
+});
+
+onUnmounted(() => {
+  GSAPContext.revert(); // delete gsap
+});
 
 function initAnimations(context, ...animations) {
   GSAPContext = gsap.context((self) => {
@@ -63,103 +73,109 @@ function pinHeader() {
   });
 }
 
-/* function animateSlidesArchive() {
-  const slidesElements = gsap.utils.toArray(".process-section__slide");
-  const count = slidesElements.length - 1;
-  const duration = 1;
+let currentIndex = -1;
+let animating;
+let swipePanels;
+let intentObserver;
 
-  let tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".process-section__slides",
-      start: "-=100 top",
-      end: () =>
-        "+=" + document.querySelector(".process-section__slides").offsetHeight,
-      scrub: 1,
-      pin: true,
-      snap: {
-        snapTo: "labels",
-        duration: 0.5,
-        delay: 0.2,
-      },
+function animateSlides() {
+  swipePanels = gsap.utils.toArray(".process-section__slide");
+  // set second panel two initial 100%
+  gsap.set(".x-100", { yPercent: 100 });
+
+  // set z-index levels for the swipe panels
+  gsap.set(swipePanels, {
+    zIndex: (i) => i,
+  });
+
+  // create an observer and disable it to start
+  intentObserver = ScrollTrigger.observe({
+    type: "wheel,touch",
+    onUp: () => !animating && gotoPanel(currentIndex + 1, true),
+    onDown: () => !animating && gotoPanel(currentIndex - 1, false),
+    wheelSpeed: -1, // to match mobile behavior, invert the wheel speed
+    tolerance: 10,
+    preventDefault: true,
+    onPress: (self) => {
+      // on touch devices like iOS, if we want to prevent scrolling, we must call preventDefault() on the touchstart (Observer doesn't do that because that would also prevent side-scrolling which is undesirable in most cases)
+      ScrollTrigger.isTouch && self.event.preventDefault();
+    },
+  });
+  intentObserver.disable();
+
+  let preventScroll = ScrollTrigger.observe({
+    preventDefault: true,
+    type: "wheel,scroll",
+    allowClicks: true,
+    onEnable: (self) => (self.savedScroll = self.scrollY()), // save the scroll position
+    onChangeY: (self) => self.scrollY(self.savedScroll), // refuse to scroll
+  });
+  preventScroll.disable();
+
+  // pin swipe section and initiate observer
+  ScrollTrigger.create({
+    trigger: ".process-section__slides",
+    pin: true,
+    anticipatePin: true,
+    start: "top top",
+    end: "+=50%",
+    onEnter: (self) => {
+      if (preventScroll.isEnabled === false) {
+        self.scroll(self.start);
+        preventScroll.enable();
+        intentObserver.enable();
+        gotoPanel(currentIndex + 1, true);
+      }
+    },
+    onEnterBack: (self) => {
+      if (preventScroll.isEnabled === false) {
+        self.scroll(self.start);
+        preventScroll.enable();
+        intentObserver.enable();
+        gotoPanel(currentIndex - 1, false);
+      }
     },
   });
 
-  slidesElements.forEach((slide, i) =>
-    tl.add("label" + i, i * (duration / count))
-  );
+  // handle the panel swipe animations
+  function gotoPanel(index, isScrollingDown) {
+    animating = true;
+    // return to normal scroll if we're at the end or back up to the start
+    if (
+      (index === swipePanels.length && isScrollingDown) ||
+      (index === -1 && !isScrollingDown)
+    ) {
+      intentObserver.disable();
+      preventScroll.disable();
+      animating = false;
+      // now make it go 1px beyond in the correct direction so that it doesn't trigger onEnter/onEnterBack.
+      preventScroll.scrollY(
+        preventScroll.scrollY() + (index === swipePanels.length ? 1 : -1)
+      );
+      return;
+    }
 
-  tl.to(slidesElements, {
-    yPercent: -100 * count,
-    duration: duration,
-    ease: "none",
-  });
-} */
+    //   target the second panel, last panel?
+    let target = isScrollingDown
+      ? swipePanels[index]
+      : swipePanels[currentIndex];
 
-onMounted(() => {
-  initAnimations(containerElement.value, animateSlides, pinHeader); // order of animations is important
-  // actualParentContainerHeight.value = containerElement.value.offsetHeight;
-});
-
-onUnmounted(() => {
-  GSAPContext.revert(); // delete gsap
-});
+    gsap.to(target, {
+      yPercent: isScrollingDown ? 0 : 100,
+      duration: 0.75,
+      onComplete: () => {
+        animating = false;
+      },
+    });
+    currentIndex = index;
+  }
+}
 
 windowParams.$subscribe((mutation) => {
   if (mutation.payload.windowHeight) {
     ScrollTrigger.refresh();
   }
 });
-
-const slideEls = ref([]);
-
-function animateSlides() {
-  let current = 0;
-  let panels = gsap.utils.toArray(".process-section__slide");
-  let observer = ScrollTrigger.normalizeScroll({
-    preventDefault: true,
-    type: "touch",
-    momentum: (self) => Math.min(0.3, Math.abs(self.velocityY / 1000)),
-  });
-  let scrollTween;
-
-  observer.disable();
-
-  function goToSection(panel, i) {
-    scrollTween = gsap.to(".process-section__slide", {
-      scrollTo: { y: i * panel.offsetHeight, autoKill: false },
-      duration: 1,
-      onComplete: () => {
-        scrollTween = null;
-      },
-      overwrite: true,
-    });
-  }
-
-  panels.forEach((panel, i) => {
-    ScrollTrigger.create({
-      trigger: panel,
-      scrub: 0.1,
-      start: "top center",
-      end: "bottom 20%",
-      onToggle: (self) =>
-        self.isActive && !scrollTween && goToSection(panel, i),
-    });
-  });
-
-  // just in case the user forces the scroll to an inbetween spot (like a momentum scroll on a Mac that ends AFTER the scrollTo tween finishes):
-  ScrollTrigger.create({
-    trigger: containerElement.value,
-    start: "top top",
-    end: "bottom bottom",
-    snap: 1 / (panels.length - 1),
-    onEnter: () => {
-      observer.enable();
-    },
-    onLeave: () => {
-      observer.disable();
-    },
-  });
-}
 </script>
 
 <template>
@@ -170,8 +186,9 @@ function animateSlides() {
       }}</SectionHeader>
     </div>
     <div class="process-section__slides">
+      <div class="process-section__slide x-100"></div>
       <ProcessSlide
-        class="process-section__slide"
+        class="process-section__slide x-100"
         v-for="slide in slides"
         :key="slide.number"
         ref="slideEls"
@@ -179,6 +196,7 @@ function animateSlides() {
         :header="t(slide.headerI18n)"
         :image="slide.image"
       ></ProcessSlide>
+      <div class="process-section__slide x-100"></div>
     </div>
   </div>
 </template>
@@ -201,13 +219,16 @@ function animateSlides() {
 }
 
 .process-section__slides {
-  // height: calc(100vh - 70px);
-  // overflow: hidden;
-  scroll-snap-type: mandatory;
+  height: 100vh;
+  position: relative;
+  padding-top: 60px;
+  overflow: hidden;
+  // scroll-snap-type: mandatory;
 }
 
 .process-section__slide {
-  scroll-snap-align: center;
+  position: absolute;
+  // scroll-snap-align: center;
 }
 </style>
 

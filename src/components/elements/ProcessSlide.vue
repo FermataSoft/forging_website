@@ -3,8 +3,9 @@ import { ref, onMounted, onUnmounted, computed } from "vue";
 import SlidesDevider from "../elements/SlidesDevider.vue";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { Observer } from "gsap/all";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, Observer);
 
 const props = defineProps({
   number: {
@@ -42,15 +43,21 @@ function animate() {
   });
 
   GSAPContext = gsap.context((self) => {
-    gsap.from([numberElement.value, headerElement.value, imageElement.value], {
-      y: 100,
-      opacity: 0,
-      stagger: 0.3,
-      scrollTrigger: {
-        trigger: containerElement.value,
-        start: "center bottom",
-      },
-    });
+    if (ScrollTrigger.isInViewport(containerElement.value)) {
+      gsap.from(
+        [numberElement.value, headerElement.value, imageElement.value],
+        {
+          y: 100,
+          opacity: 0,
+          stagger: 0.3,
+          // scrollTrigger: {
+          //   trigger: containerElement.value,
+          //   start: "center bottom",
+          //   markers: true,
+          // },
+        }
+      ).play();
+    }
   }, containerElement.value);
 }
 </script>
