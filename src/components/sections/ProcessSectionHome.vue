@@ -54,7 +54,7 @@ function initAnimations(context, ...animations) {
 function pinHeader() {
   ScrollTrigger.create({
     trigger: headerElement.value,
-    start: "-15px top",
+    start: "top top",
     end: () => "+=" + containerElement.value.offsetHeight + " bottom",
     pin: headerElement.value,
     pinnedContainer: containerElement.value,
@@ -63,41 +63,8 @@ function pinHeader() {
   });
 }
 
-/* function animateSlidesArchive() {
-  const slidesElements = gsap.utils.toArray(".process-section__slide");
-  const count = slidesElements.length - 1;
-  const duration = 1;
-
-  let tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".process-section__slides",
-      start: "-=100 top",
-      end: () =>
-        "+=" + document.querySelector(".process-section__slides").offsetHeight,
-      scrub: 1,
-      pin: true,
-      snap: {
-        snapTo: "labels",
-        duration: 0.5,
-        delay: 0.2,
-      },
-    },
-  });
-
-  slidesElements.forEach((slide, i) =>
-    tl.add("label" + i, i * (duration / count))
-  );
-
-  tl.to(slidesElements, {
-    yPercent: -100 * count,
-    duration: duration,
-    ease: "none",
-  });
-} */
-
 onMounted(() => {
   initAnimations(containerElement.value, animateSlides, pinHeader); // order of animations is important
-  // actualParentContainerHeight.value = containerElement.value.offsetHeight;
 });
 
 onUnmounted(() => {
@@ -113,67 +80,47 @@ windowParams.$subscribe((mutation) => {
 const slideEls = ref([]);
 
 function animateSlides() {
-  let current = 0;
-  let panels = gsap.utils.toArray(".process-section__slide");
-  let observer = ScrollTrigger.normalizeScroll({
-    preventDefault: true,
-    type: "touch",
-    momentum: (self) => Math.min(0.3, Math.abs(self.velocityY / 1000)),
+  let sections = gsap.utils.toArray(".process-section__slide");
+  let count = sections.length - 1;
+  let duration = 1;
+
+  let tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: containerElement.value,
+      pin: true,
+      scrub: 1,
+      start: "top top",
+      end: () =>
+        "+=" + document.querySelector(".process-section__slides").offsetWidth,
+      snap: {
+        snapTo: "labelsDirectional", // 1 / (sections.length - 1)
+        duration: { min: 0.3, max: 0.7 },
+        ease: "power1.inOut",
+      },
+    },
   });
-  // let scrollTween;
 
-  observer.disable();
+  sections.forEach((section, i) => tl.add("label" + i, i * (duration / count)));
 
-  // function goToSection(panel, i) {
-  //   scrollTween = gsap.to(".process-section__slide", {
-  //     scrollTo: { y: i * panel.offsetHeight, autoKill: false },
-  //     duration: 1,
-  //     onComplete: () => {
-  //       scrollTween = null;
-  //     },
-  //     overwrite: true,
-  //   });
-  // }
-
-  // panels.forEach((panel, i) => {
-  //   ScrollTrigger.create({
-  //     trigger: panel,
-  //     scrub: 0.1,
-  //     start: "top center",
-  //     end: "bottom 20%",
-  //     onToggle: (self) =>
-  //       self.isActive && !scrollTween && goToSection(panel, i),
-  //   });
-  // });
-
-  // just in case the user forces the scroll to an inbetween spot (like a momentum scroll on a Mac that ends AFTER the scrollTo tween finishes):
-  ScrollTrigger.create({
-    trigger: containerElement.value,
-    start: "top top",
-    end: "bottom bottom",
-    snap: {
-      snapTo: 1 / (panels.length - 1),
-      duration: { min: 0.3, max: 0.7 },
-      ease: "power1.inOut"
-    },
-    onEnter: () => {
-      observer.enable();
-    },
-    onLeave: () => {
-      observer.disable();
-    },
+  tl.to(sections, {
+    xPercent: -100 * count,
+    duration: duration,
+    ease: "none",
   });
 }
 </script>
 
 <template>
-  <div class=" process-section" ref="containerElement">
+  <div class="process-section" ref="containerElement">
     <div class="process_section__header" ref="headerElement">
       <SectionHeader inverseColor noMargin>{{
         t("SectionProcessHeader")
       }}</SectionHeader>
     </div>
-    <div class="process-section__slides">
+    <div
+      class="process-section__slides"
+      :style="{ width: slides.length * 100 + '%' }"
+    >
       <ProcessSlide
         class="process-section__slide"
         v-for="slide in slides"
@@ -191,7 +138,7 @@ function animateSlides() {
 @import "../../assets/vars";
 .process-section {
   width: 100%;
-  // height: 500%;
+  overflow: hidden;
   background-color: $inverse-surface;
   margin-top: 50px;
 }
@@ -205,13 +152,9 @@ function animateSlides() {
 }
 
 .process-section__slides {
-  // height: calc(100vh - 70px);
-  // overflow: hidden;
-  scroll-snap-type: mandatory;
-}
-
-.process-section__slide {
-  scroll-snap-align: center;
+  height: calc(100vh - 70px);
+  display: flex;
+  flex-wrap: nowrap;
 }
 </style>
 
