@@ -2,17 +2,23 @@
 import { ref, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { useFetch } from "@vueuse/core";
 import SectionHeader from "../components/elements/SectionHeader.vue";
 import ArticleCard from "../components/elements/ArticleCard.vue";
 
-import { Database } from "../api/db";
-
 const { t } = useI18n();
 const content = ref([]);
-const db = new Database();
 
 onBeforeMount(async () => {
-  content.value = await db.getContent("SELECT * FROM articles;");
+  const { isFetching, error, data } = await useFetch(
+    "/api/database.php?action=fetch-all",
+    {
+      refetch: true,
+    }
+  )
+    .get()
+    .json();
+  content.value = data.value;
 });
 </script>
 
