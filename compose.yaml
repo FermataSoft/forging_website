@@ -5,11 +5,11 @@ networks:
     name: network
 
 services:
-  app:
-    container_name: app
-    build:
-      context: .
-      dockerfile: /docker/node/Dockerfile
+  # app:
+  #   container_name: app
+  #   build:
+  #     context: .
+  #     dockerfile: /docker/node/Dockerfile
     # volumes:
     #   - ./dist:/usr/share/nginx/html
     # ports:
@@ -26,7 +26,7 @@ services:
       dockerfile: /docker/php/Dockerfile
     volumes:
       - ./dist:/usr/share/nginx/html
-      - ./app/php-ini:/usr/local/etc/php/custom.d
+      - ./docker/php:/usr/local/etc/php/custom.d
     environment:
       PHP_INI_SCAN_DIR: /usr/local/etc/php/custom.d:/usr/local/etc/php/conf.d
     networks:
@@ -44,7 +44,7 @@ services:
     networks:
       - network
     depends_on:
-      - app
+      # - app
       - mysql
 
   mysql:
