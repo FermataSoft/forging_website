@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="btn">
+  <div class="btn --unselectable">
     <slot></slot>
   </div>
 </template>
