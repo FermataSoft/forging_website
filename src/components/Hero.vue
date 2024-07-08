@@ -69,8 +69,8 @@
       font-weight: 700;
       line-height: 11rem;
       color: $primary;
-      filter: drop-shadow(20px 20px 40px $primary-opacity);
-      -webkit-filter: drop-shadow(20px 20px 40px $primary-opacity);
+      filter: drop-shadow(20px 20px 30px $primary-opacity);
+      // -webkit-filter: drop-shadow(20px 20px 40px $primary-opacity);
       // background: -webkit-linear-gradient(180deg, $tertiary, $primary);
       // -webkit-background-clip: text;
       // -webkit-text-fill-color: transparent;
@@ -89,8 +89,8 @@
       font-size: 3.4rem;
       font-family: "Play", sans-serif;
       color: $tertiary;
+      // -webkit-filter: drop-shadow(5px 0px 10px $secondary);
       filter: drop-shadow(5px 0px 10px $secondary);
-      -webkit-filter: drop-shadow(5px 0px 10px $secondary);
 
       @include breakpoint(lg) {
         font-size: 2.5rem;
