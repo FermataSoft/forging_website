@@ -88,6 +88,8 @@ function addVirtualSlides(content = []) {
 @import "../assets/_vars.scss";
 .image-view {
   background: #000;
+  height: 100vh;
+  width: 100%;
 }
 
 .swiper-slide {
