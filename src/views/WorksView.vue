@@ -62,7 +62,7 @@ useWindowParamsStore().$subscribe((mutation, state) => {
             <li v-for="item in categories" class="menu__checkbox-item">
               <span class="menu__checkbox"></span>
               <input
-                class="_invisible"
+                class="--invisible"
                 type="radio"
                 name="menu"
                 :checked="item === currentCategorySelected"
