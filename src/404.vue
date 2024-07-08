@@ -15,6 +15,8 @@ const { t } = useI18n();
 <style lang="scss" scoped>
 main {
   display: flex;
+  height: 100vh;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
