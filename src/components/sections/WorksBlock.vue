@@ -1,7 +1,8 @@
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onBeforeMount } from "vue";
 import Pagination from "../../components/elements/Pagination.vue";
 import { useFetch } from "@vueuse/core";
+import AsyncImg from "../elements/AsyncImg.vue";
 
 const props = defineProps({
   currentCategory: String,
@@ -13,13 +14,17 @@ const props = defineProps({
 const images = ref([]);
 let currentPage = ref(1);
 
-onMounted(async () => {
-  const { isFetching, error, data } = await useFetch("/api/database.php?action=fetch-all", {
-    refetch: true,
-  })
-  .get()
-  .json();
+onBeforeMount(async () => {
+  const { isFetching, error, data } = await useFetch(
+    "/api/database.php?action=fetch-all",
+    {
+      refetch: true,
+    }
+  )
+    .get()
+    .json();
   images.value = data.value;
+    // images.value = (await import("/src/api/images.json")).default;
 });
 
 // Normalize value according to column name in DB
@@ -100,7 +105,10 @@ const devidedImages = computed(() => {
       :key="item.id"
     >
       <Transition name="fade-slide-up" appear mode="out-in">
-        <img :src="'/images/' + item.srcFilename" :alt="item.srcName" />
+          <AsyncImg
+            :src="'/images/' + item.srcFilename"
+            :alt="item.previewFilename"
+          ></AsyncImg>
       </Transition>
     </RouterLink>
   </div>
