@@ -91,7 +91,7 @@ body::-webkit-scrollbar-corner {
   user-select: none;
 }
 
-._invisible {
+.--invisible {
   position: absolute;
   z-index: -1;
   opacity: 0;
