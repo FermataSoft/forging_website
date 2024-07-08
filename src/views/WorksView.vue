@@ -191,10 +191,10 @@ main {
   padding: 3px;
 
   @include device(screen) {
-        &:hover {
-          background-color: $secondary;
-        }
-      }
+    &:hover {
+      background-color: $secondary;
+    }
+  }
 }
 
 .sort-menu {
