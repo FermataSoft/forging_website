@@ -1,14 +1,14 @@
 <script setup></script>
 
 <template>
-  <div class="form-loader">
-    <div class="form-loader__background"></div>
-    <div class="form-loader__animation">
-      <div class="form-loader__face">
-        <div class="form__circle"></div>
+  <div class="loader">
+    <div class="loader__background"></div>
+    <div class="loader__animation">
+      <div class="loader__face">
+        <div class="loader__circle"></div>
       </div>
-      <div class="form-loader__face">
-        <div class="form__circle"></div>
+      <div class="loader__face">
+        <div class="loader__circle"></div>
       </div>
     </div>
   </div>
@@ -19,7 +19,7 @@
 
 $size: 10rem;
 
-.form-loader {
+.loader {
   display: block;
   width: 100%;
   height: 100%;
@@ -32,13 +32,13 @@ $size: 10rem;
   // opacity: 0;
   // visibility: hidden;
 
-  .form-loader__background {
+  .loader__background {
     width: 100%;
     height: 100%;
     backdrop-filter: blur(1px);
   }
 
-  .form-loader__animation {
+  .loader__animation {
     width: $size;
     height: $size;
     font-size: 10px;
@@ -51,14 +51,14 @@ $size: 10rem;
     justify-content: center;
     z-index: 4;
 
-    .form-loader__face {
+    .loader__face {
       position: absolute;
       border-radius: 50%;
       border-style: solid;
       animation: animate 3s linear infinite;
     }
 
-    .form-loader__face:nth-child(1) {
+    .loader__face:nth-child(1) {
       width: 100%;
       height: 100%;
       color: $tertiary;
@@ -68,7 +68,7 @@ $size: 10rem;
       animation-direction: normal;
     }
 
-    .form-loader__face:nth-child(2) {
+    .loader__face:nth-child(2) {
       width: 45%;
       height: 45%;
       color: $primary;
@@ -78,7 +78,7 @@ $size: 10rem;
       animation-direction: reverse;
     }
 
-    .form-loader__face .form__circle {
+    .loader__face .loader__circle {
       position: absolute;
       width: 50%;
       height: 0.1em;
@@ -89,7 +89,7 @@ $size: 10rem;
       transform-origin: left;
     }
 
-    .form-loader__face .form__circle::before {
+    .loader__face .loader__circle::before {
       position: absolute;
       top: -0.5em;
       right: -0.6em;
