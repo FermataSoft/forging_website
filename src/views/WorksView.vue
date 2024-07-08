@@ -2,6 +2,7 @@
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import CloseModal from "@/components/elements/CloseModal.vue";
+import WorksBlock from "@/components/sections/WorksBlock.vue";
 import { useI18n } from "vue-i18n";
 import { useWorksStore } from "../stores/WorksStore";
 import { useWindowParamsStore } from "../stores/WindowParamsStore";

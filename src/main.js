@@ -1,4 +1,4 @@
-import { createApp, ref } from "vue";
+import { createApp, defineAsyncComponent } from "vue";
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
 
@@ -17,6 +17,7 @@ const app = createApp(App);
 app.component("SectionHeader", SectionHeader)
 app.component("ButtonClose", ButtonClose)
 app.component("Devider", Devider)
+app.component("Loader", defineAsyncComponent(() => import("./components/elements/Loader.vue")))
 
 import ru from "./locales/ru-RU.json";
 import by from "./locales/by-BY.json";
