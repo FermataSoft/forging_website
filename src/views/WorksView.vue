@@ -1,8 +1,6 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import IconSort from "../components/elements/IconSort.vue";
-import WorksBlock from "../components/sections/WorksBlock.vue";
 import CloseModal from "@/components/elements/CloseModal.vue";
 import { useI18n } from "vue-i18n";
 import { useWorksStore } from "../stores/WorksStore";
@@ -50,7 +48,7 @@ function openMenu(event) {
 
 useWindowParamsStore().$subscribe((mutation, state) => {
   windowWidth.value = state.windowWidth;
-})
+});
 </script>
 
 <template>
@@ -113,7 +111,6 @@ useWindowParamsStore().$subscribe((mutation, state) => {
                   id="sort-order"
                   v-model="isAscendingOrder"
                 />
-                <!-- <IconSort :is-ascending-order="isAscendingOrder"></IconSort> -->
               </label>
             </div>
           </div>
@@ -338,12 +335,6 @@ main {
     input[type="radio"]:checked ~ .menu__background {
       width: 100%;
     }
-
-    /*     input[type='radio']:checked + .menu__checkbox {
-      background-color: $on-surface;
-      border-color: $on-surface;
-      background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 30 30' xml:space='preserve' fill='none' stroke='%23fff' stroke-width='8px' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='5,16.6 12.5,23 25.4,7 '/%3E%3C/svg%3E");
-    } */
   }
 }
 
