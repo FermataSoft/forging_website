@@ -4,7 +4,7 @@ try {
   $user = "root";
   $password = "root";
   // $connect = new PDO("mysql:host=localhost;dbname=***REMOVED***", "***REMOVED***", "***REMOVED***");
-  $connect = new PDO("mysql:host=mysql;dbname={$dbName}", $user, $password);
+  $connect = new PDO("mysql:host=mysql;dbname={$dbName};charset=utf8", $user, $password);
 
   $received_data = json_decode(file_get_contents("php://input"), true);
 
