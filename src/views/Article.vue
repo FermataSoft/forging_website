@@ -1,60 +1,56 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeMount, reactive } from "vue";
 import { useRoute } from "vue-router";
 import ButtonGoBack from "../components/elements/ButtonGoBack.vue";
-import { Database } from "../api/db";
+import { useFetch } from "@vueuse/core";
 
 const routePath = useRoute().path;
 const currentArticleID = ref(routePath.slice(routePath.lastIndexOf("/") + 1));
-const db = new Database();
 
-const content = ref({
+const content = reactive({
   count: 0,
   IDs: [],
   current: {},
-  prev: {},
-  next: {},
+  prevID: null,
+  nextID: null,
 });
 
 const isPrevArticleShow = ref(false);
 const isNextArticleShow = ref(false);
 
+onBeforeMount(async () => {
+  content.IDs = await getDataFromDB(
+    "/api/articles.php?query=SELECT id FROM articles"
+  ).then((result) => result.map((value) => value["id"]));
+  content.count = content.IDs.length;
+
+  content.current =
+    await getDataFromDB(`/api/articles.php?action=fetch-one&query=SELECT id, title, html_text, creation_date
+  FROM articles WHERE id = ${currentArticleID.value};`).then(
+      (result) => result[0]
+    );
+
+  content.prevID = definePrevId(content.IDs, currentArticleID.value);
+
+  content.nextID = defineNextId(content.IDs, currentArticleID.value);
+});
+
 onMounted(async () => {
-  content.value.IDs = await db
-    .getContent(`SELECT id FROM articles;`)
-    .then((result) => {
-      return result.map((value) => value["id"]);
-    });
-
-  content.value.count = content.value.IDs.length;
-
-  content.value.current = await db.getContent(
-    `SELECT id, title, html_text, creation_date 
-    FROM articles WHERE id = ${currentArticleID.value};`
-  );
-
-  content.value.prev = await db.getContent(
-    `SELECT id, title FROM articles WHERE id = ${definePrevId(
-      content.value.IDs,
-      currentArticleID.value
-    )}`
-  );
-
-  content.value.next = await db.getContent(
-    `SELECT id, title FROM articles WHERE id = ${defineNextId(
-      content.value.IDs,
-      currentArticleID.value
-    )};`
-  );
-
   checkLessTwoArticles();
 });
 
+async function getDataFromDB(query) {
+  const { isFetching, error, data } = await useFetch(query, { refetch: true })
+    .get()
+    .json();
+  return data.value;
+}
+
 function checkLessTwoArticles() {
-  if (content.value.next["id"] !== content.value.prev["id"]) {
+  if (content.nextID !== content.prevID) {
     isPrevArticleShow.value = true;
   }
-  if (content.value.count > 1) isNextArticleShow.value = true;
+  if (content.count > 1) isNextArticleShow.value = true;
 }
 
 function defineNextId(elementsID = [], currentID) {
@@ -79,7 +75,7 @@ function definePrevId(elementsID = [], currentID) {
 <template>
   <div class="article">
     <div class="article__top-bar">
-      <button-go-back></button-go-back>
+      <ButtonGoBack></ButtonGoBack>
     </div>
 
     <Suspense>
@@ -91,22 +87,22 @@ function definePrevId(elementsID = [], currentID) {
           }}</time>
         </div>
         <div class="article__content-block">
-          <!-- <pre>{{ content.current.html_text }}</pre> -->
           <p v-html="content.current.html_text"></p>
-        </div></div
-    ></Suspense>
+        </div>
+      </div>
+    </Suspense>
 
     <div class="article__navigation-block">
       <router-link
         class="article__navigation-item article__navigation-prev"
-        :to="`/articles/${content.prev['id']}`"
+        :to="`/articles/${content.prevID}`"
         v-show="isPrevArticleShow"
       >
         ← Предыдущая статья
       </router-link>
       <router-link
         class="article__navigation-item article__navigation-next"
-        :to="`/articles/${content.next['id']}`"
+        :to="`/articles/${content.nextID}`"
         v-show="isNextArticleShow"
       >
         <span>Следующая статья →</span>
