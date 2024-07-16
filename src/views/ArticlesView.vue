@@ -11,7 +11,7 @@ const content = ref([]);
 
 onBeforeMount(async () => {
   const { isFetching, error, data } = await useFetch(
-    "/api/database.php?action=fetch-all",
+    "/api/articles.php?query=SELECT id, title, description, creation_date FROM articles",
     {
       refetch: true,
     }

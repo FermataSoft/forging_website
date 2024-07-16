@@ -16,7 +16,7 @@ let currentPage = ref(1);
 
 onBeforeMount(async () => {
   const { isFetching, error, data } = await useFetch(
-    "/api/database.php?action=fetch-all",
+    "/api/images.php?action=fetch-all",
     {
       refetch: true,
     }
