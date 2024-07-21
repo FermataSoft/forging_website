@@ -26,9 +26,9 @@ coverage
 *.njsproj
 *.sln
 *.sw?
-.env
+.env*
+!.env.example
 RUN.bat
-.env
 
 *.webp
 *.jpg
