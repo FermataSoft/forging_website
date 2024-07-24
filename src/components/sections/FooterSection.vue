@@ -49,7 +49,7 @@ const isPositionFixed = computed(() => windowHeight.value < pageHeight.value);
             <div class="footer__text-block">
               <h2>Email</h2>
               <p>
-                <a href="mailto:***REMOVED***">email@test.ru</a>
+                <a href="mailto:subneck@gmail.com">email@test.ru</a>
               </p>
             </div>
           </div>
