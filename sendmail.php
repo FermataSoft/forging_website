@@ -15,7 +15,7 @@ $mail->IsHTML(true);
 // От кого письмо
 $mail->setFrom('officialpage@andrvi.com', 'AndrVi Official Page');
 // Кому отправить
-$mail->addAddress('***REMOVED***');
+$mail->addAddress('subneck@gmail.com');
 // Тема письма
 $mail->Subject = 'AndrVi Official Page [SubmitForm]';
 
