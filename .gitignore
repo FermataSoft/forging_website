@@ -14,28 +14,28 @@ dist-ssr
 coverage
 *.local
 
-/cypress/videos/
-/cypress/screenshots/
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-.env
-RUN.bat
-.env
 
+# Images
 *.webp
 *.jpg
 *.jpeg
 *.png
+
+# Secrets
+db_root_password.txt
+
+# Other
+.idea
 idea/websiteName.md
 bugs
 plugins
-test.js
 app
+psd
