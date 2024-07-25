@@ -3,7 +3,6 @@ try {
   $dbName = getenv("DB_NAME");
   $user = getenv("DB_USER");
   $password = getenv("DB_PASSWORD");
-  echo $password;
   $host = getenv("DB_HOST");
   $connect = new PDO("mysql:host={$host};dbname={$dbName};charset=utf8", $user, $password);
   $received_data = json_decode(file_get_contents("php://input"), true);

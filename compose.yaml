@@ -33,11 +33,8 @@ services:
       - ./docker/php:/usr/local/etc/php/custom.d
     environment:
       PHP_INI_SCAN_DIR: /usr/local/etc/php/custom.d:/usr/local/etc/php/conf.d
-      DB_PASSWORD_FILE: /run/secrets/db_root_password
-    # env_file:
-    #   - ./.env.development.local
-    secrets:
-      - db_root_password
+    env_file:
+      - ./.env.development.local
     networks:
       - network
 
