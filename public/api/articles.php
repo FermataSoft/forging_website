@@ -3,7 +3,7 @@ try {
   $dbName = "interiorsteel";
   $user = "root";
   $password = "root";
-  // $connect = new PDO("mysql:host=localhost;dbname=subneckgm2", "subneckgm2", "25Legansubn");
+  // $connect = new PDO("mysql:host=localhost;dbname=***REMOVED***", "***REMOVED***", "***REMOVED***");
   $connect = new PDO("mysql:host=mysql;dbname={$dbName}", $user, $password);
 
   $received_data = json_decode(file_get_contents("php://input"), true);
