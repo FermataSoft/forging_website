@@ -31,13 +31,12 @@ const router = createRouter({
       name: "articles",
       meta: { layout: PageLayout, transition: "fade" },
       component: () => import("../views/ArticlesView.vue"),
-      children: [
-        {
-          path: ":id",
-          meta: { layout: PageLayout, transition: "fade" },
-          component: () => import('../views/Article.vue'),
-        }
-      ]
+    },
+    {
+      path: "/articles/:id",
+      name: "article",
+      meta: { layout: PageLayout, transition: "fade" },
+      component: () => import("../views/Article.vue"),
     },
     {
       path: "/contacts",
