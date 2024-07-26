@@ -12,19 +12,26 @@ $mail->CharSet = 'UTF-8';
 $mail->setLanguage('ru', __DIR__ . '/plugins/PHPMailer-master/language/');
 $mail->IsHTML(true);
 
+$address_from = getenv('MAIL_ADDRESS_FROM');
+$address_to   = getenv('MAIL_ADDRESS_TO');
+$host         = getenv('MAIL_HOST');
+$username     = getenv('MAIL_USERNAME');
+$password     = getenv('MAIL_PASSWORD');
+$port         = getenv('MAIL_PORT');
+
 try {
     $mail->isSMTP();
-    $mail->Host       = 'smtp.yandex.ru';
+    $mail->Host       = $host;
     $mail->SMTPAuth   = true;
-    $mail->Username   = '***REMOVED***';
-    $mail->Password   = '***REMOVED***';
+    $mail->Username   = $username;
+    $mail->Password   = $password;
     $mail->SMTPSecure = 'ssl';
-    $mail->Port       = 465;
+    $mail->Port       = $port;
 
     // От кого письмо
-    $mail->setFrom('***REMOVED***', 'Интерьер Сталь');
+    $mail->setFrom($address_from, 'Интерьер Сталь');
     // Кому отправить
-    $mail->addAddress('***REMOVED***');
+    $mail->addAddress($address_to);
 
     // Content
     $mail->isHTML(true);
