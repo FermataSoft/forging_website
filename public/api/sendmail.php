@@ -16,15 +16,15 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.yandex.ru';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'subneck@yandex.by';
-    $mail->Password   = 'MAIL_PASSWORD';
+    $mail->Username   = '***REMOVED***';
+    $mail->Password   = '***REMOVED***';
     $mail->SMTPSecure = 'ssl';
     $mail->Port       = 465;
 
     // От кого письмо
-    $mail->setFrom('subneck@yandex.by', 'Интерьер Сталь');
+    $mail->setFrom('***REMOVED***', 'Интерьер Сталь');
     // Кому отправить
-    $mail->addAddress('subneck@gmail.com');
+    $mail->addAddress('***REMOVED***');
 
     // Content
     $mail->isHTML(true);
