@@ -14,7 +14,7 @@ const slides = ref([]);
 onBeforeMount(async () => {
   const query = getDBQuery(currentCategory.value);
   const { isFetching, error, data } = await useFetch(
-    `/api/database.php?action=fetch-all&query=${query}`,
+    `/api/images.php?action=fetch-all&query=${query}`,
     {
       refetch: true,
     }
