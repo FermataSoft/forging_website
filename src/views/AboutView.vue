@@ -1,5 +1,8 @@
 <script setup>
 import SectionHeader from "../components/elements/SectionHeader.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -18,8 +21,7 @@ import SectionHeader from "../components/elements/SectionHeader.vue";
           <img src="../images/hero/Main-page_Image_3.webp" alt="" />
         </div>
         <p class="about-view__content-slide-title">
-          Мы - команда профессионалов, знающих свое дело. Мы занимаемся
-          изготовлением лестниц, металлокаркасов и различных кованных изделий на заказ более 10 лет.
+          {{ t("about-view__content-slide-title-1") }}
         </p>
       </div>
       <div class="about-view__content-slide">
@@ -27,8 +29,7 @@ import SectionHeader from "../components/elements/SectionHeader.vue";
           <img src="../images/hero/Main-page_Image_1.webp" alt="" />
         </div>
         <p class="about-view__content-slide-title">
-          Наша мастерская оснащена современным оборудованием и инструментами,
-          которые позволяют нам создавать уникальные и качественные изделия для любых целей и на любой вкус.
+          {{ t("about-view__content-slide-title-2") }}
         </p>
       </div>
       <div class="about-view__content-slide">
@@ -36,8 +37,7 @@ import SectionHeader from "../components/elements/SectionHeader.vue";
           <img src="../images/hero/Main-page_Image_4.webp" alt="" />
         </div>
         <h2 class="about-view__content-slide-title">
-          Мы учитываем все пожелания наших клиентов, а также предлагаем свои
-          идеи и рекомендации по дизайну и исполнению кованных изделий.
+          {{ t("about-view__content-slide-title-3") }}
         </h2>
       </div>
       <div class="about-view__content-slide">
@@ -45,8 +45,7 @@ import SectionHeader from "../components/elements/SectionHeader.vue";
           <img src="../images/hero/Main-page_Image_5.jpg" alt="" />
         </div>
         <p class="about-view__content-slide-title">
-          Мы гарантируем высокое качество нашей работы, соблюдение сроков и
-          разумные цены.
+          {{ t("about-view__content-slide-title-4") }}
         </p>
       </div>
     </div>
@@ -149,3 +148,20 @@ import SectionHeader from "../components/elements/SectionHeader.vue";
   }
 }
 </style>
+
+<i18n>
+  {
+    ru-RU: {
+      "about-view__content-slide-title-1": "Мы – команда профессионалов, знающих свое дело. Мы занимаемся изготовлением лестниц, металлокаркасов и различных кованных изделий на заказ более 10 лет.",
+      "about-view__content-slide-title-2":  "Наша мастерская оснащена современным оборудованием и инструментами, которые позволяют нам создавать уникальные и качественные изделия для любых целей и на любой вкус.",
+      "about-view__content-slide-title-3":  "Мы учитываем все пожелания наших клиентов, а также предлагаем свои идеи и рекомендации по дизайну и исполнению кованных изделий.",
+      "about-view__content-slide-title-4":  "Мы гарантируем высокое качество нашей работы, соблюдение сроков и разумные цены.",
+    },
+    by-BY: {
+      "about-view__content-slide-title-1":  "Мы – каманда прафесіяналаў, якія ведаюць сваю справу. Мы займаемся вытворчасцю лесвіц, металакаркасаў і розных каваных вырабаў на заказ больш за 10 гадоў.",
+      "about-view__content-slide-title-2":  "Наша майстэрня абсталявана сучасным абсталяваннем і інструментамі, якія дазваляюць нам ствараць унікальныя і якасныя вырабы для любых мэт і на любы густ.",
+      "about-view__content-slide-title-3":  "Мы ўлічваем усе пажаданні нашых кліентаў, а таксама прапануем свае ідэі і рэкамендацыі па дызайне і выкананню каваных вырабаў.",
+      "about-view__content-slide-title-4":  "Мы гарантуем высокую якасць нашай працы, своечасовае выкананне і разумныя кошты.",
+    }
+  }
+</i18n>
