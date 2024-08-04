@@ -117,15 +117,15 @@ const swiperEl = ref(null);
       "Measurement": "Снятие необходимых размеров",
       "PreliminaryDesign": "Создание дизайна и предварительное проектирование",
       "3DVisualization": "Корректировка проекта и отрисовка в 3D",
-      "Forging": "Изготовление кованого изделия",
+      "Forging": "Изготовление изделия из металла",
       "Delivery": "Доставка и монтаж"
     },
     "by-BY": {
-      "Measurement": "",
-      "PreliminaryDesign": "",
-      "3DVisualization": "",
-      "Forging": "",
-      "Delivery": ""
+      "Measurement": "Атрыманне неабходных памераў",
+      "PreliminaryDesign": "Стварэнне дызайну і папярэдняе праектаванне",
+      "3DVisualization": "Карэкціроўка праекта і адмалёўка ў 3D",
+      "Forging": "Выраб вырабы з металу",
+      "Delivery": "Дастаўка і мантаж"
     }
   }
 </i18n>
