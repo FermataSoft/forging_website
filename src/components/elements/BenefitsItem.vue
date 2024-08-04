@@ -9,7 +9,7 @@ defineProps({
 
 <template>
   <div class="benefits-item _unselectable">
-    <img class="benefits-item__icon" :src="`src/images/benefits_icons/${icon}`" alt="" />
+    <img class="benefits-item__icon" :src="`./images/benefits_icons/${icon}`" alt="" />
     <p class="benefits-item__text">
       <slot></slot>
     </p>
@@ -32,9 +32,13 @@ defineProps({
 
   border-radius: 10px;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.25);
-  background-color: #fff;
+  background-color: $surface;
 
   transition: all 0.3s ease-in-out;
+
+  @include breakpoint(sm) {
+    height: 100px;
+  }
 
   &:hover {
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.25);
@@ -48,7 +52,7 @@ defineProps({
     text-align: left;
     font-size: 1.6rem;
     font-weight: $font-regular;
-    color: $navbar;
+    color: $on-surface;
   }
 }
 </style>

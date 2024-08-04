@@ -1,7 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue';
-import Pagination from '../../components/elements/Pagination.vue';
-import works from '../../assets/works.json';
+import { ref, computed, onBeforeMount } from "vue";
+import Pagination from "../../components/elements/Pagination.vue";
+import { useFetch } from "@vueuse/core";
+import AsyncImg from "../elements/AsyncImg.vue";
 
 const props = defineProps({
   currentCategory: String,
@@ -10,7 +11,32 @@ const props = defineProps({
   isAscendingOrder: Boolean,
 });
 
+const images = ref([]);
 let currentPage = ref(1);
+
+onBeforeMount(async () => {
+  const { isFetching, error, data } = await useFetch(
+    "/api/images.php?action=fetch-all",
+    {
+      refetch: true,
+    }
+  )
+    .get()
+    .json();
+  images.value = data.value;
+    // images.value = (await import("/src/api/images.json")).default;
+});
+
+// Normalize value according to column name in DB
+const normalizedSortBy = computed(() => {
+  switch (props.sortBy) {
+    case "uploadDateNewFirst":
+    case "uploadDateOldFirst":
+      return "uploadDate";
+    default:
+      return props.sortBy;
+  }
+});
 
 function sliceIntoChunks(arr, chunkSize) {
   let res = [];
@@ -22,8 +48,9 @@ function sliceIntoChunks(arr, chunkSize) {
   return res;
 }
 
-function sortItems(arr, sortByField, ascendingOrder) {
-  if (typeof (arr[0] === String)) {
+function sortItems(arr, sortByField, ascendingOrder = true) {
+  if (typeof arr.map((value, index, array) => array[0]) === String) {
+    // strange behaviour arr[0][sortByField] not working
     return arr.sort((a, b) =>
       ascendingOrder
         ? a[sortByField].localeCompare(b[sortByField])
@@ -31,50 +58,70 @@ function sortItems(arr, sortByField, ascendingOrder) {
     );
   } else {
     return arr.sort((a, b) =>
-      ascendingOrder ? a[sortByField] - b[sortByField] : b[sortByField] - a[sortByField]
+      ascendingOrder
+        ? a[sortByField] - b[sortByField]
+        : b[sortByField] - a[sortByField]
     );
   }
 }
 
-const worksByCategory = computed(() => {
-  if (props.currentCategory === 'category-all') {
-    return Object.values(works);
+const imagesByCategory = computed(() => {
+  if (props.currentCategory === "all") {
+    return images.value;
   } else {
-    return Object.values(works).filter((item) => item.category === props.currentCategory);
+    return images.value.filter(
+      (item) => item.category === props.currentCategory
+    );
   }
 });
 
-const worksByCategoryCount = computed(() => {
-  return worksByCategory.value.length;
+const imagesByCategoryCount = computed(() => {
+  return imagesByCategory.value.length;
 });
 
-const sortedWorks = computed(() => {
-  return sortItems([...worksByCategory.value], props.sortBy, props.isAscendingOrder);
+const sortedImages = computed(() => {
+  return sortItems(
+    [...imagesByCategory.value],
+    normalizedSortBy.value,
+    props.isAscendingOrder
+  );
 });
 
-const devidedWorks = computed(() => {
-  return sliceIntoChunks([...sortedWorks.value], props.itemsPerPage);
+const devidedImages = computed(() => {
+  return sliceIntoChunks([...sortedImages.value], props.itemsPerPage);
 });
 </script>
 
 <template>
   <div class="works-block">
-    <div v-for="item in devidedWorks[currentPage]" :key="item.id" class="works-item">
+    <RouterLink
+      class="works-block__item"
+      :to="{
+        path: '/image/',
+        hash: `#${item.id}`,
+        query: { category: props.currentCategory },
+      }"
+      v-for="item in devidedImages[currentPage]"
+      :key="item.id"
+    >
       <Transition name="fade-slide-up" appear mode="out-in">
-        <img :src="'src/images/section_product/' + item.srcName" :alt="item.srcName" />
+          <AsyncImg
+            :src="'/images/' + item.srcFilename"
+            :alt="item.previewFilename"
+          ></AsyncImg>
       </Transition>
-    </div>
+    </RouterLink>
   </div>
 
   <Pagination
     @update="(currPage) => (currentPage = currPage - 1)"
-    :totalCount="worksByCategoryCount"
+    :totalCount="imagesByCategoryCount"
     :itemsPerPage="itemsPerPage"
   ></Pagination>
 </template>
 
 <style lang="scss" scoped>
-@import '../../assets/_vars.scss';
+@import "../../assets/_vars.scss";
 
 .works-block {
   display: grid;
@@ -83,7 +130,18 @@ const devidedWorks = computed(() => {
 
   padding: 30px 40px;
 
-  .works-item {
+  @include breakpoint(lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @include breakpoint(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include breakpoint(sm) {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px 20px;
+  }
+
+  .works-block__item {
     position: relative;
     border-radius: 5px;
     overflow: hidden;
@@ -106,8 +164,6 @@ const devidedWorks = computed(() => {
     }
 
     &:hover {
-      // transform: translateY(-3px);
-
       &::before {
         opacity: 1;
         transform: translateY(0);
@@ -129,6 +185,6 @@ const devidedWorks = computed(() => {
 .fade-slide-up-enter-from,
 .fade-slide-up-leave-to {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(5px);
 }
 </style>

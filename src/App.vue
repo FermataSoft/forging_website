@@ -1,25 +1,21 @@
 <script setup>
-import { ref, onMounted, provide, watchEffect } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
-import { useI18n } from 'vue-i18n';
+import { onMounted } from "vue";
+import { RouterView } from "vue-router";
+import { useI18n } from "vue-i18n";
 
-import MyButton from './components/elements/OrderButton.vue';
-import LanguageDropdownMenu from './components/LanguageDropdownMenuView.vue';
-import FooterSection from './components/sections/FooterSection.vue';
-import ScrollTopButton from './components/elements/ScrollTopButton.vue';
-import { useLocaleStore } from './stores/LocaleStore';
-import { useWindowParamsStore } from './stores/WindowParamsStore';
+import { useLocaleStore } from "./stores/LocaleStore";
+import { useWindowParamsStore } from "./stores/WindowParamsStore";
 
 const windowParamsStore = useWindowParamsStore();
 
 onMounted(() => {
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     windowParamsStore.$patch({
       scrollYPos: window.scrollY,
     });
   });
 
-  window.addEventListener('resize', () => {
+  window.addEventListener("resize", () => {
     windowParamsStore.$patch({
       windowHeight: window.innerHeight,
     });
@@ -34,180 +30,22 @@ localeStore.$subscribe(() => {
   let currentLocale = localeStore.currentLocale;
 
   locale.value = currentLocale;
-  localStorage.setItem('locale', currentLocale);
+  localStorage.setItem("locale", currentLocale);
 });
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <div class="logo-wrapper">
-        <img class="logo" src="./favicon/android-chrome-512x512.png" alt="" />
-      </div>
-
-      <nav>
-        <div class="nav__item">
-          <RouterLink to="/">Главная</RouterLink>
-        </div>
-        <div class="nav__item">
-          <RouterLink to="/works">Наши работы</RouterLink>
-        </div>
-        <div class="nav__item"><RouterLink to="/articles">Статьи</RouterLink></div>
-        <div class="nav__item"><RouterLink to="/contacts">Контакты</RouterLink></div>
-        <div class="nav__item"><RouterLink to="/about">О нас</RouterLink></div>
-      </nav>
-      <MyButton>Заказать</MyButton>
-      <LanguageDropdownMenu></LanguageDropdownMenu>
-    </div>
-  </header>
-  <div class="navbar-margin"></div>
-
-  <RouterView v-slot="{ Component }">
-    <Transition name="fade" mode="out-in" appear>
-      <component :is="Component" :key="$route.path"></component>
-    </Transition>
-  </RouterView>
-
-  <FooterSection></FooterSection>
-
-  <ScrollTopButton></ScrollTopButton>
+  <main>
+    <component :is="$route.meta.layout || 'div'">
+      <router-view></router-view>
+    </component>
+  </main>
 </template>
 
-<style scoped lang="scss">
-@import './assets/vars.scss';
+<style lang="scss" scoped>
+@import "./assets/vars";
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-header {
-  position: fixed;
-  display: block;
-  height: 50px;
-  width: 100%;
-  z-index: 9999999;
-
-  background-color: $navbar;
-
-  .wrapper {
-    max-width: $wrapper-width;
-    height: 100%;
-    margin: auto;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 60px;
-
-    .logo-wrapper {
-      width: fit-content;
-      display: flex;
-      flex-direction: row;
-      gap: 20px;
-      align-items: center;
-
-      .logo {
-        width: 30px;
-        height: auto;
-      }
-
-      span {
-        font-size: 2rem;
-        font-weight: $font-medium;
-        color: $white;
-      }
-    }
-
-    nav {
-      height: 100%;
-      width: 100%;
-
-      display: flex;
-      flex-direction: row;
-      gap: 30px;
-      align-items: center;
-      justify-content: center;
-
-      .nav__item {
-        height: 100%;
-        position: relative;
-      }
-
-      a {
-        display: flex;
-        align-items: center;
-        text-align: center;
-        font-size: 1.6rem;
-        font-weight: $font-regular;
-        height: 100%;
-
-        color: $white;
-
-        transition: color 0.2s ease-in-out;
-
-        // &::before {
-        //   content: '';
-
-        //   position: absolute;
-        //   top: 0;
-        //   left: 0%;
-        //   height: 2px;
-        //   width: 67%;
-        //   transform: translate(-50%) scaleX(0);
-
-        //   background-color: $accent;
-        // }
-
-        &::after {
-          content: '';
-
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          height: 3px;
-          width: 0;
-
-          transform: translate(-50%, 0%);
-
-          background-color: $accent;
-        }
-
-        &::before,
-        &::after {
-          transition: all 0.3s ease-in-out;
-        }
-
-        &:hover {
-          &::before,
-          &::after {
-            width: 80%;
-          }
-        }
-
-        &.router-link-active {
-          color: $accent;
-
-          &::before {
-            width: 67%;
-          }
-
-          &::after {
-            width: 67%;
-          }
-        }
-      }
-    }
-  }
-}
-
-.navbar-margin {
-  height: 50px;
+main {
+  background-color: $surface-container-highest;
 }
 </style>

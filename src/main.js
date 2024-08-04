@@ -1,23 +1,31 @@
-import { createApp, ref } from 'vue';
-import { createPinia } from 'pinia';
-import { createI18n } from 'vue-i18n';
+import { createApp, defineAsyncComponent } from "vue";
+import { createPinia } from "pinia";
+import { createI18n } from "vue-i18n";
 
-import App from './App.vue';
-import router from './router';
+import App from "./App.vue";
+import router from "./router";
+import SectionHeader from "./components/elements/SectionHeader.vue"
+import ButtonClose from "./components/elements/ButtonClose.vue"
+import Devider from "./components/elements/Devider.vue"
 
 import VueAwesomePaginate from "vue-awesome-paginate";
 
-import './assets/main.css';
+import "./assets/main.css";
 
 const app = createApp(App);
 
-import ru from './locales/ru-RU.json';
-import by from './locales/by-BY.json';
-import { useLocaleStore } from './stores/LocaleStore';
+app.component("SectionHeader", SectionHeader)
+app.component("ButtonClose", ButtonClose)
+app.component("Devider", Devider)
+app.component("Loader", defineAsyncComponent(() => import("./components/elements/Loader.vue")))
+
+import ru from "./locales/ru-RU.json";
+import by from "./locales/by-BY.json";
+import { useLocaleStore } from "./stores/LocaleStore";
 
 const messages = {
-  'ru-RU': ru,
-  'by-BY': by,
+  "ru-RU": ru,
+  "by-BY": by,
 };
 
 app.use(createPinia());
@@ -25,14 +33,17 @@ app.use(createPinia());
 const i18n = createI18n({
   legacy: false,
   locale: useLocaleStore().currentLocale,
-  fallbackLocale: 'ru-RU',
+  fallbackLocale: "ru-RU",
   messages,
   missingWarn: false,
   fallbackWarn: false
 });
 
+import { register } from "swiper/element/bundle";
+register();
+
 app.use(VueAwesomePaginate);
 app.use(router);
 app.use(i18n);
 
-app.mount('#app');
+app.mount("#app");

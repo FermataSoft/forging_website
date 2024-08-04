@@ -1,21 +1,82 @@
 /* Main STYLES */
 $wrapper-width: 1250px;
+$navbar-height: 55px;
+$scrollbar-width: 15px;
 
-// COLORS
-$app-background-color: #000000;
-$navbar_opacity: rgba(11, 11, 14, 0.7);
-$navbar: #232323;
-$navbar-url: '%23232323';
-$dark: #050d21;
-$white: #fefefe;
-$gray: #b8b8b8;
-$links: rgb(242, 242, 242);
-$accent: #ffd166;
-$accent-hover: #f3c761;
+// PALLETE
+$color1: #232323;
+// $color2: #ffd166;
+$color3: #2d4059;
+$color4: #ea5455;
+$color5: #f07b3f;
+$color6: #ffd460;
+
+// Neutral colors
+$surface: hsl(0, 0%, 100%);
+$on-surface: hsl(0, 0%, 14%);
+$on-surface-variant: hsl(0, 0%, 10%);
+$surface-container-lowest: hsl(0, 0%, 90%);
+$surface-container-low: hsl(0, 0%, 92%);
+$surface-container: hsl(0, 0%, 95%);
+$surface-container-high: hsl(0, 0%, 96%);
+$surface-container-highest: hsl(0, 0%, 98%);
+$inverse-surface: hsl(0, 0%, 14%);
+$inverse-surface-lower: hsl(0, 0%, 10%);
+$inverse-on-surface: hsl(0, 0%, 100%);
+$inverse-on-surface-variant: hsl(0, 0%, 80%);
+
+$outline: hsl(0, 0%, 75%);
+$outline-darker: hsl(0, 0%, 60%);
+$outline-variant: hsl(0, 0%, 80%);
+
+// Accent colors
+$primary: #ffd666;
+$primary-opacity: rgb(255, 214, 102, 40%);
+$on-primary: hsl(0, 0%, 14%);
+$on-primary-url: "%23242424";
+$primary-container: hsl(0, 0%, 14%);
+$on-primary-container: hsl(44, 100%, 70%);
+$primary-variant: hsl(44, 85%, 65%);
+
+$secondary: #242424;
+$on-secondary: hsl(0, 0%, 100%);
+$secondary-opacity70: rgb(36, 36, 36, 70%);
+$secondary-container: hsl(0, 0%, 90%);
+$on-secondary-container: hsl(0, 0%, 14%);
+$secondary-container-variant: hsl(0, 0%, 80%);
+
+$tertiary: hsl(20, 86%, 59%);
+$on-tertiary: hsl(20, 86%, 90%);
+$tertiary-container: hsl(20, 86%, 70%);
+$on-tertiary-container: hsl(20, 86%, 30%);
+
+$error: hsl(360, 78%, 50%);
+$on-error: hsl(0, 100%, 95%);
+$error-container: hsl(360, 78%, 62%);
+$on-error-container: hsl(360, 78%, 20%);
+
+$disabled: hsl(0, 0%, 75%);
+
+// Gradients
 $add-dark-blue: linear-gradient(252.85deg, #0e0e25 0%, #0e0e25 100%);
-// $blue-gradient: linear-gradient(252.85deg, #006fbf 0%, #7000c0 100%);
 $accent-gradient: linear-gradient(to right, #ffa751, #ffe259);
 
+// FONT SIZES
+$header1: 24px;
+$header1-mobile: 20px;
+$header2: 20px;
+$header2-mobile: 16px;
+$header3: 16px;
+$header3-mobile: 14px;
+$header4: 14px;
+$header4-mobile: 12px;
+
+$paragraph: 14px;
+$paragraph-lg: 16px;
+$paragraph-mobile: 12px;
+
+$font-controls: 14px;
+$font-controls-mobile: 12px;
 
 // FONTS
 // $font-extraLight: 200;
@@ -25,8 +86,8 @@ $font-medium: 500;
 $font-bold: 700;
 // $font-extraBold: 800;
 
-$font-sans-serif: 'Ubuntu', sans-serif;
-$font-mono: 'Ubuntu Mono', monospace;
+$font-main: "Ubuntu", sans-serif;
+$font-mono: "Ubuntu Mono", monospace;
 
 // @font-face {
 //   font-family: mellanissa;
@@ -61,5 +122,80 @@ $mobile: 767px;
     @media (max-width: 500px) {
       @content;
     }
+  } @else {
+    @media (max-width: $point) {
+      @content;
+    }
   }
+}
+
+@mixin device($device) {
+  @if $device == touch {
+    @media (hover: none) and (pointer: coarse) {
+      @content;
+    }
+  }
+  @if $device == screen {
+    @media (hover: hover) and (pointer: fine) {
+      @content;
+    }
+  }
+}
+
+@mixin scrollbar($width: 15px, $background: false) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+
+    @if $background == true {
+      box-shadow: inset 0 0 5px rgb(199, 199, 199);
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    border: 5px solid transparent;
+    background-color: rgb(34, 34, 34);
+    background-clip: padding-box;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}
+
+// Skeleton loading animation
+$base-color: #cfcfcf;
+$shine-color: #ececec;
+$animation-duration: 2.5s;
+
+@mixin skeleton($offset: 0) {
+  @include background-gradient;
+  animation: shine-lines $animation-duration infinite linear;
+  border-radius: 7px;
+
+  @keyframes shine-lines {
+    0% {
+      background-position: -500px + $offset;
+    }
+
+    40%,
+    100% {
+      background-position: 1000px + $offset;
+    }
+  }
+}
+
+@mixin background-gradient {
+  background-image: linear-gradient(
+    90deg,
+    $base-color 0px,
+    $shine-color 150px,
+    $base-color 300px
+  );
+  background-size: 2000px;
 }

@@ -45,26 +45,23 @@ watch(
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
-  color: $navbar;
+  color: $on-secondary-container;
   font-size: 1.4rem;
   font-weight: $font-medium;
 }
-.paginate-buttons:hover {
-  background-color: #e1e1e1;
+.paginate-buttons:hover:not(.active-page) {
+  background-color: $secondary-container-variant;
 }
 .active-page {
-  background-color: $navbar;
-  color: white;
+  background-color: $secondary;
+  color: $on-secondary;
   font-size: 1.6rem;
   font-weight: $font-bold;
-}
-.active-page:hover {
-  background-color: $accent;
 }
 
 .back-button,
 .next-button {
   font-size: 1.6rem;
-  background: #f1f1f1;
+  background: $secondary-container;
 }
 </style>

@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="btn">
+  <div class="btn --unselectable">
     <slot></slot>
   </div>
 </template>
@@ -14,14 +14,15 @@
   align-items: center;
   justify-content: center;
 
-  background-color: $accent;
-  width: 120px;
+  background-color: $primary;
+  padding: 0 20px;
   height: 30px;
   border-radius: 3px;
 
   font-size: 1.4rem;
   font-weight: $font-medium;
-  color: $navbar;
+  color: $on-primary;
+  text-wrap: nowrap;
 
   cursor: pointer;
 
@@ -29,6 +30,10 @@
 
   &:hover {
     box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  @include breakpoint(xs) {
+    padding: 20px 40px;
   }
 }
 </style>

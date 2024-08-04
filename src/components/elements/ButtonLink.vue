@@ -1,12 +1,13 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
+import { RouterLink } from 'vue-router';
 
 const { t } = useI18n();
 
 defineProps({
-  inputType: {
+  link: {
     type: String,
-    default: 'button',
+    required: true
   },
   text: {
     type: String,
@@ -16,32 +17,35 @@ defineProps({
 </script>
 
 <template>
-  <div class="btn-wrapper">
-    <input class="btn" :type="inputType" :value="t(text)" />
+  <RouterLink :to="link" class="btn-wrapper">
+    <input class="btn" type="button" :value="t(text)" />
     <div class="btn-arrow"></div>
-  </div>
+  </RouterLink>
 </template>
 
 <style lang="scss" scoped>
 @import '../../assets/_vars.scss';
 
 .btn-wrapper {
+  display: block;
   position: relative;
   width: fit-content;
   cursor: pointer;
 }
 .btn {
-  background-color: $accent;
+  background-color: $primary;
   padding: 20px 40px;
   border-radius: 5px;
 
   font-size: 1.6rem;
   font-weight: $font-bold;
-  color: $navbar;
+  font-family: $font-main;
+  color: $on-primary;
 
   transform: translate(0);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+  box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.822), 3px 3px 9px rgba(116, 116, 116, 0.3);
 }
 
 @mixin element-color($color) {
@@ -51,7 +55,7 @@ defineProps({
 .btn-arrow {
   // background-image: url("./icons/arrow.svg");
 
-  @include element-color($navbar-url);
+  @include element-color($on-primary-url);
   background-repeat: no-repeat;
   background-size: 1.6rem;
   background-position: center;
@@ -66,8 +70,7 @@ defineProps({
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $accent-hover;
-  color: $navbar;
+  background-color: $primary-variant;
 
   border-radius: 50%;
 
@@ -90,12 +93,14 @@ defineProps({
 <i18n>
   {
     "ru-RU": {
-      "ButtonOurWorks": "Наши работы",
-      "ButtonSubmit": "Отправить"
+      "ButtonOurWorks": "Примеры работ",
+      "ButtonSubmit": "Отправить",
+      "ButtonGoHomePage": "Вернуться на главную страницу"
     },
     "by-BY": {
-      "ButtonOurWorks": "Нашы вырабы",
-      "ButtonSubmit": "Адправіць"
+      "ButtonOurWorks": "Прыклады работ",
+      "ButtonSubmit": "Адправіць",
+      "ButtonGoHomePage": "Вярнуцца на галоўную старонку"
     }
   }
 </i18n>
