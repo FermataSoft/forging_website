@@ -1,15 +1,9 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/all";
 import ProcessSlide from "../elements/ProcessSlide.vue";
-import { useWindowParamsStore } from "@/stores/WindowParamsStore.js";
 
-const windowParams = useWindowParamsStore();
 const { t } = useI18n();
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const slides = ref([
   {
@@ -39,97 +33,45 @@ const slides = ref([
   },
 ]);
 
-const containerElement = ref(null);
-const headerElement = ref(null);
-let GSAPContext = null;
-
-function initAnimations(context, ...animations) {
-  GSAPContext = gsap.context((self) => {
-    animations.forEach((animation) => {
-      animation();
-    });
-  }, context);
-}
-
-function pinHeader() {
-  ScrollTrigger.create({
-    trigger: headerElement.value,
-    start: "top top",
-    end: () => "+=" + containerElement.value.offsetHeight + " bottom",
-    pin: headerElement.value,
-    pinnedContainer: containerElement.value,
-    pinSpacing: false,
-    pinType: "fixed",
-  });
-}
-
-onMounted(() => {
-  initAnimations(containerElement.value, animateSlides, pinHeader); // order of animations is important
-});
-
-onUnmounted(() => {
-  GSAPContext.revert(); // delete gsap
-});
-
-windowParams.$subscribe((mutation) => {
-  if (mutation.payload.windowHeight) {
-    ScrollTrigger.refresh();
-  }
-});
-
-const slideEls = ref([]);
-
-function animateSlides() {
-  let sections = gsap.utils.toArray(".process-section__slide");
-  let count = sections.length - 1;
-  let duration = 1;
-
-  let tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: containerElement.value,
-      pin: true,
-      scrub: 1,
-      start: "top top",
-      end: () =>
-        "+=" + document.querySelector(".process-section__slides").offsetWidth,
-      snap: {
-        snapTo: "labelsDirectional", // 1 / (sections.length - 1)
-        duration: { min: 0.3, max: 0.7 },
-        ease: "power1.inOut",
-      },
-    },
-  });
-
-  sections.forEach((section, i) => tl.add("label" + i, i * (duration / count)));
-
-  tl.to(sections, {
-    xPercent: -100 * count,
-    duration: duration,
-    ease: "none",
-  });
-}
+const swiperEl = ref(null);
 </script>
 
 <template>
-  <div class="process-section" ref="containerElement">
-    <div class="process_section__header" ref="headerElement">
+  <div class="process-section">
+    <div class="process_section__header">
       <SectionHeader inverseColor noMargin>{{
         t("SectionProcessHeader")
       }}</SectionHeader>
     </div>
-    <div
-      class="process-section__slides"
-      :style="{ width: slides.length * 100 + '%' }"
-    >
-      <ProcessSlide
-        class="process-section__slide"
-        v-for="slide in slides"
-        :key="slide.number"
-        ref="slideEls"
-        :number="slide.number"
-        :header="t(slide.headerI18n)"
-        :image="slide.image"
-      ></ProcessSlide>
+    <div class="process-section__slides">
+      <swiper-container
+        class="swiper-container"
+        ref="swiperEl"
+        :slides-per-view="1"
+        :speed="1000"
+        :autoplay="{
+          delay: 3000,
+        }"
+        :pagination="{
+          type: 'bullets',
+          clickable: true,
+        }"
+        virtual
+      >
+        <swiper-slide
+          class="swiper-slide"
+          v-for="(item, index) in slides"
+          :key="index"
+        >
+          <ProcessSlide
+            class="process-section__slide"
+            :key="item.number"
+            :number="item.number"
+            :header="t(item.headerI18n)"
+            :image="item.image"
+          ></ProcessSlide>
+        </swiper-slide>
+      </swiper-container>
     </div>
   </div>
 </template>
@@ -149,17 +91,28 @@ function animateSlides() {
   padding-bottom: 20px;
   background-color: $inverse-surface;
   z-index: 4;
+
+  @include breakpoint(md) {
+    padding-bottom: 0;
+  }
 }
 
 .process-section__slides {
-  height: calc(100vh - 70px);
-  display: flex;
-  flex-wrap: nowrap;
+  height: 50vh;
+  min-height: 500px;
+
+  .swiper-container {
+    height: 100%;
+  }
+}
+
+.process-section__slide {
+  background-color: $surface-container-highest;
 }
 </style>
 
 <i18n>
-    {
+  {
     "ru-RU": {
       "Measurement": "Снятие необходимых размеров",
       "PreliminaryDesign": "Создание дизайна и предварительное проектирование",
