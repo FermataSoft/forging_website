@@ -1,10 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
 import SlidesDevider from "../elements/SlidesDevider.vue";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const props = defineProps({
   number: {
@@ -21,50 +16,18 @@ const props = defineProps({
   },
   actualParentContainerHeight: Number,
 });
-
-onMounted(() => {
-  animate();
-});
-
-onUnmounted(() => {
-  GSAPContext.revert();
-});
-
-let GSAPContext = null;
-const containerElement = ref(null);
-const numberElement = ref(null);
-const headerElement = ref(null);
-const imageElement = ref(null);
-
-function animate() {
-  ScrollTrigger.defaults({
-    toggleActions: "play none none reverse",
-  });
-
-  GSAPContext = gsap.context((self) => {
-    gsap.from([numberElement.value, headerElement.value, imageElement.value], {
-      y: 100,
-      opacity: 0,
-      stagger: 0.3,
-      scrollTrigger: {
-        trigger: containerElement.value,
-        start: "center bottom",
-      },
-    });
-  }, containerElement.value);
-}
 </script>
 
 <template>
-  <div class="process-slide" ref="containerElement">
+  <div class="process-slide">
     <div class="process-slide__text-block">
       <div class="process-slide__text-block-background--dark"></div>
       <div class="process-slide__text-block-background--light"></div>
       <SlidesDevider class="process-slide__devider"></SlidesDevider>
-      <h1 class="process-slide__text-block-number" ref="numberElement">
+      <h1 class="process-slide__text-block-number">
         {{ number }}
       </h1>
-      <h2 class="process-slide__text-block-header" ref="headerElement">
+      <h2 class="process-slide__text-block-header">
         {{ header }}
       </h2>
     </div>
@@ -73,7 +36,6 @@ function animate() {
         class="process-slide__image"
         :src="`./images/section_process/${image}`"
         alt=""
-        ref="imageElement"
       />
     </div>
   </div>
@@ -83,8 +45,7 @@ function animate() {
 @import "../../assets/_vars.scss";
 .process-slide {
   width: 100%;
-  height: calc(100vh - 70px);
-  height: calc(100svh - 70px);
+  height: 100%;
   position: relative;
 
   display: flex;
@@ -119,11 +80,12 @@ function animate() {
   }
 
   @include breakpoint(md) {
-    height: 50%;
+    height: 40%;
     width: 100%;
+    padding: 0 20px 30px;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding-left: 50px;
-    padding-right: 50px;
   }
 
   .process-slide__text-block-number {
@@ -153,9 +115,14 @@ function animate() {
     font-size: 4rem;
     color: $inverse-on-surface;
     z-index: 2;
+    text-wrap: pretty;
 
     @include breakpoint(lg) {
       font-size: 3rem;
+    }
+
+    @include breakpoint(md) {
+      font-size: 2.5rem;
     }
 
     @include breakpoint(sm) {
@@ -175,8 +142,8 @@ function animate() {
 
   .process-slide__text-block-background--light {
     top: 0;
-    right: -40px;
-    width: 40px;
+    right: -30px;
+    width: 30px;
     height: 100%;
     position: absolute;
     background-color: $surface-container-highest;
@@ -186,7 +153,7 @@ function animate() {
       top: 100%;
       left: 0;
       width: 100%;
-      height: 40px;
+      height: 20px;
     }
   }
 }
@@ -215,14 +182,16 @@ function animate() {
 .process-slide__image-block {
   height: 100%;
   width: 60%;
-  padding: 50px;
+  margin-left: 40px;
   overflow: hidden;
   background-color: $surface-container-highest;
   z-index: 2;
 
   @include breakpoint(md) {
     width: 100%;
-    padding: 10px;
+    height: 60%;
+    padding: 0;
+    margin: 0;
   }
 
   .process-slide__image {

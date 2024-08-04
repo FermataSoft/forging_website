@@ -104,4 +104,6 @@ body::-webkit-scrollbar-corner {
 :root {
   --swiper-pagination-color: hsl(44, 100%, 70%);
   --swiper-theme-color: hsl(44, 100%, 70%);
+  --swiper-pagination-bullet-size: 12px;
+  --swiper-pagination-bottom: 5px;
 }
