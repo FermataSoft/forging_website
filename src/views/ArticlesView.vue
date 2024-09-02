@@ -13,13 +13,14 @@ let isError = ref(false);
 
 onMounted(async () => {
   const { isFetching, error, data } = await useFetch(
-    "/api/articles.php?query=SELECT id, title, description, creation_date FROM articles"
+    "/api/articles.php?query=SELECT id, title, description, creation_date, preview_image FROM articles"
   )
     .get()
     .json();
 
   if (error.value) {
     isError.value = error.value;
+    content.value = [];
     throw new Error(error.value);
   } else {
     content.value = data.value;

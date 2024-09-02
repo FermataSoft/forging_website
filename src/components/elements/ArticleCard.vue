@@ -121,6 +121,7 @@ const formattedUploadDate = computed(() => {
   overflow: hidden;
   flex-shrink: 0;
   text-align: center;
+  border-radius: 10px;
 
   @include breakpoint(sm) {
     height: 60px;
