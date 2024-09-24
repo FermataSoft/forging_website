@@ -1,13 +1,17 @@
 <?php
+// Use this on server with .env file
+/* require $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
+$dotenv->load(); */
+
 try {
-  $dbName = "interiorsteel";
-  $user = "root";
-  $password = "root";
-  // $connect = new PDO("mysql:host=localhost;dbname=***REMOVED***", "***REMOVED***", "***REMOVED***");
-  $connect = new PDO("mysql:host=mysql;dbname={$dbName};charset=utf8", $user, $password);
-
+  $dbName = $_ENV["DB_NAME"];
+  $user = $_ENV["DB_USER"];
+  $password = $_ENV["DB_PASSWORD"];
+  $host = $_ENV["DB_HOST"];
+  $connect = new PDO("mysql:host={$host};dbname={$dbName};charset=utf8", $user, $password);
   $received_data = json_decode(file_get_contents("php://input"), true);
-
   $result = [];
 
   if ($_GET['action'] === 'fetch-all') {

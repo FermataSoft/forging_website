@@ -1,7 +1,12 @@
 <?php
-// $_SERVER['DOCUMENT_ROOT'] . "/pathTo"
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
+// Use this on server with .env file
+/* require $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
+$dotenv->load(); */
 
 require __DIR__ . '/plugins/PHPMailer-master/src/Exception.php';
 require __DIR__ . '/plugins/PHPMailer-master/src/PHPMailer.php';
@@ -12,12 +17,12 @@ $mail->CharSet = 'UTF-8';
 $mail->setLanguage('ru', __DIR__ . '/plugins/PHPMailer-master/language/');
 $mail->IsHTML(true);
 
-$address_from = getenv('MAIL_ADDRESS_FROM');
-$address_to   = getenv('MAIL_ADDRESS_TO');
-$host         = getenv('MAIL_HOST');
-$username     = getenv('MAIL_USERNAME');
-$password     = getenv('MAIL_PASSWORD');
-$port         = getenv('MAIL_PORT');
+$address_from = $_ENV['MAIL_ADDRESS_FROM'];
+$address_to   = $_ENV['MAIL_ADDRESS_TO'];
+$host         = $_ENV['MAIL_HOST'];
+$username     = $_ENV['MAIL_USERNAME'];
+$password     = $_ENV['MAIL_PASSWORD'];
+$port         = $_ENV['MAIL_PORT'];
 
 try {
     $mail->isSMTP();
