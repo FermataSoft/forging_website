@@ -6,6 +6,7 @@ import { useFetch } from "@vueuse/core";
 import SectionHeader from "../components/elements/SectionHeader.vue";
 import ArticleCard from "../components/elements/ArticleCard.vue";
 import ReloadOnError from "../components/elements/ReloadOnError.vue";
+import fakeArticles from "@/api/articles.json";
 
 const { t } = useI18n();
 const content = ref([{}, {}, {}]);
@@ -18,6 +19,13 @@ onMounted(async () => {
   )
     .get()
     .json();
+
+  // Fake API ---------------
+/*   let error = { value: false}
+  let data = ref([]);
+  data.value = fakeArticles;
+  isLoaded.value = true; */
+  // --------------- Fake API
 
   if (error.value) {
     isError.value = !!error.value;
