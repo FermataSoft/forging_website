@@ -10,11 +10,12 @@ const DBTableName = "images";
 const initialImageIndex = ref(); // define index according to id from db array
 const currentCategory = ref(route.query.category || "all");
 const slides = ref([]);
+const order = ref(route.query.ascending === "true" ? "ASC" : "DESC");
 
 onBeforeMount(async () => {
   const query = getDBQuery(currentCategory.value);
   const { isFetching, error, data } = await useFetch(
-    `/api/images.php?action=fetch-all&query=${query}`,
+    `/api/images.php?query=${query}`,
     {
       refetch: true,
     }
@@ -24,16 +25,16 @@ onBeforeMount(async () => {
 
   slides.value = addVirtualSlides(data.value);
   initialImageIndex.value = slides.value.findIndex(
-    (value) => value.id == route.hash.slice(1)
+    (value) => value.srcFilename == route.hash.slice(1)
   );
   swiperEl.value.swiper.slideTo(initialImageIndex.value);
 });
 
 function getDBQuery(category) {
   if (category === "all") {
-    return `SELECT * FROM ${DBTableName}`;
+    return `SELECT * FROM ${DBTableName} ORDER BY id ${order.value}`;
   }
-  return `SELECT * FROM ${DBTableName} WHERE category="${currentCategory.value}"`;
+  return `SELECT * FROM ${DBTableName} WHERE category="${currentCategory.value} ORDER BY id ${order.value}"`;
 }
 
 function addVirtualSlides(content = []) {
@@ -45,7 +46,8 @@ function addVirtualSlides(content = []) {
   for (let item of content) {
     result.push({
       id: item.id,
-      image: `../images/${item.srcFilename}`,
+      srcFilename: item.srcFilename,
+      path: `../images/${item.srcFilename}`,
     });
   }
   return result;
@@ -74,11 +76,11 @@ function addVirtualSlides(content = []) {
     >
       <swiper-slide
         class="swiper-slide"
-        v-for="(item, index) in slides"
-        :key="index"
-        :data-hash="item.id"
+        v-for="item in slides"
+        :key="item.srcFilename"
+        :data-hash="item.srcFilename"
       >
-        <img :src="item.image" />
+        <img :src="item.path" />
       </swiper-slide>
     </swiper-container>
   </div>

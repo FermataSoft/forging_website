@@ -13,22 +13,29 @@ try {
   $connect = new PDO("mysql:host={$host};dbname={$dbName};charset=utf8", $user, $password);
   $received_data = json_decode(file_get_contents("php://input"), true);
   $result = [];
+  $query;
 
-  if ($_GET['action'] === 'fetch-all') {
-
-    $query = $_GET['query'] ?? "SELECT *
+  if (!empty($_GET['action']) && $_GET['action'] === 'fetch-all') {
+    $query = "SELECT *
               FROM images
               ORDER BY id DESC";
-
-    $statement = $connect->query($query);
-
-    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-
-      $result[] = $row;
+  } else {
+    if (empty($_GET['query'])) {
+      echo 'Request error: query parameter "query" is empty!';
+      return;
+    } else {
+      $query = $_GET['query'];
     }
-
-    echo json_encode($result);
   }
+
+  $statement = $connect->query($query);
+
+  while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+
+    $result[] = $row;
+  }
+
+  echo json_encode($result);
 } catch (PDOException $e) {
   echo "Database error: " . $e->getMessage();
 }

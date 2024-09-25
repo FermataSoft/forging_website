@@ -106,8 +106,8 @@ const devidedImages = computed(() => {
       class="works-block__item"
       :to="{
         path: '/image/',
-        hash: `#${item.id}`,
-        query: { category: props.currentCategory },
+        hash: `#${item.srcFilename}`,
+        query: { category: props.currentCategory, ascending: isAscendingOrder },
       }"
       v-for="item in devidedImages[currentPage]"
       :key="item.id"
