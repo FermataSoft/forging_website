@@ -242,7 +242,7 @@ function toFormData(obj = {}) {
 
     <ButtonSubmit
       class="feedback__button-submit"
-      text="ButtonSubmit"
+      :text="t('buttonSubmit')"
       :disabled="!form.valid || form.sending"
     ></ButtonSubmit>
   </form>
@@ -405,7 +405,8 @@ $border-width: 1px;
       "labelTopic": "Тема сообщения",
       "labelMessage": "Ваше сообщение",
       "labelPrivacyPolicy": "Я согласен(-на) с",
-      "labelPrivacyPolicyLink": "Политикой конфиденциальности"
+      "labelPrivacyPolicyLink": "Политикой конфиденциальности",
+      "buttonSubmit": "Отправить"
   },
     "by-BY": {
       "required": "абавязкова",
@@ -418,7 +419,8 @@ $border-width: 1px;
       "labelTopic": "Тэма паведамлення",
       "labelMessage": "Ваша паведамленне",
       "labelPrivacyPolicy": "Я згодзен(-на) з",
-      "labelPrivacyPolicyLink": "Палітыкай канфідэнцыяльнасьці"
+      "labelPrivacyPolicyLink": "Палітыкай канфідэнцыяльнасьці",
+      "buttonSubmit": "Адправіць"
     }
   }
 </i18n>
