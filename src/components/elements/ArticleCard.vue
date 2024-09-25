@@ -20,7 +20,7 @@ const dateOptions = {
 };
 
 const formattedUploadDate = computed(() => {
-  return new Date(props.uploadDate).toLocaleString("ru", dateOptions);
+  return new Date(+props.uploadDate).toLocaleString("ru", dateOptions);
 });
 </script>
 
@@ -78,7 +78,7 @@ const formattedUploadDate = computed(() => {
     2px 2px 9px rgba(94, 104, 121, 0.5);
 
   @include breakpoint(sm) {
-    height: 120px;
+    height: 150px;
     padding: 20px 10px;
     gap: 20px;
   }
@@ -124,12 +124,13 @@ const formattedUploadDate = computed(() => {
   border-radius: 10px;
 
   @include breakpoint(sm) {
-    height: 60px;
+    width: 85px;
+    height: 85px;
   }
 
   img {
-    height: 200px;
-    width: 200px;
+    height: auto;
+    width: 100%;
     object-fit: cover;
   }
 
@@ -137,7 +138,7 @@ const formattedUploadDate = computed(() => {
     font-size: 2rem;
 
     @include breakpoint(sm) {
-      font-size: 1.6rem;
+      font-size: 0.9rem;
     }
   }
 
