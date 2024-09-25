@@ -125,7 +125,7 @@ const { t } = useI18n();
 
   img {
     width: 100%;
-    margin-left: calc(100% - 100% / 1.09); // Trouble with clip-path position
+    // margin-left: calc(100% - 100% / 1.09); // Trouble with clip-path position
     clip-path: url(#hexagon);
     -webkit-clip-path: url(#hexagon);
 
