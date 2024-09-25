@@ -136,6 +136,8 @@ $top-bar-inner: 50px;
 }
 
 .article__content {
+  padding: 0 16px;
+
   .article__content-header {
     margin-bottom: 30px;
 

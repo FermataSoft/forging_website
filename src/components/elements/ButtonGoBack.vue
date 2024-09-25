@@ -22,8 +22,9 @@ const { t } = useI18n();
 
 .button-go-back {
   position: relative;
-  padding: 15px 20px;
+  padding: 15px 16px;
   width: auto;
+  height: 100%;
   display: flex;
   align-items: center;
   gap: 10px;
