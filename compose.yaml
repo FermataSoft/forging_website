@@ -75,6 +75,7 @@ services:
       - 1500:80
     environment:
       - PMA_HOST=mysql
+      - UPLOAD_LIMIT=100000000
     networks:
       - network
     depends_on:
