@@ -51,6 +51,12 @@ const router = createRouter({
       component: () => import("../views/AboutView.vue"),
     },
     {
+      path: "/privacy",
+      name: "privacy",
+      meta: { layout: PageLayout, transition: "fade" },
+      component: () => import("../views/PrivacyView.vue"),
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "404",
       meta: { layout: BlankLayout },
