@@ -45,8 +45,7 @@ import ScrollTopButton from "../components/elements/ScrollTopButton.vue";
 }
 
 .navbar-margin {
-  height: 50px;
-  background-color: $inverse-surface;
+  height: $navbar-height;
 }
 
 .router-view {
