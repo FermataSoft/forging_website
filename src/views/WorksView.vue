@@ -149,7 +149,7 @@ main {
   position: relative;
   width: 350px;
   padding: 20px;
-  z-index: 3;
+  z-index: 4;
   background-color: $surface;
   border-right: 1px solid $outline-variant;
   transition: all 0.3s ease;
@@ -196,7 +196,7 @@ main {
 }
 
 .sort-menu {
-  position: fixed;
+  position: absolute;
   top: $navbar-height;
   right: 0;
   width: 100%;
@@ -206,7 +206,11 @@ main {
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid $outline-variant;
-  z-index: 2;
+  z-index: 3;
+
+  @include breakpoint(sm) {
+    position: fixed;
+  }
 
   span {
     font-size: 1.4rem;
@@ -355,6 +359,11 @@ select {
 .works-view__sort-menu-margin {
   height: $sort-menu-height;
   width: 100%;
+}
+
+.works-view__works-block {
+  min-height: 500px;
+  margin-bottom: $sort-menu-height;
 }
 
 .view-enter-active,

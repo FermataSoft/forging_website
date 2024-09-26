@@ -99,33 +99,38 @@ const devidedImages = computed(() => {
 </script>
 
 <template>
-  <ReloadOnError v-if="isError"></ReloadOnError>
-  
-  <div class="works-block">
-    <RouterLink
-      class="works-block__item"
-      :to="{
-        path: '/image/',
-        hash: `#${item.srcFilename}`,
-        query: { category: props.currentCategory, ascending: isAscendingOrder },
-      }"
-      v-for="item in devidedImages[currentPage]"
-      :key="item.id"
-    >
-      <Transition name="fade-slide-up" appear mode="out-in">
-        <AsyncImg
-          :src="'/images/' + item.srcFilename"
-          :alt="item.previewFilename"
-        ></AsyncImg>
-      </Transition>
-    </RouterLink>
-  </div>
+  <div class="works-block-wrapper">
+    <ReloadOnError v-if="isError"></ReloadOnError>
 
-  <Pagination
-    @update="(currPage) => (currentPage = currPage - 1)"
-    :totalCount="imagesByCategoryCount"
-    :itemsPerPage="itemsPerPage"
-  ></Pagination>
+    <div class="works-block">
+      <RouterLink
+        class="works-block__item"
+        :to="{
+          path: '/image/',
+          hash: `#${item.srcFilename}`,
+          query: {
+            category: props.currentCategory,
+            ascending: isAscendingOrder,
+          },
+        }"
+        v-for="item in devidedImages[currentPage]"
+        :key="item.id"
+      >
+        <Transition name="fade-slide-up" appear mode="out-in">
+          <AsyncImg
+            :src="'/images/' + item.srcFilename"
+            :alt="item.previewFilename"
+          ></AsyncImg>
+        </Transition>
+      </RouterLink>
+    </div>
+
+    <Pagination
+      @update="(currPage) => (currentPage = currPage - 1)"
+      :totalCount="imagesByCategoryCount"
+      :itemsPerPage="itemsPerPage"
+    ></Pagination>
+  </div>
 </template>
 
 <style lang="scss" scoped>
