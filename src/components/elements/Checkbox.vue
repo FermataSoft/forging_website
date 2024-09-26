@@ -82,7 +82,7 @@ $border-width: 1px;
 .checkbox-wrapper label {
   color: $secondary;
   font-size: 1.4rem;
-  line-height: var(--size);
+  line-height: calc(var(--size) - 1px); // Strange fix but it works:)
   cursor: pointer;
   position: relative;
 
