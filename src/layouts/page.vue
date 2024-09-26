@@ -23,24 +23,17 @@ import ScrollTopButton from "../components/elements/ScrollTopButton.vue";
 <style scoped lang="scss">
 @import "../assets/vars.scss";
 
-.navbar-margin-enter-active,
-.navbar-margin-leave-active {
+.slide-enter-active,
+.slide-leave-active {
   transition: all 0.2s ease;
 }
 
-.navbar-margin-enter-from,
-.navbar-margin-leave-to {
-  transform: translateY(-50px);
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.2s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
+.slide-enter-from {
   transform: translateY(-5px);
+  opacity: 0.3;
+}
+
+.slide-leave-to {
   opacity: 0.3;
 }
 
