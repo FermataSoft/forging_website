@@ -36,6 +36,12 @@ const form = useForm({
 });
 
 async function submit() {
+  form.submitClicked = true;
+
+  if (!form.valid) {
+    return;
+  }
+
   const formData = toFormData(form.fields);
   form.sending = true;
 
@@ -77,7 +83,7 @@ function toFormData(obj = {}) {
       <div
         class="feedback__item"
         :class="{
-          invalid: !form.fields.name.valid && form.fields.name.touched,
+          invalid: !form.fields.name.valid && form.submitClicked,
         }"
       >
         <input
@@ -95,14 +101,12 @@ function toFormData(obj = {}) {
         </label>
         <small
           class="feedback__item-input-error"
-          v-if="form.fields.name.errors.required && form.fields.name.touched"
+          v-if="form.fields.name.errors.required && form.submitClicked"
           >{{ t("errorRequired") }}
         </small>
         <small
           class="feedback__item-input-error"
-          v-else-if="
-            form.fields.name.errors.maxLength && form.fields.name.touched
-          "
+          v-else-if="form.fields.name.errors.maxLength && form.submitClicked"
         >
           {{ t("errorMaxlength50") }}
           {{ form.fields.name.value.length }}
@@ -112,7 +116,7 @@ function toFormData(obj = {}) {
       <div
         class="feedback__item"
         :class="{
-          invalid: !form.fields.email.valid && form.fields.email.touched,
+          invalid: !form.fields.email.valid && form.submitClicked,
         }"
       >
         <input
@@ -130,21 +134,17 @@ function toFormData(obj = {}) {
         </label>
         <small
           class="feedback__item-input-error"
-          v-if="form.fields.email.errors.required && form.fields.email.touched"
+          v-if="form.fields.email.errors.required && form.submitClicked"
           >{{ t("errorRequired") }}
         </small>
         <small
           class="feedback__item-input-error"
-          v-else-if="
-            form.fields.email.errors.email && form.fields.email.touched
-          "
+          v-else-if="form.fields.email.errors.email && form.submitClicked"
           >{{ t("errorEmailFormat") }}
         </small>
         <small
           class="feedback__item-input-error"
-          v-else-if="
-            form.fields.email.errors.maxLength && form.fields.email.touched
-          "
+          v-else-if="form.fields.email.errors.maxLength && form.submitClicked"
           >Максимальная длина строки - 50 символов. Введено
           {{ form.fields.name.value.length }}
         </small>
@@ -153,7 +153,7 @@ function toFormData(obj = {}) {
       <div
         class="feedback__item"
         :class="{
-          invalid: !form.fields.subject.valid && form.fields.subject.touched,
+          invalid: !form.fields.subject.valid && form.submitClicked,
         }"
       >
         <input
@@ -168,9 +168,7 @@ function toFormData(obj = {}) {
         <label for="subject">{{ t("labelTopic") }}</label>
         <small
           class="feedback__item-input-error"
-          v-if="
-            form.fields.subject.errors.maxLength && form.fields.subject.touched
-          "
+          v-if="form.fields.subject.errors.maxLength && form.submitClicked"
           >{{ t("errorMaxlength50") }}
           {{ form.fields.subject.value.length }}
         </small>
@@ -179,7 +177,7 @@ function toFormData(obj = {}) {
       <div
         class="feedback__item"
         :class="{
-          invalid: !form.fields.message.valid && form.fields.message.touched,
+          invalid: !form.fields.message.valid && form.submitClicked,
         }"
       >
         <textarea
@@ -200,16 +198,12 @@ function toFormData(obj = {}) {
         </label>
         <small
           class="feedback__item-input-error"
-          v-if="
-            form.fields.message.errors.required && form.fields.message.touched
-          "
+          v-if="form.fields.message.errors.required && form.submitClicked"
           >{{ t("errorRequired") }}
         </small>
         <small
           class="feedback__item-input-error"
-          v-else-if="
-            form.fields.subject.errors.maxLength && form.fields.subject.touched
-          "
+          v-else-if="form.fields.subject.errors.maxLength && form.submitClicked"
           >{{ t("errorMaxlength3000") }}
           {{ form.fields.subject.value.length }}
         </small>
@@ -217,10 +211,7 @@ function toFormData(obj = {}) {
 
       <div class="feedback__terms-and-conditions">
         <Checkbox
-          :invalid="
-            !form.fields.termsAndCondition.valid &&
-            form.fields.termsAndCondition.touched
-          "
+          :invalid="!form.fields.termsAndCondition.valid && form.submitClicked"
           @blur="form.fields.termsAndCondition.blur"
           v-model="form.fields.termsAndCondition.value"
           >{{ t("labelPrivacyPolicy") }}
@@ -232,8 +223,7 @@ function toFormData(obj = {}) {
         <small
           class="feedback__item-input-error"
           v-if="
-            form.fields.termsAndCondition.errors.required &&
-            form.fields.termsAndCondition.touched
+            form.fields.termsAndCondition.errors.required && form.submitClicked
           "
           >Поле является обязательным
         </small>
@@ -243,7 +233,6 @@ function toFormData(obj = {}) {
     <ButtonSubmit
       class="feedback__button-submit"
       :text="t('buttonSubmit')"
-      :disabled="!form.valid || form.sending"
     ></ButtonSubmit>
   </form>
 </template>
