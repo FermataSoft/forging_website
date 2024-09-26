@@ -17,6 +17,7 @@ const content = reactive({
 const isPrevArticleShow = ref(false);
 const isNextArticleShow = ref(false);
 const isError = ref(false);
+const isLoading = ref(true);
 
 onBeforeMount(async () => {
   content.IDs = await getDataFromDB(
@@ -41,6 +42,7 @@ async function getDataFromDB(query) {
     .get()
     .json();
   isError.value = !!error.value;
+  isLoading.value = !!isFetching.value;
   return data.value;
 }
 
@@ -79,14 +81,17 @@ function definePrevId(elementsID = [], currentID) {
     <ReloadOnError v-if="isError"></ReloadOnError>
     <Suspense v-else>
       <div class="article__content">
-        <div class="article__content-header">
-          <h1 class="article__title">{{ content.current.title }}</h1>
-          <time class="article__creation-date">{{
-            new Date(+content.current.creation_date).toLocaleDateString()
-          }}</time>
-        </div>
-        <div class="article__content-block">
-          <p v-html="content.current.html_text"></p>
+        <Loader v-if="isLoading"></Loader>
+        <div class="article__content-block" v-else>
+          <div class="article__content-header">
+            <h1 class="article__title">{{ content.current.title }}</h1>
+            <time class="article__creation-date" v-show="content.current.creation_date">{{
+              new Date(+content.current.creation_date).toLocaleDateString()
+            }}</time>
+          </div>
+          <div class="article__content-block">
+            <p v-html="content.current.html_text"></p>
+          </div>
         </div>
       </div>
     </Suspense>
@@ -136,7 +141,12 @@ $top-bar-inner: 50px;
 }
 
 .article__content {
-  padding: 0 16px;
+  position: relative;
+  min-height: 200px;
+
+  .article__content-block {
+    padding: 0 16px;
+  }
 
   .article__content-header {
     margin-bottom: 30px;
