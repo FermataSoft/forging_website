@@ -34,7 +34,7 @@ function getDBQuery(category) {
   if (category === "all") {
     return `SELECT * FROM ${DBTableName} ORDER BY id ${order.value}`;
   }
-  return `SELECT * FROM ${DBTableName} WHERE category="${currentCategory.value} ORDER BY id ${order.value}"`;
+  return `SELECT * FROM ${DBTableName} WHERE category = "${currentCategory.value}" ORDER BY id ${order.value}`;
 }
 
 function addVirtualSlides(content = []) {
