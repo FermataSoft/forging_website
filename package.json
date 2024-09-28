@@ -9,14 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tinymce/tinymce-vue": "^5.1.1",
+    "@tinymce/tinymce-vue": "^6.0.1",
     "@vueuse/core": "^10.9.0",
     "gsap": "^3.12.5",
     "pinia": "^2.0.30",
     "sql.js": "^1.8.0",
     "swiper": "^11.0.5",
     "vee-validate": "^4.7.4",
-    "vue": "^3.4.25",
+    "vue": "^3.5.10",
     "vue-awesome-paginate": "^1.1.46",
     "vue-editor-js": "^2.0.2",
     "vue-i18n": "^9.2.2",
