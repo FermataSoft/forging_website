@@ -49,7 +49,7 @@ $border-width: 1px;
   text-align: left;
 
   @include breakpoint(xs) {
-  --size: 16px;
+    --size: 16px;
   }
 }
 
@@ -73,6 +73,11 @@ $border-width: 1px;
   height: calc(var(--size) * 0.6);
   -webkit-animation: draw-checkbox-28 ease-in-out 0.2s forwards;
   animation: draw-checkbox-28 ease-in-out 0.2s forwards;
+}
+
+.checkbox-wrapper input:focus ~ label::before {
+  border: $border-width solid $primary;
+  box-shadow: 0 0 0 1px $primary;
 }
 
 .checkbox-wrapper label:active::before {
