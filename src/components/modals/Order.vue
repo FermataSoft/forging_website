@@ -26,7 +26,7 @@ watch(
 </script>
 
 <template>
-  <Transition>
+  <Transition :duration="600">
     <div class="order" v-if="isActive">
       <div class="order__background" @click.self="$emit('close')"></div>
 
@@ -83,6 +83,7 @@ watch(
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 500px;
   max-height: calc(100vh - 20px);
   transform: translate(-50%, -50%);
 
@@ -127,9 +128,8 @@ watch(
 }
 
 .order__top-block {
-  background-color: $surface;
-  padding-top: 30px;
-  padding-bottom: 10px;
+  background-color: $surface-container-highest;
+  padding: 20px 0;
 
   @include breakpoint(xs) {
     padding: 20px 0 10px 0;
@@ -142,35 +142,19 @@ watch(
 }
 
 .order__mid-block {
-  background-color: $surface;
-  transform: translate(0, -1px);
+  background-color: $surface-container-highest;
   padding-bottom: 30px;
-  height: 500px;
+  padding-top: 10px;
   max-height: calc(100vh - 200px);
-  overflow-y: scroll;
   overflow-x: hidden;
+  overflow-y: scroll;
 
-  &::-webkit-scrollbar {
-    width: 12px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    border: 3px solid transparent;
-    background-color: rgb(34, 34, 34);
-    background-clip: padding-box;
-  }
-
-  &::-webkit-scrollbar-corner {
-    background-color: transparent;
-  }
+  @include scrollbar(12px);
 
   .order__form {
-    padding: 0 40px;
-    transform: translate(12px);
+    padding: 0 23px 0 34px;
 
     @include breakpoint(xs) {
-      transform: translate(0, 0px);
       padding: 0 20px;
     }
   }
@@ -180,17 +164,36 @@ watch(
   background-color: $secondary;
   width: 100%;
   height: auto;
-  padding: 10px 0px;
+  padding: 20px 0px;
 }
 
-.v-enter-active,
-.v-leave-active {
-  transition: all 0.2s ease-in-out;
+.v-enter-active {
+  transition: all 0.3s ease-in-out;
 }
 
-.v-enter-from,
+.v-enter-from {
+  opacity: 0;
+}
+
 .v-leave-to {
-  transform: scale(1.1);
+  opacity: 0;
+}
+
+.v-enter-active .order__modal-wrapper {
+  transition: all 0.3s ease-in-out;
+}
+
+.v-enter-from .order__modal-wrapper {
+  left: calc(50% - 30px);
+}
+
+.v-enter-active .order__form {
+  transition: all 0.3s ease-in-out;
+  transition-delay: 0.3s;
+}
+
+.v-enter-from .order__form {
+  transform: translateX(-30px);
   opacity: 0;
 }
 </style>

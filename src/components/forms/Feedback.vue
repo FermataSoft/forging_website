@@ -1,4 +1,5 @@
 <script setup>
+import { useTemplateRef } from "vue";
 import { useI18n } from "vue-i18n";
 import ButtonSubmit from "../elements/ButtonAccent.vue";
 import Checkbox from "../elements/Checkbox.vue";
@@ -11,6 +12,7 @@ const required = (val) => !!val;
 const maxLength = (num) => (val) => val.length <= num;
 const email = (val) =>
   /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(val);
+const TEXTAREA = useTemplateRef("textarea");
 
 const form = useForm({
   name: {
@@ -69,6 +71,11 @@ function toFormData(obj = {}) {
   });
   return formData;
 }
+
+function autoResize(element) {
+  element.style.height = "5px";
+  element.style.height = element.scrollHeight + "px";
+}
 </script>
 
 <template>
@@ -93,7 +100,7 @@ function toFormData(obj = {}) {
           type="text"
           maxlength="50"
           id="name"
-          placeholder="Full name"
+          placeholder=""
         />
         <label for="name"
           >{{ t("labelName") }}
@@ -126,7 +133,7 @@ function toFormData(obj = {}) {
           type="email"
           maxlength="50"
           id="email"
-          placeholder="Email"
+          placeholder=""
         />
         <label for="email"
           >{{ t("labelEmail") }}
@@ -163,7 +170,7 @@ function toFormData(obj = {}) {
           type="text"
           maxlength="50"
           id="subject"
-          placeholder="subject"
+          placeholder=""
         />
         <label for="subject">{{ t("labelTopic") }}</label>
         <small
@@ -182,15 +189,15 @@ function toFormData(obj = {}) {
       >
         <textarea
           class="feedback-form__item-input"
+          ref="textarea"
+          @input="autoResize(TEXTAREA)"
           v-model="form.fields.message.value"
           @blur="form.fields.message.blur"
           wrap="soft"
-          rows="7"
           maxlength="1000"
-          style="resize: vertical"
           id="message"
           name="message"
-          placeholder="Describe your idea"
+          placeholder=""
         ></textarea>
         <label for="message"
           >{{ t("labelMessage") }}
@@ -243,23 +250,20 @@ function toFormData(obj = {}) {
 $border-width: 1px;
 
 @mixin inputsVisual($height: 0) {
-  border: $border-width solid $outline-variant;
-  border-radius: 5px;
+  border: $border-width solid $outline-darker;
   width: 100%;
   min-height: 40px;
-  background-color: $surface;
+  background-color: transparent;
   font-family: $font-main;
   font-weight: $font-regular;
   color: $on-surface;
   font-size: 1.4rem;
   outline: none;
-  box-shadow: none;
-  box-shadow: inset 2px 2px 5px rgba(160, 160, 160, 0.1);
+  border-radius: 5px;
 }
 
 .feedback {
   width: 450px;
-  // margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
@@ -301,9 +305,13 @@ $border-width: 1px;
     }
 
     textarea {
-      padding: 5px 10px;
-      max-height: 200px;
       @include inputsVisual(0);
+      @include scrollbar($width: 10px);
+      padding: 5px 10px;
+      min-height: 100px;
+      max-height: 250px;
+      overflow: auto;
+      resize: none;
     }
 
     small {
@@ -328,9 +336,10 @@ $border-width: 1px;
 
     input:not(:placeholder-shown) + label,
     textarea:not(:placeholder-shown) + label {
-      transform: translate(0, -20px) scale(0.8);
+      transform: translate(0, -9px) scale(0.8);
       font-size: 1.4rem;
       padding: 0 5px;
+      background-color: $surface-container-highest;
     }
 
     input:focus + label,
@@ -342,13 +351,11 @@ $border-width: 1px;
     }
 
     input:focus,
-    textarea:focus {
-      border: $border-width solid $outline-darker;
+    textarea:focus,
+    checkbox:focus {
+      border: $border-width solid $primary;
+      box-shadow: 0 0 0 1px $primary;
       z-index: 1;
-    }
-
-    ._error {
-      border-color: $error;
     }
   }
 }
