@@ -149,23 +149,10 @@ watch(
   overflow-x: hidden;
   overflow-y: scroll;
 
-  &::-webkit-scrollbar {
-    width: 12px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    border: 3px solid transparent;
-    background-color: rgb(34, 34, 34);
-    background-clip: padding-box;
-  }
-
-  &::-webkit-scrollbar-corner {
-    background-color: transparent;
-  }
+  @include scrollbar(12px);
 
   .order__form {
-    padding: 0 25px 0 35px;
+    padding: 0 23px 0 34px;
 
     @include breakpoint(xs) {
       padding: 0 20px;
