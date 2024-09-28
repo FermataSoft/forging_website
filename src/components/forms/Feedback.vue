@@ -1,4 +1,5 @@
 <script setup>
+import { useTemplateRef } from "vue";
 import { useI18n } from "vue-i18n";
 import ButtonSubmit from "../elements/ButtonAccent.vue";
 import Checkbox from "../elements/Checkbox.vue";
@@ -11,6 +12,7 @@ const required = (val) => !!val;
 const maxLength = (num) => (val) => val.length <= num;
 const email = (val) =>
   /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(val);
+const TEXTAREA = useTemplateRef("textarea");
 
 const form = useForm({
   name: {
@@ -68,6 +70,11 @@ function toFormData(obj = {}) {
     formData.append(key, value.value);
   });
   return formData;
+}
+
+function autoResize(element) {
+  element.style.height = "5px";
+  element.style.height = element.scrollHeight + "px";
 }
 </script>
 
@@ -182,12 +189,12 @@ function toFormData(obj = {}) {
       >
         <textarea
           class="feedback-form__item-input"
+          ref="textarea"
+          @input="autoResize(TEXTAREA)"
           v-model="form.fields.message.value"
           @blur="form.fields.message.blur"
           wrap="soft"
-          rows="7"
           maxlength="1000"
-          style="resize: vertical"
           id="message"
           name="message"
           placeholder=""
@@ -257,7 +264,6 @@ $border-width: 1px;
 
 .feedback {
   width: 450px;
-  // margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
@@ -299,9 +305,13 @@ $border-width: 1px;
     }
 
     textarea {
-      padding: 5px 10px;
-      max-height: 200px;
       @include inputsVisual(0);
+      @include scrollbar($width: 10px);
+      padding: 5px 10px;
+      min-height: 100px;
+      max-height: 250px;
+      overflow: auto;
+      resize: none;
     }
 
     small {
@@ -346,10 +356,6 @@ $border-width: 1px;
       border: $border-width solid $primary;
       box-shadow: 0 0 0 1px $primary;
       z-index: 1;
-    }
-
-    ._error {
-      border-color: $error;
     }
   }
 }
