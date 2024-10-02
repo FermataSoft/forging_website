@@ -222,7 +222,7 @@ function autoResize(element) {
           @blur="form.fields.termsAndCondition.blur"
           v-model="form.fields.termsAndCondition.value"
           >{{ t("labelPrivacyPolicy") }}
-          <router-link to="/privacy-policy"
+          <router-link to="/privacy" target="_blank"
             >{{ t("labelPrivacyPolicyLink") }}
           </router-link>
           <span>{{ " (" + t("required") + ")" }}</span>
