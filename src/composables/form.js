@@ -5,6 +5,7 @@ export function useForm(init = {}) {
     const form = reactive({
         fields: {},
         sending: false,
+        submitClicked: false,
         reset: reset
     });
 

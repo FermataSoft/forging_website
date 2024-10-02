@@ -5,6 +5,8 @@ import { useI18n } from "vue-i18n";
 import { useFetch } from "@vueuse/core";
 import SectionHeader from "../components/elements/SectionHeader.vue";
 import ArticleCard from "../components/elements/ArticleCard.vue";
+import ReloadOnError from "../components/elements/ReloadOnError.vue";
+import fakeArticles from "@/api/articles.json";
 
 const { t } = useI18n();
 const content = ref([{}, {}, {}]);
@@ -13,14 +15,20 @@ let isError = ref(false);
 
 onMounted(async () => {
   const { isFetching, error, data } = await useFetch(
-    "/api/articles.php?query=SELECT id, title, description, creation_date FROM articles"
+    "/api/articles.php?query=SELECT id, title, description, creation_date, preview_image FROM articles"
   )
     .get()
     .json();
 
+  // Fake API ---------------
+/*   let error = { value: false}
+  let data = ref([]);
+  data.value = fakeArticles;
+  isLoaded.value = true; */
+  // --------------- Fake API
+
   if (error.value) {
-    isError.value = error.value;
-    throw new Error(error.value);
+    isError.value = !!error.value;
   } else {
     content.value = data.value;
     isLoaded.value = !isFetching.value;
@@ -32,8 +40,8 @@ onMounted(async () => {
   <div class="articles">
     <div class="articles__wrapper" v-if="useRoute().path === '/articles'">
       <SectionHeader>{{ t("ArticlesHeader") }}</SectionHeader>
-      
-      <div class="articles__items">
+      <ReloadOnError v-if="isError"></ReloadOnError>
+      <div class="articles__items" v-else>
         <ArticleCard
           v-for="item in content"
           :is-loaded="isLoaded"
@@ -46,7 +54,6 @@ onMounted(async () => {
         </ArticleCard>
       </div>
     </div>
-
     <router-view></router-view>
   </div>
 </template>

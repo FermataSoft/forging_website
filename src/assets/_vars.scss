@@ -19,7 +19,7 @@ $surface-container-lowest: hsl(0, 0%, 90%);
 $surface-container-low: hsl(0, 0%, 92%);
 $surface-container: hsl(0, 0%, 95%);
 $surface-container-high: hsl(0, 0%, 96%);
-$surface-container-highest: hsl(0, 0%, 98%);
+$surface-container-highest: hsl(0, 0%, 99%);
 $inverse-surface: hsl(0, 0%, 14%);
 $inverse-surface-lower: hsl(0, 0%, 10%);
 $inverse-on-surface: hsl(0, 0%, 100%);
@@ -31,6 +31,7 @@ $outline-variant: hsl(0, 0%, 80%);
 
 // Accent colors
 $primary: #ffd666;
+$primary-lighten: #fae884;
 $primary-opacity: rgb(255, 214, 102, 40%);
 $on-primary: hsl(0, 0%, 14%);
 $on-primary-url: "%23242424";
@@ -104,7 +105,7 @@ $mobile: 767px;
     }
   }
   @if $point == lg {
-    @media (max-width: 1250px) {
+    @media (max-width: 1300px) {
       @content;
     }
   }
@@ -142,7 +143,7 @@ $mobile: 767px;
   }
 }
 
-@mixin scrollbar($width: 15px, $background: false) {
+@mixin scrollbar($width: 15px, $color: $secondary, $background: false) {
   &::-webkit-scrollbar {
     width: $width;
     height: $width;
@@ -154,13 +155,9 @@ $mobile: 767px;
 
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    border: 5px solid transparent;
-    background-color: rgb(34, 34, 34);
+    border: 3px solid transparent;
+    background-color: $color;
     background-clip: padding-box;
-  }
-
-  &::-webkit-scrollbar-track {
-    margin: 5px;
   }
 
   &::-webkit-scrollbar-corner {

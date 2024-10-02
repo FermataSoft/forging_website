@@ -1,4 +1,5 @@
 <script setup>
+import { useTemplateRef } from "vue";
 import { useI18n } from "vue-i18n";
 import ButtonSubmit from "../elements/ButtonAccent.vue";
 import Checkbox from "../elements/Checkbox.vue";
@@ -11,6 +12,7 @@ const required = (val) => !!val;
 const maxLength = (num) => (val) => val.length <= num;
 const email = (val) =>
   /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(val);
+const TEXTAREA = useTemplateRef("textarea");
 
 const form = useForm({
   name: {
@@ -36,6 +38,12 @@ const form = useForm({
 });
 
 async function submit() {
+  form.submitClicked = true;
+
+  if (!form.valid) {
+    return;
+  }
+
   const formData = toFormData(form.fields);
   form.sending = true;
 
@@ -63,6 +71,11 @@ function toFormData(obj = {}) {
   });
   return formData;
 }
+
+function autoResize(element) {
+  element.style.height = "5px";
+  element.style.height = element.scrollHeight + "px";
+}
 </script>
 
 <template>
@@ -77,7 +90,7 @@ function toFormData(obj = {}) {
       <div
         class="feedback__item"
         :class="{
-          invalid: !form.fields.name.valid && form.fields.name.touched,
+          invalid: !form.fields.name.valid && form.submitClicked,
         }"
       >
         <input
@@ -87,7 +100,7 @@ function toFormData(obj = {}) {
           type="text"
           maxlength="50"
           id="name"
-          placeholder="Full name"
+          placeholder=""
         />
         <label for="name"
           >{{ t("labelName") }}
@@ -95,14 +108,12 @@ function toFormData(obj = {}) {
         </label>
         <small
           class="feedback__item-input-error"
-          v-if="form.fields.name.errors.required && form.fields.name.touched"
+          v-if="form.fields.name.errors.required && form.submitClicked"
           >{{ t("errorRequired") }}
         </small>
         <small
           class="feedback__item-input-error"
-          v-else-if="
-            form.fields.name.errors.maxLength && form.fields.name.touched
-          "
+          v-else-if="form.fields.name.errors.maxLength && form.submitClicked"
         >
           {{ t("errorMaxlength50") }}
           {{ form.fields.name.value.length }}
@@ -112,7 +123,7 @@ function toFormData(obj = {}) {
       <div
         class="feedback__item"
         :class="{
-          invalid: !form.fields.email.valid && form.fields.email.touched,
+          invalid: !form.fields.email.valid && form.submitClicked,
         }"
       >
         <input
@@ -122,7 +133,7 @@ function toFormData(obj = {}) {
           type="email"
           maxlength="50"
           id="email"
-          placeholder="Email"
+          placeholder=""
         />
         <label for="email"
           >{{ t("labelEmail") }}
@@ -130,21 +141,17 @@ function toFormData(obj = {}) {
         </label>
         <small
           class="feedback__item-input-error"
-          v-if="form.fields.email.errors.required && form.fields.email.touched"
+          v-if="form.fields.email.errors.required && form.submitClicked"
           >{{ t("errorRequired") }}
         </small>
         <small
           class="feedback__item-input-error"
-          v-else-if="
-            form.fields.email.errors.email && form.fields.email.touched
-          "
+          v-else-if="form.fields.email.errors.email && form.submitClicked"
           >{{ t("errorEmailFormat") }}
         </small>
         <small
           class="feedback__item-input-error"
-          v-else-if="
-            form.fields.email.errors.maxLength && form.fields.email.touched
-          "
+          v-else-if="form.fields.email.errors.maxLength && form.submitClicked"
           >Максимальная длина строки - 50 символов. Введено
           {{ form.fields.name.value.length }}
         </small>
@@ -153,7 +160,7 @@ function toFormData(obj = {}) {
       <div
         class="feedback__item"
         :class="{
-          invalid: !form.fields.subject.valid && form.fields.subject.touched,
+          invalid: !form.fields.subject.valid && form.submitClicked,
         }"
       >
         <input
@@ -163,14 +170,12 @@ function toFormData(obj = {}) {
           type="text"
           maxlength="50"
           id="subject"
-          placeholder="subject"
+          placeholder=""
         />
         <label for="subject">{{ t("labelTopic") }}</label>
         <small
           class="feedback__item-input-error"
-          v-if="
-            form.fields.subject.errors.maxLength && form.fields.subject.touched
-          "
+          v-if="form.fields.subject.errors.maxLength && form.submitClicked"
           >{{ t("errorMaxlength50") }}
           {{ form.fields.subject.value.length }}
         </small>
@@ -179,20 +184,20 @@ function toFormData(obj = {}) {
       <div
         class="feedback__item"
         :class="{
-          invalid: !form.fields.message.valid && form.fields.message.touched,
+          invalid: !form.fields.message.valid && form.submitClicked,
         }"
       >
         <textarea
           class="feedback-form__item-input"
+          ref="textarea"
+          @input="autoResize(TEXTAREA)"
           v-model="form.fields.message.value"
           @blur="form.fields.message.blur"
           wrap="soft"
-          rows="7"
           maxlength="1000"
-          style="resize: vertical"
           id="message"
           name="message"
-          placeholder="Describe your idea"
+          placeholder=""
         ></textarea>
         <label for="message"
           >{{ t("labelMessage") }}
@@ -200,16 +205,12 @@ function toFormData(obj = {}) {
         </label>
         <small
           class="feedback__item-input-error"
-          v-if="
-            form.fields.message.errors.required && form.fields.message.touched
-          "
+          v-if="form.fields.message.errors.required && form.submitClicked"
           >{{ t("errorRequired") }}
         </small>
         <small
           class="feedback__item-input-error"
-          v-else-if="
-            form.fields.subject.errors.maxLength && form.fields.subject.touched
-          "
+          v-else-if="form.fields.subject.errors.maxLength && form.submitClicked"
           >{{ t("errorMaxlength3000") }}
           {{ form.fields.subject.value.length }}
         </small>
@@ -217,14 +218,11 @@ function toFormData(obj = {}) {
 
       <div class="feedback__terms-and-conditions">
         <Checkbox
-          :invalid="
-            !form.fields.termsAndCondition.valid &&
-            form.fields.termsAndCondition.touched
-          "
+          :invalid="!form.fields.termsAndCondition.valid && form.submitClicked"
           @blur="form.fields.termsAndCondition.blur"
           v-model="form.fields.termsAndCondition.value"
           >{{ t("labelPrivacyPolicy") }}
-          <router-link to="/privacy-policy"
+          <router-link to="/privacy" target="_blank"
             >{{ t("labelPrivacyPolicyLink") }}
           </router-link>
           <span>{{ " (" + t("required") + ")" }}</span>
@@ -232,8 +230,7 @@ function toFormData(obj = {}) {
         <small
           class="feedback__item-input-error"
           v-if="
-            form.fields.termsAndCondition.errors.required &&
-            form.fields.termsAndCondition.touched
+            form.fields.termsAndCondition.errors.required && form.submitClicked
           "
           >Поле является обязательным
         </small>
@@ -242,8 +239,7 @@ function toFormData(obj = {}) {
 
     <ButtonSubmit
       class="feedback__button-submit"
-      text="ButtonSubmit"
-      :disabled="!form.valid || form.sending"
+      :text="t('buttonSubmit')"
     ></ButtonSubmit>
   </form>
 </template>
@@ -254,23 +250,20 @@ function toFormData(obj = {}) {
 $border-width: 1px;
 
 @mixin inputsVisual($height: 0) {
-  border: $border-width solid $outline-variant;
-  border-radius: 5px;
+  border: $border-width solid $outline-darker;
   width: 100%;
   min-height: 40px;
-  background-color: $surface;
+  background-color: transparent;
   font-family: $font-main;
   font-weight: $font-regular;
   color: $on-surface;
   font-size: 1.4rem;
   outline: none;
-  box-shadow: none;
-  box-shadow: inset 2px 2px 5px rgba(160, 160, 160, 0.1);
+  border-radius: 5px;
 }
 
 .feedback {
   width: 450px;
-  // margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
@@ -312,9 +305,13 @@ $border-width: 1px;
     }
 
     textarea {
-      padding: 5px 10px;
-      max-height: 200px;
       @include inputsVisual(0);
+      @include scrollbar($width: 10px);
+      padding: 5px 10px;
+      min-height: 100px;
+      max-height: 250px;
+      overflow: auto;
+      resize: none;
     }
 
     small {
@@ -339,9 +336,10 @@ $border-width: 1px;
 
     input:not(:placeholder-shown) + label,
     textarea:not(:placeholder-shown) + label {
-      transform: translate(0, -20px) scale(0.8);
+      transform: translate(0, -9px) scale(0.8);
       font-size: 1.4rem;
       padding: 0 5px;
+      background-color: $surface-container-highest;
     }
 
     input:focus + label,
@@ -353,13 +351,11 @@ $border-width: 1px;
     }
 
     input:focus,
-    textarea:focus {
-      border: $border-width solid $outline-darker;
+    textarea:focus,
+    checkbox:focus {
+      border: $border-width solid $primary;
+      box-shadow: 0 0 0 1px $primary;
       z-index: 1;
-    }
-
-    ._error {
-      border-color: $error;
     }
   }
 }
@@ -405,7 +401,8 @@ $border-width: 1px;
       "labelTopic": "Тема сообщения",
       "labelMessage": "Ваше сообщение",
       "labelPrivacyPolicy": "Я согласен(-на) с",
-      "labelPrivacyPolicyLink": "Политикой конфиденциальности"
+      "labelPrivacyPolicyLink": "Политикой конфиденциальности",
+      "buttonSubmit": "Отправить"
   },
     "by-BY": {
       "required": "абавязкова",
@@ -418,7 +415,8 @@ $border-width: 1px;
       "labelTopic": "Тэма паведамлення",
       "labelMessage": "Ваша паведамленне",
       "labelPrivacyPolicy": "Я згодзен(-на) з",
-      "labelPrivacyPolicyLink": "Палітыкай канфідэнцыяльнасьці"
+      "labelPrivacyPolicyLink": "Палітыкай канфідэнцыяльнасьці",
+      "buttonSubmit": "Адправіць"
     }
   }
 </i18n>

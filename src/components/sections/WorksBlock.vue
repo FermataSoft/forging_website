@@ -3,6 +3,7 @@ import { ref, computed, onBeforeMount } from "vue";
 import Pagination from "../../components/elements/Pagination.vue";
 import { useFetch } from "@vueuse/core";
 import AsyncImg from "../elements/AsyncImg.vue";
+import ReloadOnError from "../elements/ReloadOnError.vue";
 
 const props = defineProps({
   currentCategory: String,
@@ -13,6 +14,7 @@ const props = defineProps({
 
 const images = ref([]);
 let currentPage = ref(1);
+let isError = ref(false);
 
 onBeforeMount(async () => {
   const { isFetching, error, data } = await useFetch(
@@ -23,8 +25,12 @@ onBeforeMount(async () => {
   )
     .get()
     .json();
-  images.value = data.value;
-    // images.value = (await import("/src/api/images.json")).default;
+  if (error.value) {
+    isError.value = !!error.value;
+  } else {
+    images.value = data.value;
+  }
+  // images.value = (await import("/src/api/images.json")).default;
 });
 
 // Normalize value according to column name in DB
@@ -93,31 +99,38 @@ const devidedImages = computed(() => {
 </script>
 
 <template>
-  <div class="works-block">
-    <RouterLink
-      class="works-block__item"
-      :to="{
-        path: '/image/',
-        hash: `#${item.id}`,
-        query: { category: props.currentCategory },
-      }"
-      v-for="item in devidedImages[currentPage]"
-      :key="item.id"
-    >
-      <Transition name="fade-slide-up" appear mode="out-in">
+  <div class="works-block-wrapper">
+    <ReloadOnError v-if="isError"></ReloadOnError>
+
+    <div class="works-block">
+      <RouterLink
+        class="works-block__item"
+        :to="{
+          path: '/image/',
+          hash: `#${item.srcFilename}`,
+          query: {
+            category: props.currentCategory,
+            ascending: isAscendingOrder,
+          },
+        }"
+        v-for="item in devidedImages[currentPage]"
+        :key="item.id"
+      >
+        <Transition name="fade-slide-up" appear mode="out-in">
           <AsyncImg
             :src="'/images/' + item.srcFilename"
             :alt="item.previewFilename"
           ></AsyncImg>
-      </Transition>
-    </RouterLink>
-  </div>
+        </Transition>
+      </RouterLink>
+    </div>
 
-  <Pagination
-    @update="(currPage) => (currentPage = currPage - 1)"
-    :totalCount="imagesByCategoryCount"
-    :itemsPerPage="itemsPerPage"
-  ></Pagination>
+    <Pagination
+      @update="(currPage) => (currentPage = currPage - 1)"
+      :totalCount="imagesByCategoryCount"
+      :itemsPerPage="itemsPerPage"
+    ></Pagination>
+  </div>
 </template>
 
 <style lang="scss" scoped>

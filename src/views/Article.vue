@@ -3,10 +3,10 @@ import { ref, onMounted, onBeforeMount, reactive } from "vue";
 import { useRoute } from "vue-router";
 import ButtonGoBack from "../components/elements/ButtonGoBack.vue";
 import { useFetch } from "@vueuse/core";
+import ReloadOnError from "../components/elements/ReloadOnError.vue";
 
 const routePath = useRoute().path;
 const currentArticleID = ref(routePath.slice(routePath.lastIndexOf("/") + 1));
-
 const content = reactive({
   count: 0,
   IDs: [],
@@ -14,24 +14,22 @@ const content = reactive({
   prevID: null,
   nextID: null,
 });
-
 const isPrevArticleShow = ref(false);
 const isNextArticleShow = ref(false);
+const isError = ref(false);
+const isLoading = ref(true);
 
 onBeforeMount(async () => {
   content.IDs = await getDataFromDB(
     "/api/articles.php?query=SELECT id FROM articles"
   ).then((result) => result.map((value) => value["id"]));
   content.count = content.IDs.length;
-
   content.current =
     await getDataFromDB(`/api/articles.php?action=fetch-one&query=SELECT id, title, html_text, creation_date
   FROM articles WHERE id = ${currentArticleID.value};`).then(
       (result) => result[0]
     );
-
   content.prevID = definePrevId(content.IDs, currentArticleID.value);
-
   content.nextID = defineNextId(content.IDs, currentArticleID.value);
 });
 
@@ -43,6 +41,8 @@ async function getDataFromDB(query) {
   const { isFetching, error, data } = await useFetch(query, { refetch: true })
     .get()
     .json();
+  isError.value = !!error.value;
+  isLoading.value = !!isFetching.value;
   return data.value;
 }
 
@@ -77,17 +77,21 @@ function definePrevId(elementsID = [], currentID) {
     <div class="article__top-bar">
       <ButtonGoBack></ButtonGoBack>
     </div>
-
-    <Suspense>
+    <div class="article__top-bar-inner"></div>
+    <ReloadOnError v-if="isError"></ReloadOnError>
+    <Suspense v-else>
       <div class="article__content">
-        <div class="article__content-header">
-          <h1 class="article__title">{{ content.current.title }}</h1>
-          <time class="article__creation-date">{{
-            new Date(+content.current.creation_date).toLocaleDateString()
-          }}</time>
-        </div>
-        <div class="article__content-block">
-          <p v-html="content.current.html_text"></p>
+        <Loader v-if="isLoading"></Loader>
+        <div class="article__content-block" v-else>
+          <div class="article__content-header">
+            <h1 class="article__title">{{ content.current.title }}</h1>
+            <time class="article__creation-date" v-show="content.current.creation_date">{{
+              new Date(+content.current.creation_date).toLocaleDateString()
+            }}</time>
+          </div>
+          <div class="article__content-block">
+            <p v-html="content.current.html_text"></p>
+          </div>
         </div>
       </div>
     </Suspense>
@@ -113,6 +117,9 @@ function definePrevId(elementsID = [], currentID) {
 
 <style lang="scss" scoped>
 @import "../assets/_vars.scss";
+
+$top-bar-inner: 50px;
+
 .article {
   max-width: $wrapper-width;
   margin: 0 auto;
@@ -121,15 +128,28 @@ function definePrevId(elementsID = [], currentID) {
 .article__top-bar {
   position: fixed;
   top: $navbar-height;
+  height: $top-bar-inner;
   width: $wrapper-width;
   background-color: $surface-container-highest;
   z-index: 3;
 }
 
+.article__top-bar-inner {
+  height: $top-bar-inner;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
 .article__content {
+  position: relative;
+  min-height: 200px;
+
+  .article__content-block {
+    padding: 0 16px;
+  }
+
   .article__content-header {
     margin-bottom: 30px;
-    padding-top: 70px;
 
     .article__title {
       position: relative;

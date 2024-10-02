@@ -1,9 +1,15 @@
 <?php
+// Use this on server with .env file
+/* require $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
+$dotenv->load(); */
+
 try {
-  $dbName = getenv("DB_NAME");
-  $user = getenv("DB_USER");
-  $password = getenv("DB_PASSWORD");
-  $host = getenv("DB_HOST");
+  $dbName = $_ENV["DB_NAME"];
+  $user = $_ENV["DB_USER"];
+  $password = $_ENV["DB_PASSWORD"];
+  $host = $_ENV["DB_HOST"];
   $connect = new PDO("mysql:host={$host};dbname={$dbName};charset=utf8", $user, $password);
   $received_data = json_decode(file_get_contents("php://input"), true);
   $result = [];

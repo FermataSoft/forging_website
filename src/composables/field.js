@@ -3,7 +3,7 @@ import { ref, reactive, watch } from "vue";
 export function useField(field) {
   const valid = ref(true);
   const value = ref(field.value);
-  const touched = ref(false);
+  const touched = ref(false); // use it to check is item touched and show error message after user touches the input
   const errors = reactive({});
 
   const reassign = val => {

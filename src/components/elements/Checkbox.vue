@@ -49,7 +49,7 @@ $border-width: 1px;
   text-align: left;
 
   @include breakpoint(xs) {
-  --size: 16px;
+    --size: 16px;
   }
 }
 
@@ -75,6 +75,11 @@ $border-width: 1px;
   animation: draw-checkbox-28 ease-in-out 0.2s forwards;
 }
 
+.checkbox-wrapper input:focus ~ label::before {
+  border: $border-width solid $primary;
+  box-shadow: 0 0 0 1px $primary;
+}
+
 .checkbox-wrapper label:active::before {
   background-color: #e6e6e6;
 }
@@ -82,7 +87,7 @@ $border-width: 1px;
 .checkbox-wrapper label {
   color: $secondary;
   font-size: 1.4rem;
-  line-height: var(--size);
+  line-height: calc(var(--size) - 1px); // Strange fix but it works:)
   cursor: pointer;
   position: relative;
 

@@ -73,8 +73,8 @@ const workStore = useWorksStore();
             >
               <li class="site-map-item__link">
                 <RouterLink
-                  :to="{ path: '/works', query: { category: item } }"
-                  >{{ t("category-" + item) }}</RouterLink
+                  :to="{ path: '/works', query: { category: item.category } }"
+                  >{{ t("category-" + item.category) }}</RouterLink
                 >
               </li>
             </ul>

@@ -23,32 +23,38 @@ const router = createRouter({
     {
       path: "/image/",
       name: "image",
-      meta: { layout: BlankLayout, transition: "fade" },
+      meta: { layout: BlankLayout, transition: "slide" },
       component: () => import("../views/ImageView.vue")
     },
     {
       path: "/articles",
       name: "articles",
-      meta: { layout: PageLayout, transition: "fade" },
+      meta: { layout: PageLayout, transition: "slide" },
       component: () => import("../views/ArticlesView.vue"),
     },
     {
       path: "/articles/:id",
       name: "article",
-      meta: { layout: PageLayout, transition: "fade" },
+      meta: { layout: PageLayout },
       component: () => import("../views/Article.vue"),
     },
     {
       path: "/contacts",
       name: "contacts",
-      meta: { layout: PageLayout, transition: "fade" },
+      meta: { layout: PageLayout, transition: "slide" },
       component: () => import("../views/ContactsView.vue"),
     },
     {
       path: "/about",
       name: "about",
-      meta: { layout: PageLayout, transition: "fade" },
+      meta: { layout: PageLayout, transition: "slide" },
       component: () => import("../views/AboutView.vue"),
+    },
+    {
+      path: "/privacy",
+      name: "privacy",
+      meta: { layout: PageLayout, transition: "fade" },
+      component: () => import("../views/PrivacyView.vue"),
     },
     {
       path: "/:pathMatch(.*)*",
