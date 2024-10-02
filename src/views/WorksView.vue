@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, markRaw, ref, shallowRef, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import CloseModal from "@/components/elements/CloseModal.vue";
 import WorksBlock from "@/components/sections/WorksBlock.vue";
@@ -61,18 +61,18 @@ useWindowParamsStore().$subscribe((mutation, state) => {
           <h2>Категории</h2>
           <ul class="menu__checkbox-container">
             <li v-for="item in categories" class="menu__checkbox-item">
-              <span class="menu__checkbox"></span>
+              <component class="menu__checkbox-icon" :is="item.icon"></component>
               <input
                 class="--invisible"
                 type="radio"
                 name="menu"
-                :checked="item === currentCategorySelected"
-                :id="item"
-                :value="item"
+                :checked="item.category === currentCategorySelected"
+                :id="item.category"
+                :value="item.category"
                 v-model="currentCategorySelected"
               />
               <span class="menu__background"></span>
-              <label :for="item">{{ t("category-" + item) }}</label>
+              <label :for="item.category">{{ t("category-" + item.category) }}</label>
             </li>
           </ul>
         </div>
@@ -302,22 +302,24 @@ main {
       background-color: $surface-container-high;
     }
 
-    .menu__checkbox {
+    .menu__checkbox-icon {
       position: absolute;
-      height: 3rem;
-      width: 3px;
-      background-color: $secondary;
+      height: 2rem;
+      width: 2rem;
+      margin-left: 10px;
+      color: $secondary;
       z-index: 3;
       transition: all 0.3s ease;
     }
 
     label {
       width: 100%;
-      padding: 12px 0px 12px 8px;
-      font-size: 1.4rem;
+      padding: 12px 12px 12px 40px;
+      font-size: $font-controls;
       cursor: pointer;
       transition: all 0.3s ease;
       z-index: 3;
+      text-wrap: nowrap;
     }
 
     .menu__background {
@@ -333,8 +335,7 @@ main {
     }
 
     input[type="radio"]:checked ~ label {
-      padding-left: 15px;
-      // font-weight: $font-bold;
+      padding-left: 40px;
     }
 
     input[type="radio"]:checked ~ .menu__background {
