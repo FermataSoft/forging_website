@@ -55,7 +55,7 @@ function sliceIntoChunks(arr, chunkSize) {
 }
 
 function sortItems(arr, sortByField, ascendingOrder = true) {
-  if (typeof arr.map((value, index, array) => array[0]) === String) {
+  if (typeof arr.map((value, index, array) => array[0]) === "string") {
     // strange behaviour arr[0][sortByField] not working
     return arr.sort((a, b) =>
       ascendingOrder
@@ -118,7 +118,7 @@ const devidedImages = computed(() => {
       >
         <Transition name="fade-slide-up" appear mode="out-in">
           <AsyncImg
-            :src="'/images/' + item.srcFilename"
+            :src="'/images/works/' + `${item.category}/${item.srcFilename}`"
             :alt="item.previewFilename"
           ></AsyncImg>
         </Transition>
