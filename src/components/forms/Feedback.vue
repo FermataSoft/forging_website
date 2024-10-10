@@ -4,7 +4,6 @@ import { useI18n } from "vue-i18n";
 import ButtonSubmit from "../elements/ButtonAccent.vue";
 import Checkbox from "../elements/Checkbox.vue";
 import { useForm } from "../../composables/form";
-import FormLoader from "../elements/Loader.vue";
 
 const { t } = useI18n();
 
@@ -86,7 +85,7 @@ function autoResize(element) {
     @submit.prevent="submit"
   >
     <div class="feedback__items">
-      <FormLoader v-if="form.sending"></FormLoader>
+      <Loader v-if="form.sending"></Loader>
       <div
         class="feedback__item"
         :class="{
