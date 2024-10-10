@@ -2,8 +2,18 @@
 import { ref, watch } from "vue";
 
 const props = defineProps({
-  totalCount: Number,
-  itemsPerPage: Number,
+  totalCount: {
+    type: Number,
+    required: true,
+  },
+  itemsPerPage: {
+    type: Number,
+    required: true,
+  },
+  currentCategory: {
+    type: String,
+    required: true
+  }
 });
 
 const emit = defineEmits(["update"]);
@@ -12,6 +22,13 @@ const currentPage = ref(1);
 
 watch(
   () => props.itemsPerPage,
+  () => {
+    currentPage.value = 1;
+  }
+);
+
+watch(
+  () => props.currentCategory,
   () => {
     currentPage.value = 1;
   }

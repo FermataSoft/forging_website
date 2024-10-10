@@ -129,6 +129,7 @@ const devidedImages = computed(() => {
       @update="(currPage) => (currentPage = currPage - 1)"
       :totalCount="imagesByCategoryCount"
       :itemsPerPage="itemsPerPage"
+      :currentCategory="props.currentCategory"
     ></Pagination>
   </div>
 </template>
