@@ -27,7 +27,7 @@ onBeforeMount(async () => {
     .json();
   if (error.value) {
     isError.value = !!error.value;
-    images.value = (await import("/src/fakeapi/images.json")).default;
+    // images.value = (await import("/src/fakeapi/images.json")).default;
   } else {
     images.value = data.value;
   }
