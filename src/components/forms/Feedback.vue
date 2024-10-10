@@ -239,6 +239,7 @@ function autoResize(element) {
     <ButtonSubmit
       class="feedback__button-submit"
       :text="t('buttonSubmit')"
+      :disabled="form.sending"
     ></ButtonSubmit>
   </form>
 </template>
@@ -378,6 +379,10 @@ $border-width: 1px;
 
 .feedback__button-submit {
   margin-top: 15px;
+
+  @include breakpoint(xs) {
+    width: 100%;
+  }
 }
 
 .invalid input:not(:focus),
