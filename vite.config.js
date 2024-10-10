@@ -32,6 +32,12 @@ export default defineConfig({
       plugins: [
         autoprefixer({})
       ]
+    },
+    preprocessorOptions: {
+      scss: {
+        api: "modern-compiler",
+        silenceDeprecations: ["legacy-js-api"]
+      }
     }
   },
   resolve: {
