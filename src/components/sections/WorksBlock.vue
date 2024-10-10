@@ -27,10 +27,10 @@ onBeforeMount(async () => {
     .json();
   if (error.value) {
     isError.value = !!error.value;
+    images.value = (await import("/src/fakeapi/images.json")).default;
   } else {
     images.value = data.value;
   }
-  // images.value = (await import("/src/api/images.json")).default;
 });
 
 // Normalize value according to column name in DB
@@ -118,6 +118,7 @@ const devidedImages = computed(() => {
       >
         <Transition name="fade-slide-up" appear mode="out-in">
           <AsyncImg
+            class="works-block__item-image"
             :src="'/images/works/' + `${item.category}/${item.srcFilename}`"
             :alt="item.previewFilename"
           ></AsyncImg>
@@ -145,10 +146,10 @@ const devidedImages = computed(() => {
   padding: 30px 40px;
 
   @include breakpoint(lg) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   @include breakpoint(md) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
   @include breakpoint(sm) {
     grid-template-columns: repeat(2, 1fr);
@@ -157,6 +158,8 @@ const devidedImages = computed(() => {
 
   .works-block__item {
     position: relative;
+    width: 100%;
+    aspect-ratio: 1;
     border-radius: 5px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -182,11 +185,6 @@ const devidedImages = computed(() => {
         opacity: 1;
         transform: translateY(0);
       }
-    }
-
-    img {
-      width: 100%;
-      height: auto;
     }
   }
 }
