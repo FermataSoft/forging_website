@@ -23,7 +23,6 @@ button {
   background-color: $primary;
   padding: 15px 40px;
   border-radius: 5px;
-  max-width: fit-content;
 
   font-size: 1.6rem;
   font-weight: $font-bold;

@@ -26,17 +26,14 @@ function toggleLoadState() {
 <template>
   <div class="async-img">
     <Loader v-if="isLoading"></Loader>
-    <img
-      v-show="!isLoading"
-      :src="imageSrc"
-      :alt="alt"
-    />
+    <img v-show="!isLoading" :src="imageSrc" :alt="alt" />
   </div>
 </template>
 
 <style lang="scss" scoped>
 img {
+  display: block;
   width: 100%;
-  height: auto;
+  object-fit: cover;
 }
 </style>

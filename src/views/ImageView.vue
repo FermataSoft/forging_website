@@ -47,7 +47,7 @@ function addVirtualSlides(content = []) {
     result.push({
       id: item.id,
       srcFilename: item.srcFilename,
-      path: `../images/${item.srcFilename}`,
+      path: `../images/works/${item.category}/${item.srcFilename}`,
     });
   }
   return result;

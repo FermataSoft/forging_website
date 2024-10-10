@@ -1,12 +1,22 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch } from "vue";
 
 const props = defineProps({
-  totalCount: Number,
-  itemsPerPage: Number,
+  totalCount: {
+    type: Number,
+    required: true,
+  },
+  itemsPerPage: {
+    type: Number,
+    required: true,
+  },
+  currentCategory: {
+    type: String,
+    required: true
+  }
 });
 
-defineEmits(['update']);
+const emit = defineEmits(["update"]);
 
 const currentPage = ref(1);
 
@@ -16,6 +26,25 @@ watch(
     currentPage.value = 1;
   }
 );
+
+watch(
+  () => props.currentCategory,
+  () => {
+    currentPage.value = 1;
+  }
+);
+
+function onClickHandler() {
+  scrollToTop();
+  emit("update", currentPage.value);
+}
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
 </script>
 
 <template>
@@ -25,13 +54,13 @@ watch(
     :items-per-page="itemsPerPage"
     :max-pages-shown="5"
     v-model="currentPage"
-    :on-click="$emit('update', currentPage)"
+    :on-click="onClickHandler()"
     :hide-prev-next-when-ends="true"
   />
 </template>
 
 <style lang="scss">
-@import '../../assets/_vars.scss';
+@import "../../assets/_vars.scss";
 
 .pagination-container {
   display: flex;
