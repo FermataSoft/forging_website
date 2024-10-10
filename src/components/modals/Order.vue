@@ -66,6 +66,7 @@ watch(
   top: 0;
   left: 0;
   width: 100%;
+  height: 100vh;
   height: 100svh;
   z-index: 5;
   font-family: $font-main;
@@ -84,7 +85,8 @@ watch(
   top: 50%;
   left: 50%;
   width: 500px;
-  max-height: calc(100vh - 20px);
+  max-height: calc(100vh - 40px);
+  max-height: calc(100svh - 20px);
   transform: translate(-50%, -50%);
 
   @include breakpoint(xs) {
@@ -145,7 +147,8 @@ watch(
   background-color: $surface-container-highest;
   padding-bottom: 30px;
   padding-top: 10px;
-  max-height: calc(100vh - 250px);
+  max-height: calc(100vh - 300px);
+  max-height: calc(100svh - 250px);
   overflow-x: hidden;
   overflow-y: scroll;
 
