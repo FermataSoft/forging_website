@@ -145,11 +145,13 @@ watch(
   background-color: $surface-container-highest;
   padding-bottom: 30px;
   padding-top: 10px;
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 250px);
   overflow-x: hidden;
   overflow-y: scroll;
 
-  @include scrollbar(12px);
+  @include device(screen) {
+    @include scrollbar(12px);
+  }
 
   .order__form {
     padding: 0 23px 0 34px;
