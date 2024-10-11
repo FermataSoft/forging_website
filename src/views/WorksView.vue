@@ -56,12 +56,16 @@ useWindowParamsStore().$subscribe((mutation, state) => {
   <Transition name="view">
     <div class="works-view" @click.stop="hideMenu($event)">
       <nav class="menu-block" :class="{ 'menu-block--hidden': !isMenuOpened }">
+        <div class="menu-block__background" v-show="isMenuOpened"></div>
         <CloseModal class="menu-block__close-button"></CloseModal>
         <div class="filters-menu__block">
           <h2>Категории</h2>
           <ul class="menu__checkbox-container">
             <li v-for="item in categories" class="menu__checkbox-item">
-              <component class="menu__checkbox-icon" :is="item.icon"></component>
+              <component
+                class="menu__checkbox-icon"
+                :is="item.icon"
+              ></component>
               <input
                 class="--invisible"
                 type="radio"
@@ -72,7 +76,9 @@ useWindowParamsStore().$subscribe((mutation, state) => {
                 v-model="currentCategorySelected"
               />
               <span class="menu__background"></span>
-              <label :for="item.category">{{ t("category-" + item.category) }}</label>
+              <label :for="item.category">{{
+                t("category-" + item.category)
+              }}</label>
             </li>
           </ul>
         </div>
@@ -179,6 +185,14 @@ main {
   }
 }
 
+.menu-block__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .menu-block__close-button {
   position: absolute;
   display: none;
@@ -187,6 +201,7 @@ main {
   background: none;
   border-radius: 50%;
   padding: 3px;
+  z-index: 2;
 
   @include device(screen) {
     &:hover {
