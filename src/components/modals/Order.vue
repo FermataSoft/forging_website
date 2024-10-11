@@ -144,24 +144,23 @@ watch(
 }
 
 .order__mid-block {
+  $right-padding: 20px;
+  $right-padding-xs: 0px;
+  $scrollbar-width: 12px;
+  $left-padding: calc($right-padding + $scrollbar-width);
+  $left-padding-xs: calc($right-padding-xs + $scrollbar-width);
+
   background-color: $surface-container-highest;
-  padding-bottom: 30px;
-  padding-top: 10px;
+  padding: 10px $right-padding 30px $left-padding;
   max-height: calc(100vh - 300px);
   max-height: calc(100svh - 250px);
   overflow-x: hidden;
   overflow-y: scroll;
 
-  @include device(screen) {
-    @include scrollbar(12px);
-  }
+  @include scrollbar($scrollbar-width);
 
-  .order__form {
-    padding: 0 23px 0 34px;
-
-    @include breakpoint(xs) {
-      padding: 0 20px;
-    }
+  @include breakpoint(xs) {
+    padding: 5px $right-padding-xs 20px $left-padding-xs;
   }
 }
 

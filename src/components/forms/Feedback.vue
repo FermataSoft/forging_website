@@ -263,7 +263,7 @@ $border-width: 1px;
 }
 
 .feedback {
-  width: 450px;
+  max-width: 450px;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
