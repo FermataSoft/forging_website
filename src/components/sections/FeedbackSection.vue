@@ -13,7 +13,7 @@ const { t } = useI18n();
 </template>
 
 <style lang="scss" scoped>
-@import "../../assets/_vars.scss";
+@import "@/assets/_vars.scss";
 
 .feedback-section {
   width: 100%;
@@ -22,6 +22,10 @@ const { t } = useI18n();
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @include breakpoint(xs) {
+    margin-top: 50px;
+  }
 
   h1 {
     font-size: 3.5rem;
