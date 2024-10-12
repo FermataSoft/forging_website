@@ -38,6 +38,7 @@ const form = useForm({
 
 async function submit() {
   form.submitClicked = true;
+  form.validate();
 
   if (!form.valid) {
     return;
