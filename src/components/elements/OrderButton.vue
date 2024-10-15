@@ -26,10 +26,10 @@
 
   cursor: pointer;
 
-  transition: box-shadow 0.3s;
+  transition: all 0.2s;
 
   &:hover {
-    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.4);
+    background-color: $primary-lighten;
   }
 
   @include breakpoint(xs) {
