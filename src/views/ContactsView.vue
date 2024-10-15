@@ -4,14 +4,17 @@ import IconTelegram from '../components/icons/footer/IconTelegram.vue';
 import IconInstagram from '../components/icons/footer/IconInstagram.vue';
 import IconVK from '../components/icons/footer/IconVK.vue';
 import IconViber from '../components/icons/footer/IconViber.vue';
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 </script>
 
 <template>
   <div class="wrapper">
-    <SectionHeader>Контакты</SectionHeader>
+    <SectionHeader>{{ t("contactsHeader") }}</SectionHeader>
     <Contacts :monochromeIcons="true"></Contacts>
     <div class="social-links">
-      <h2>Мы в социальных сетях:</h2>
+      <h2>{{ t("socialLinksHeader") }}</h2>
       <div class="social-links__block">
         <a href="https://www.instagram.com/bliznyuksasha/" target="_blank" rel="noopener noreferrer">
           <IconInstagram></IconInstagram>
@@ -164,3 +167,16 @@ import IconViber from '../components/icons/footer/IconViber.vue';
   }
 }
 </style>
+
+<i18n>
+  {
+    "ru-RU": {
+      "contactsHeader": "Контакты",
+      "socialLinksHeader": "Мы в социальных сетях:"
+    },
+    "by-BY": {
+      "contactsHeader": "Кантакты",
+      "socialLinksHeader": "Мы ў сацыяльных сетках:"
+    }
+  }
+</i18n>

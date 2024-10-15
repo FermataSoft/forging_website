@@ -15,7 +15,9 @@ const { t } = useI18n();
           />
         </clipPath>
       </svg>
-      <SectionHeader>О нас</SectionHeader>
+      <SectionHeader class="about-view__header">{{
+        t("about-view__header")
+      }}</SectionHeader>
       <div class="about-view__content-slide">
         <div class="about-view__content-slide-image">
           <img src="../images/hero/Main-page_Image_3.webp" alt="" />
@@ -50,9 +52,13 @@ const { t } = useI18n();
       </div>
     </div>
 
-    <h2 class="catchy-header">
-      Свяжитесь с нами<br />и мы обсудим все детали<br />вашего проекта!
-    </h2>
+    <i18n-t
+      class="about-view__catchy-header"
+      keypath="about-view__catchy-header"
+      tag="p"
+    >
+      <br />
+    </i18n-t>
   </div>
 </template>
 
@@ -135,7 +141,7 @@ const { t } = useI18n();
   }
 }
 
-.catchy-header {
+.about-view__catchy-header {
   font-size: 5rem;
   text-align: center;
   color: $on-surface;
@@ -152,16 +158,20 @@ const { t } = useI18n();
 <i18n>
   {
     ru-RU: {
+      "about-view__header": "О нас",
       "about-view__content-slide-title-1": "Мы – команда профессионалов, знающих свое дело. Мы занимаемся изготовлением лестниц, металлокаркасов и различных кованных изделий на заказ более 10 лет.",
       "about-view__content-slide-title-2":  "Наша мастерская оснащена современным оборудованием и инструментами, которые позволяют нам создавать уникальные и качественные изделия для любых целей и на любой вкус.",
       "about-view__content-slide-title-3":  "Мы учитываем все пожелания наших клиентов, а также предлагаем свои идеи и рекомендации по дизайну и исполнению кованных изделий.",
       "about-view__content-slide-title-4":  "Мы гарантируем высокое качество нашей работы, соблюдение сроков и разумные цены.",
+      "about-view__catchy-header": "Свяжитесь с нами{0}и мы обсудим все детали{0}вашего проекта!",
     },
     by-BY: {
+      "about-view__header": "Пра нас",
       "about-view__content-slide-title-1":  "Мы – каманда прафесіяналаў, якія ведаюць сваю справу. Мы займаемся вытворчасцю лесвіц, металакаркасаў і розных каваных вырабаў на заказ больш за 10 гадоў.",
       "about-view__content-slide-title-2":  "Наша майстэрня абсталявана сучасным абсталяваннем і інструментамі, якія дазваляюць нам ствараць унікальныя і якасныя вырабы для любых мэт і на любы густ.",
       "about-view__content-slide-title-3":  "Мы ўлічваем усе пажаданні нашых кліентаў, а таксама прапануем свае ідэі і рэкамендацыі па дызайне і выкананню каваных вырабаў.",
       "about-view__content-slide-title-4":  "Мы гарантуем высокую якасць нашай працы, своечасовае выкананне і разумныя кошты.",
+      "about-view__catchy-header": "Звяжыцеся з намі{0}і мы абмяркуем усе дэталі{0}вашага праекта!",
     }
   }
 </i18n>

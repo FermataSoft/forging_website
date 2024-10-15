@@ -86,7 +86,7 @@ onMounted(async () => {
       ArticlesHeader: "Статьи"
     },
     "by-BY": {
-      ArticlesHeader: "Артыкул"
+      ArticlesHeader: "Артыкулы"
     }
   }
 </i18n>
