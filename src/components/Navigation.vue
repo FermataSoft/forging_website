@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted, defineAsyncComponent } from "vue";
 import OrderButton from "./elements/OrderButton.vue";
 import LanguageDropdownMenu from "./LanguageDropdownMenu.vue";
+import Logo from "./elements/Logo.vue";
 import { useUIStore } from "@/stores/UIStore.js";
 import { useI18n } from "vue-i18n";
 
@@ -91,7 +92,7 @@ UIStore.$subscribe((mutation, state) => {
     <div class="navbar__overlay" @click="toggleBurgerMenu"></div>
     <div class="navbar__wrapper">
       <RouterLink to="./" class="logo-wrapper" @click="toggleBurgerMenu">
-        <img class="logo" src="../favicon/android-chrome-512x512.png" alt="" />
+        <Logo></Logo>
       </RouterLink>
 
       <nav>
@@ -201,11 +202,11 @@ UIStore.$subscribe((mutation, state) => {
       align-items: center;
 
       .logo {
-        width: 30px;
-        height: auto;
+        width: auto;
+        height: 30px;
 
         @include breakpoint(md) {
-          width: 50px;
+          height: 50px;
         }
       }
     }
