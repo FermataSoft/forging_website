@@ -9,7 +9,11 @@ defineProps({
 
 <template>
   <div class="benefits-item _unselectable">
-    <img class="benefits-item__icon" :src="`./images/benefits_icons/${icon}`" alt="" />
+    <img
+      class="benefits-item__icon"
+      :src="`./images/benefits_icons/${icon}`"
+      alt=""
+    />
     <p class="benefits-item__text">
       <slot></slot>
     </p>
@@ -17,7 +21,7 @@ defineProps({
 </template>
 
 <style lang="scss" scoped>
-@import '../../assets/_vars.scss';
+@import "@/assets/_vars.scss";
 
 .benefits-item {
   max-width: 350px;
@@ -48,11 +52,16 @@ defineProps({
     height: auto;
     width: 50px;
   }
+
   .benefits-item__text {
     text-align: left;
-    font-size: 1.6rem;
+    font-size: $paragraph-lg;
     font-weight: $font-regular;
     color: $on-surface;
+
+    @include breakpoint(xs) {
+      font-size: $paragraph-mobile;
+    }
   }
 }
 </style>

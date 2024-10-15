@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+</script>
 
 <template>
   <div class="hero">
@@ -41,7 +45,7 @@
     <div class="hero__title-block">
       <!-- Интерьер<br />Сталь -->
       <h1 class="hero__title">Интерьер<br />Сталь</h1>
-      <h2 class="hero__subtitle">Работаем по всей Беларуси</h2>
+      <h2 class="hero__subtitle">{{ t("heroSubtitle") }}</h2>
     </div>
   </div>
 </template>
@@ -120,3 +124,14 @@
   }
 }
 </style>
+
+<i18n>
+  {
+    "ru-RU": {
+      "heroSubtitle": "Работаем по всей Беларуси"
+    },
+    "by-BY": {
+      "heroSubtitle": "Працуем па ўсёй Беларусі"
+    }
+  }
+</i18n>

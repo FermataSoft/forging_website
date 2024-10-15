@@ -38,6 +38,7 @@ const form = useForm({
 
 async function submit() {
   form.submitClicked = true;
+  form.validate();
 
   if (!form.valid) {
     return;
@@ -263,7 +264,7 @@ $border-width: 1px;
 }
 
 .feedback {
-  width: 450px;
+  max-width: 450px;
   margin-left: auto;
   margin-right: auto;
   text-align: left;

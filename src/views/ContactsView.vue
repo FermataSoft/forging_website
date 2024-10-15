@@ -1,121 +1,103 @@
 <script setup>
-import Contacts from "../components/sections/Contacts.vue"
-import IconTelegram from '../components/icons/footer/IconTelegram.vue';
-import IconInstagram from '../components/icons/footer/IconInstagram.vue';
-import IconVK from '../components/icons/footer/IconVK.vue';
-import IconViber from '../components/icons/footer/IconViber.vue';
+import Contacts from "../components/sections/Contacts.vue";
+import IconTelegram from "../components/icons/footer/IconTelegram.vue";
+import IconInstagram from "../components/icons/footer/IconInstagram.vue";
+import IconVK from "../components/icons/footer/IconVK.vue";
+import IconViber from "../components/icons/footer/IconViber.vue";
+import Feedback from "../components/forms/Feedback.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 </script>
 
 <template>
   <div class="wrapper">
-    <SectionHeader>Контакты</SectionHeader>
-    <Contacts :monochromeIcons="true"></Contacts>
-    <div class="social-links">
-      <h2>Мы в социальных сетях:</h2>
-      <div class="social-links__block">
-        <a href="https://www.instagram.com/bliznyuksasha/" target="_blank" rel="noopener noreferrer">
-          <IconInstagram></IconInstagram>
-        </a>
-        <a class="link-vk" href="https://www.instagram.com/bliznyuksasha/" target="_blank" rel="noopener noreferrer">
-          <IconVK></IconVK>
-        </a>
-        <a href="https://t.me/+375447199961" target="_blank" rel="noopener noreferrer">
-          <IconTelegram></IconTelegram>
-        </a>
-        <a class="link-viber" href="viber://chat?number=%2B375447199961" rel="noopener noreferrer">
-          <IconViber></IconViber>
-        </a>
+    <SectionHeader>{{ t("contacts-view__header") }}</SectionHeader>
+    <div class="contacts-view">
+      <Contacts
+        class="contacts-view__contacts-block"
+        :monochromeIcons="true"
+      ></Contacts>
+      <div class="contacts-view__social-links">
+        <div class="contacts-view__social-links-block">
+          <a
+            href="https://www.instagram.com/bliznyuksasha/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <IconInstagram></IconInstagram>
+          </a>
+          <a
+            class="link-vk"
+            href="https://www.instagram.com/bliznyuksasha/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <IconVK></IconVK>
+          </a>
+          <a
+            href="https://t.me/+375447199961"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <IconTelegram></IconTelegram>
+          </a>
+          <a
+            class="link-viber"
+            href="viber://chat?number=%2B375447199961"
+            rel="noopener noreferrer"
+          >
+            <IconViber></IconViber>
+          </a>
+        </div>
+      </div>
+      <div class="contacts-view__feedback-form">
+        <h1 class="contacts-view__feedback-form-header">
+          {{ t("contacts-view__feedback-form-header") }}
+        </h1>
+        <Feedback></Feedback>
       </div>
     </div>
-
-    <iframe class="yandex-maps-wrapper" src="https://yandex.ru/map-widget/v1/?um=constructor%3A129033f74be22cda48d129a08284fdef72f87a47db1f2215da8784730f8f7db8&amp;source=constructor" width="600" height="400" frameborder="0"></iframe>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import '../assets/_vars.scss';
+@import "../assets/_vars.scss";
 
 .wrapper {
+  margin-bottom: 80px;
+}
+
+.contacts-view {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.footer__contact-block {
-  display: grid;
-  grid-template-columns: auto auto;
+  margin-top: 30px;
   gap: 50px;
-
-  .footer__contact-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 15px;
-
-    svg {
-      width: 30px;
-      fill: $accent-gradient;
-    }
-
-    .footer__text-block {
-      color: black;
-
-      h2 {
-        font-size: 2rem;
-        font-weight: $font-bold;
-        margin-bottom: 10px;
-      }
-
-      p {
-        font-size: 1.4rem;
-      }
-
-      a {
-        font-size: 1.4rem;
-        color: black;
-
-        &:hover {
-          color: $primary;
-        }
-      }
-
-      .footer__subtext-block {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-      }
-    }
-  }
 }
 
-.social-links {
-  margin-top: 80px;
+.contacts-view__contacts-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+}
 
-  h2 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    color: #000;
-
-    @include breakpoint(sm) {
-      font-size: 2rem;
-    }
-  }
-
-  .social-links__block {
-    margin-top: 30px;
+.contacts-view__social-links {
+  .contacts-view__social-links-block {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
 
     @include breakpoint(sm) {
       margin-top: 20px;
     }
 
     a {
-      width: 30px;
+      width: 35px;
 
-      color: #000;
+      color: $secondary;
       position: relative;
 
       @keyframes hover-effect {
@@ -140,7 +122,6 @@ import IconViber from '../components/icons/footer/IconViber.vue';
       }
 
       &:hover {
-
         img,
         svg {
           animation: hover-effect ease-out 0.4s;
@@ -151,16 +132,30 @@ import IconViber from '../components/icons/footer/IconViber.vue';
   }
 }
 
-.yandex-maps-wrapper {
-  width: 600px;
-  height: 400px;
+.contacts-view__feedback-form {
   margin-top: 50px;
-  margin-bottom: 50px;
+  padding: 0 10px;
+}
+.contacts-view__feedback-form-header {
+  font-size: $header1;
+  text-align: center;
+  margin-bottom: 20px;
 
-  @include breakpoint(sm) {
-    width: 100%;
-    height: 300px;
-    padding: 0 30px;
+  @include breakpoint(xs) {
+    font-size: $header1-mobile;
   }
 }
 </style>
+
+<i18n>
+  {
+    "ru-RU": {
+      "contacts-view__header": "Контакты",
+      "contacts-view__feedback-form-header": "Оставьте заявку прямо сейчас",
+    },
+    "by-BY": {
+      "contacts-view__header": "Кантакты",
+      "contacts-view__feedback-form-header": "Пакіньце заяўку прама зараз"
+    }
+  }
+</i18n>

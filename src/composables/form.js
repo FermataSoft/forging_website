@@ -1,16 +1,17 @@
-import { computed, reactive } from "vue";
+import { computed, reactive, watch } from "vue";
 import { useField } from "./field";
 
-export function useForm(init = {}) {
+export function useForm(init = {}, options = { validateOnInput: false }) {
     const form = reactive({
         fields: {},
         sending: false,
         submitClicked: false,
-        reset: reset
+        reset,
+        validate
     });
 
     for (const [key, value] of Object.entries(init)) {
-        form.fields[key] = useField(value);
+        form.fields[key] = useField(value, { validateOnInput: options.validateOnInput });
     }
 
     form["valid"] = computed(() => {
@@ -31,5 +32,11 @@ function reset() {
         } else {
             this.fields[key].value = "";
         }
+    })
+}
+
+function validate() {
+    Object.keys(this.fields).forEach((key) => {
+        this.fields[key].reassign();
     })
 }
