@@ -59,7 +59,7 @@ useWindowParamsStore().$subscribe((mutation, state) => {
         <div class="menu-block__background" v-show="isMenuOpened"></div>
         <CloseModal class="menu-block__close-button"></CloseModal>
         <div class="filters-menu__block">
-          <h2>Категории</h2>
+          <h2>{{ t("menu-block__header") }}</h2>
           <ul class="menu__checkbox-container">
             <li v-for="item in categories" class="menu__checkbox-item">
               <component
@@ -107,8 +107,8 @@ useWindowParamsStore().$subscribe((mutation, state) => {
               <option value="100">{{ t("show-count") + " 100" }}</option>
             </select>
             <select name="sort" id="sort" v-model="sortBy">
-              <option value="uploadDateNewFirst">сначала новые</option>
-              <option value="uploadDateOldFirst">сначала старые</option>
+              <option value="uploadDateNewFirst">{{ t("sort-menu__upload-date-new-first") }}</option>
+              <option value="uploadDateOldFirst">{{ t("sort-menu__upload-date-old-first") }}</option>
             </select>
 
             <div class="sort-order-button">
@@ -396,12 +396,18 @@ select {
 <i18n>
   {
     "ru-RU": {
+      "menu-block__header": "Категории",
       "show-count": "Показывать по",
-      "sort-by": "Сортировать"
+      "sort-by": "Сортировать",
+      "sort-menu__upload-date-new-first": "сначала новые",
+      "sort-menu__upload-date-old-first": "сначала старые",
     },
     "by-BY": {
+      "menu-block__header": "Катэгорыі",
       "show-count": "Паказваць па",
-      "sort-by": "Сартаваць"
+      "sort-by": "Сартаваць",
+      "sort-menu__upload-date-new-first": "спачатку новыя",
+      "sort-menu__upload-date-old-first": "спачатку старыя",
     }
   }
 </i18n>

@@ -1,5 +1,4 @@
 <script setup>
-import { computed, ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useWorksStore } from "../../stores/WorksStore";
 
@@ -22,12 +21,12 @@ const workStore = useWorksStore();
           <Contacts fontColor="light"></Contacts>
           <div class="footer__ip-information">
             <p>ИП Близнюк Светлана Юрьевна</p>
-            <p>Регистрирующий орган: Несвижский райисполком</p>
-            <p>Дата регистрации: 03.02.2022</p>
+            <p>{{ t("footer__ip-information-registration-authority") }}: Несвижский райисполком</p>
+            <p>{{ t("footer__ip-information-registration-date") }}: 03.02.2022</p>
             <p>УНП: 693163402</p>
           </div>
           <div class="social-links">
-            <h2>Мы в социальных сетях:</h2>
+            <h2>{{ t("socialLinksHeader") }}</h2>
             <div class="social-links__block">
               <a
                 href="https://www.instagram.com/bliznyuksasha/"
@@ -66,7 +65,7 @@ const workStore = useWorksStore();
 
         <div class="footer__site-map-block">
           <div class="footer__site-map-item">
-            <h2>Наши работы</h2>
+            <h2>{{ t("ourWorksHeader") }}</h2>
             <ul
               class="site-map-item__links"
               v-for="item in workStore.categories"
@@ -80,26 +79,26 @@ const workStore = useWorksStore();
             </ul>
           </div>
           <div class="footer__site-map-item">
-            <h2>Информация</h2>
+            <h2>{{ t("informationHeader") }}</h2>
             <ul class="site-map-item__links">
               <li class="site-map-item__link">
-                <RouterLink to="/articles">Статьи</RouterLink>
+                <RouterLink to="/articles">{{ t("articlesLink") }}</RouterLink>
               </li>
               <li class="site-map-item__link">
-                <RouterLink to="/contacts">Контакты</RouterLink>
+                <RouterLink to="/contacts">{{ t("contactsLink") }}</RouterLink>
               </li>
               <li class="site-map-item__link">
-                <RouterLink to="/about/">О нас</RouterLink>
+                <RouterLink to="/about/">{{ t("aboutLink") }}</RouterLink>
               </li>
             </ul>
           </div>
         </div>
       </div>
       <p class="copyright-text">
-        Copyright © 2023
+        Copyright © 2024
         <a href="https://www.linkedin.com/in/olegandreev/" target="_blank"
           >Fermata Soft</a
-        >. Все права защищены.
+        >. {{ t("footer__copyright-text") }}.
       </p>
     </div>
   </footer>
@@ -298,3 +297,30 @@ footer {
   }
 }
 </style>
+
+<i18n>
+  {
+    "ru-RU": {
+      "socialLinksHeader": "Мы в социальных сетях",
+      "ourWorksHeader": "Наши работы",
+      "informationHeader": "Информация",
+      "articlesLink": "Статьи",
+      "contactsLink": "Контакты",
+      "aboutLink": "О нас",
+      "footer__ip-information-registration-authority": "Регистрирующий орган",
+      "footer__ip-information-registration-date": "Дата регистрации",
+      "footer__copyright-text": "Все права защищены",
+    },
+    "by-BY": {
+      "socialLinksHeader": "Мы ў сацыяльных сетках",
+      "ourWorksHeader": "Нашы вырабы",
+      "informationHeader": "Інфармацыя",
+      "articlesLink": "Артыкулы",
+      "contactsLink": "Кантакты",
+      "aboutLink": "Пра нас",
+      "footer__ip-information-registration-authority": "Рэгіструючы орган",
+      "footer__ip-information-registration-date": "Дата рэгістрацыі",
+      "footer__copyright-text": "Усе правы абаронены",
+    }
+  }
+</i18n>

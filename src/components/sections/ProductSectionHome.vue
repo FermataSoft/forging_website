@@ -96,12 +96,10 @@ onUnmounted(() => {
       </div>
       <div class="product-item__item-description">
         <h3 class="product-item__item-description-title">
-          Металлические каркасы
+          {{ t("product-item__item-description-title-1") }}
         </h3>
         <p class="product-item__item-description-text">
-          Изготавливаем различные металлические каркасы для лестниц: с
-          косоурами, с тетивами, консольные, винтовые, комбинированные по
-          индивидуальному заказу.
+          {{ t("product-item__item-description-text-1") }}
         </p>
       </div>
     </div>
@@ -113,11 +111,11 @@ onUnmounted(() => {
         <img src="/images/stairs.webp" alt="" />
       </div>
       <div class="product-item__item-description">
-        <h3 class="product-item__item-description-title">Лестницы</h3>
+        <h3 class="product-item__item-description-title">
+          {{ t("product-item__item-description-title-2") }}
+        </h3>
         <p class="product-item__item-description-text">
-          Создаем дизайн лестницы под ваш интерьер. Максимально эффективно
-          используем имеющееся пространство. Изготавливаем конфигурации: прямой
-          марш; Г-образный (поворот на 90°), П-образный (поворот на 180°).
+          {{ t("product-item__item-description-text-2") }}
         </p>
       </div>
     </div>
@@ -130,12 +128,10 @@ onUnmounted(() => {
       </div>
       <div class="product-item__item-description">
         <h3 class="product-item__item-description-title">
-          Лестничные перила и ограждения
+          {{ t("product-item__item-description-title-3") }}
         </h3>
         <p class="product-item__item-description-text">
-          Изготавливаем перила и ограждения для наружных и внутренних лестниц.
-          Ограждения могут быть коваными или литыми. Наши ограждения и перила
-          отлично дополнят ваш интерьер.
+          {{ t("product-item__item-description-text-3") }}
         </p>
       </div>
     </div>
@@ -147,11 +143,11 @@ onUnmounted(() => {
         <img src="/images/gate.webp" alt="" />
       </div>
       <div class="product-item__item-description">
-        <h3 class="product-item__item-description-title">Изделия из металла</h3>
+        <h3 class="product-item__item-description-title">
+          {{ t("product-item__item-description-title-4") }}
+        </h3>
         <p class="product-item__item-description-text">
-          Изделия из металла любой сложности по честным ценам. Наши изделия
-          сочетают в себе качество и стиль. Мы используем только
-          высококачественные материалы и современное профессиональное оборудование.
+          {{ t("product-item__item-description-text-4") }}
         </p>
       </div>
     </div>
@@ -288,3 +284,28 @@ onUnmounted(() => {
   }
 }
 </style>
+
+<i18n>
+  {
+    "ru-RU": {
+      "product-item__item-description-title-1": "Металлические каркасы",
+      "product-item__item-description-text-1": "Изготавливаем различные металлические каркасы для лестниц: с косоурами, с тетивами, консольные, винтовые, комбинированные по индивидуальному заказу.",
+      "product-item__item-description-title-2": "Лестницы",
+      "product-item__item-description-text-2": "Создаем дизайн лестницы под ваш интерьер. Максимально эффективно используем имеющееся пространство. Изготавливаем конфигурации: прямой марш; Г-образный (поворот на 90°), П-образный (поворот на 180°).",
+      "product-item__item-description-title-3": "Лестничные перила и ограждения",
+      "product-item__item-description-text-3": "Изготавливаем перила и ограждения для наружных и внутренних лестниц. Ограждения могут быть коваными или литыми. Наши ограждения и перила отлично дополнят ваш интерьер.",
+      "product-item__item-description-title-4": "Изделия из металла",
+      "product-item__item-description-text-4": "Изделия из металла любой сложности по честным ценам. Наши изделия сочетают в себе качество и стиль. Мы используем только высококачественные материалы и современное профессиональное оборудование.",
+    },
+    "by-BY": {
+      "product-item__item-description-title-1": "Металічныя каркасы",
+      "product-item__item-description-text-1": "Вырабляем розныя металічныя каркасы для ўсходаў: з косоурамі, з цецівамі, кансольныя, шрубавыя, камбінаваныя па індывідуальнай замове.",
+      "product-item__item-description-title-2": "Лесвіцы",
+      "product-item__item-description-text-2": "Ствараем дызайн лесвіцы пад ваш інтэр'ер. Максімальна эфектыўна выкарыстоўваем наяўнае прастору. Вырабляем канфігурацыі: прамы марш; Г-вобразны (паварот на 90°), П-вобразны (паварот на 180°).",
+      "product-item__item-description-title-3": "Лесвічныя парэнчы і агароджы",
+      "product-item__item-description-text-3": "Вырабляем парэнчы і агароджы для вонкавых і ўнутраных усходаў. Агароджы могуць быць каванымі або адліванымі. Нашы агароджы і парэнчы выдатна дапоўняць ваш інтэр'ер.",
+      "product-item__item-description-title-4": "Выраб з металу",
+      "product-item__item-description-text-4": "Вырабы з металу любой складанасці па сумленным цэнах. Нашы прадукты спалучаюць у сабе якасць і стыль. Мы выкарыстоўваем толькі высакаякасныя матэрыялы і сучаснае прафесійнае абсталяванне.",
+    }
+  }
+</i18n>
