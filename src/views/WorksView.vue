@@ -19,7 +19,7 @@ const sortBy = ref("uploadDateNewFirst");
 const isMenuOpened = ref(false);
 const BUTTON_MENU_OPEN = ref(null);
 const isAscendingOrder = computed(() => {
-  return ["uploadDateNewFirst"].includes(sortBy.value);
+  return ["uploadDateOldFirst"].includes(sortBy.value);
 });
 
 watch(
