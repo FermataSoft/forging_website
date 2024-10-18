@@ -3,6 +3,13 @@ $wrapper-width: 1250px;
 $navbar-height: 55px;
 $scrollbar-width: 15px;
 
+$card-width-lg: 350px;
+$card-height-lg: calc($card-width-lg * 4 / 3);
+$card-width-md: 280px;
+$card-height-md: calc($card-width-md * 4 / 3);
+$card-width-sm: auto;
+$card-height-sm: 350px;
+
 // PALLETE
 $color1: #232323;
 // $color2: #ffd166;
@@ -116,7 +123,7 @@ $mobile: 767px;
     }
   }
   @if $point == sm {
-    @media (max-width: 630px) {
+    @media (max-width: 650px) {
       @content;
     }
   }

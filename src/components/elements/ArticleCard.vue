@@ -69,14 +69,14 @@ const formattedUploadDate = computed(() => {
 @import "@/assets/_vars.scss";
 
 .article-card {
-  width: 350px;
-  height: 467px;
+  width: $card-width-lg;
+  height: $card-height-lg;
   background-color: $surface;
   display: flex;
   flex-direction: column;
   padding-bottom: 20px;
   gap: 10px;
-  transition: all 0.5s;
+  transition: box-shadow 0.5s;
   color: $on-surface;
   position: relative;
   overflow: hidden;
@@ -84,15 +84,14 @@ const formattedUploadDate = computed(() => {
   box-shadow: 0px 5px 10px rgba(41, 41, 41, 0.4);
 
   @include breakpoint(md) {
-    width: 250px;
-    max-height: 333px;
+    width: $card-width-md;
+    height: $card-height-md;
     gap: 5px;
   }
 
   @include breakpoint(sm) {
-    width: auto;
-    margin: 0 20px;
-    height: 350px;
+    width: $card-width-sm;
+    height: $card-height-sm;
   }
 
   @include device(screen) {
