@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="benefits-item _unselectable">
+  <div class="benefits-item --unselectable">
     <img
       class="benefits-item__icon"
       :src="`./images/benefits_icons/${icon}`"

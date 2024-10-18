@@ -36,7 +36,6 @@ function isClickWithinBoundaries(event) {
 watchEffect(() => {
   if (isDropdownMenuActive.value) {
     document.addEventListener('click', isClickWithinBoundaries);
-
     window.addEventListener('scroll', closeDropdownMenu);
   } else {
     document.removeEventListener('click', isClickWithinBoundaries);
@@ -46,7 +45,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="dropdown-menu _unselectable">
+  <div class="dropdown-menu --unselectable">
     <div class="dropdown-menu__current-lang" :class="{ _active: isDropdownMenuActive }" @click.stop="openDropdownMenu">
       {{ locale.slice(0, 2).toUpperCase().trim() }}
     </div>
