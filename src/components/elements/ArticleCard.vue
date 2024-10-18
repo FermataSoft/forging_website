@@ -157,8 +157,8 @@ const formattedUploadDate = computed(() => {
   }
 
   &.--skeleton {
-    @include skeleton(0);
     height: 40%;
+    @include skeleton(0);
   }
 }
 
@@ -179,8 +179,8 @@ const formattedUploadDate = computed(() => {
   }
 
   &.--skeleton {
-    @include skeleton;
     height: 50px;
+    @include skeleton;
   }
 }
 
