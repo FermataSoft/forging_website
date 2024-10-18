@@ -54,7 +54,7 @@ useWindowParamsStore().$subscribe((mutation, state) => {
 
 <template>
   <Transition name="view">
-    <div class="works-view" @click.stop="hideMenu($event)">
+    <div class="works-view" @click="hideMenu($event)">
       <nav class="menu-block" :class="{ 'menu-block--hidden': !isMenuOpened }">
         <div class="menu-block__background" v-show="isMenuOpened"></div>
         <CloseModal class="menu-block__close-button"></CloseModal>
