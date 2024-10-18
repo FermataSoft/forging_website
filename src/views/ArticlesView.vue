@@ -63,7 +63,7 @@ onMounted(async () => {
 
 .articles {
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 150px;
   max-width: $wrapper-width;
   margin-left: auto;
   margin-right: auto;
@@ -74,9 +74,19 @@ onMounted(async () => {
 }
 
 .articles__items {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 80px;
+  justify-items: center;
+
+  @include breakpoint(lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoint(sm) {
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 30px;
+  }
 }
 </style>
 

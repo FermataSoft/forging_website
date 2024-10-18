@@ -41,6 +41,13 @@ const formattedUploadDate = computed(() => {
       </div>
 
       <div class="article-card__text-block">
+        <div
+          class="article-card__upload-date --skeleton"
+          v-if="!isLoaded"
+        ></div>
+        <span class="article-card__upload-date" v-else
+          >{{ formattedUploadDate }}
+        </span>
         <h1 class="article-card__title" :class="{ '--skeleton': !isLoaded }">
           {{ title }}
         </h1>
@@ -52,8 +59,7 @@ const formattedUploadDate = computed(() => {
         </p>
       </div>
 
-      <div class="article-card__upload-date --skeleton" v-if="!isLoaded"></div>
-      <span class="article-card__upload-date" v-else>{{ formattedUploadDate }} </span>
+      <div class="article-card__bottom-block"></div>
     </div>
   </router-link>
 </template>
@@ -62,48 +68,54 @@ const formattedUploadDate = computed(() => {
 @import "@/assets/_vars.scss";
 
 .article-card {
-  width: 100%;
-  height: 250px;
+  width: 350px;
+  height: 100%;
+  max-height: 467px;
   background-color: $surface;
-  padding: 20px 30px;
   display: flex;
-  flex-direction: row;
-  gap: 50px;
-  transition: all 0.3s;
+  flex-direction: column;
+  padding-bottom: 20px;
+  gap: 10px;
+  transition: all 0.5s;
   color: $on-surface;
   position: relative;
   overflow: hidden;
   border-radius: 5px;
-  box-shadow: 0px -5px 3px rgba(255, 255, 255, 0.2),
-    2px 2px 9px rgba(94, 104, 121, 0.5);
+  box-shadow: 0px 5px 10px rgba(41, 41, 41, 0.4);
+
+  @include breakpoint(md) {
+    width: 250px;
+    max-height: 333px;
+    gap: 5px;
+  }
 
   @include breakpoint(sm) {
-    height: 150px;
-    padding: 20px 10px;
-    gap: 20px;
+    width: auto;
+    margin: 0 20px;
+    height: 350px;
   }
 
-  &:hover {
-    background-color: $surface;
-    box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.45),
-      3px 7px 9px rgba(94, 104, 121, 0.3);
+  @include device(screen) {
+    &:hover {
+      box-shadow: 0px 5px 10px $primary;
+
+      &::after {
+        transform: translate(-50%, 70%);
+      }
+    }
 
     &::after {
-      transform: translate(50%, -50%);
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 10%;
+      left: 50%;
+      bottom: 0;
+      border-radius: 50%;
+      transform: translate(-50%, 100%);
+      transition: all 0.2s 0.1s cubic-bezier(0.45, 0, 0.15, 0.99);
+      background-color: $primary;
     }
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    right: 0;
-    top: 50%;
-    border-radius: 50%;
-    transform: translate(100%, -50%);
-    transition: all 0.3s 0.1s ease-in-out;
-    background-color: $primary;
   }
 
   &.--skeleton-active {
@@ -113,20 +125,14 @@ const formattedUploadDate = computed(() => {
 }
 
 .article-card__image {
-  height: 200px;
-  width: 200px;
+  height: 40%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   flex-shrink: 0;
   text-align: center;
-  border-radius: 10px;
-
-  @include breakpoint(sm) {
-    width: 85px;
-    height: 85px;
-  }
 
   img {
     height: auto;
@@ -137,8 +143,8 @@ const formattedUploadDate = computed(() => {
   .article-card__image-warning {
     font-size: 2rem;
 
-    @include breakpoint(sm) {
-      font-size: 0.9rem;
+    @include breakpoint(md) {
+      font-size: 1.6rem;
     }
   }
 
@@ -149,16 +155,18 @@ const formattedUploadDate = computed(() => {
 
 .article-card__text-block {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 20px;
 }
 
 .article-card__title {
-  font-size: $header3;
-  font-weight: $font-bold;
-  margin-bottom: 20px;
+  font-size: $header2;
+  font-weight: $font-medium;
 
-  @include breakpoint(sm) {
+  @include breakpoint(md) {
     font-size: $header3-mobile;
-    font-weight: $font-medium;
   }
 
   &.--skeleton {
@@ -168,11 +176,13 @@ const formattedUploadDate = computed(() => {
 }
 
 .article-card__description {
-  font-size: 1.4rem;
-  text-align: justify;
+  font-size: $paragraph-lg;
+  text-align: left;
+  font-weight: $font-regular;
+  color: $on-surface-lighten;
 
-  @include breakpoint(sm) {
-    display: none;
+  @include breakpoint(md) {
+    font-size: $paragraph;
   }
 
   &.--skeleton {
@@ -182,20 +192,35 @@ const formattedUploadDate = computed(() => {
 }
 
 .article-card__upload-date {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 1.2rem;
+  position: relative;
+  color: $tertiary;
+  font-size: $paragraph;
+  font-weight: $font-bold;
+  margin: 10px 0;
 
-  @include breakpoint(sm) {
-    left: 10px;
-    bottom: 10px;
+  @include breakpoint(md) {
+    font-size: $paragraph-mobile;
+    margin: 5px 0;
   }
 
   &.--skeleton {
     height: 15px;
     width: 80px;
     @include skeleton;
+  }
+}
+
+.article-card__bottom-block {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-color: $surface;
+  box-shadow: 0 -10px 8px $surface;
+
+  @include breakpoint(sm) {
+    height: 20px;
   }
 }
 </style>
