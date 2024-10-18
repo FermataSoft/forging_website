@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import IconImage from "../icons/IconImage.vue";
 
 const { t } = useI18n();
 
@@ -35,9 +36,9 @@ const formattedUploadDate = computed(() => {
           :src="'/images/articles/' + previewImage"
           :alt="previewImage"
         />
-        <span class="article-card__image-warning" v-else-if="isLoaded">{{
-          t("article-card__image-warning")
-        }}</span>
+        <div class="article-card__image-placeholder" v-else-if="isLoaded">
+          <IconImage class="article-card__image-placeholder-icon"></IconImage>
+        </div>
       </div>
 
       <div class="article-card__text-block">
@@ -59,7 +60,7 @@ const formattedUploadDate = computed(() => {
         </p>
       </div>
 
-      <div class="article-card__bottom-block"></div>
+      <div class="article-card__bottom-block" v-show="isLoaded"></div>
     </div>
   </router-link>
 </template>
@@ -69,8 +70,7 @@ const formattedUploadDate = computed(() => {
 
 .article-card {
   width: 350px;
-  height: 100%;
-  max-height: 467px;
+  height: 467px;
   background-color: $surface;
   display: flex;
   flex-direction: column;
@@ -140,16 +140,25 @@ const formattedUploadDate = computed(() => {
     object-fit: cover;
   }
 
-  .article-card__image-warning {
-    font-size: 2rem;
+  .article-card__image-placeholder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: $secondary-container;
 
-    @include breakpoint(md) {
-      font-size: 1.6rem;
+    .article-card__image-placeholder-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      color: $on-secondary-container;
     }
   }
 
   &.--skeleton {
     @include skeleton(0);
+    height: 40%;
   }
 }
 
@@ -170,8 +179,8 @@ const formattedUploadDate = computed(() => {
   }
 
   &.--skeleton {
-    height: 30px;
     @include skeleton;
+    height: 50px;
   }
 }
 
