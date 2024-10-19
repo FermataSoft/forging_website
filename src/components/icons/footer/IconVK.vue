@@ -1,5 +1,10 @@
 <template>
-  <svg width="48" height="48" viewBox="-3 -3 54 54" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="48"
+    height="48"
+    viewBox="-3 -3 54 54"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       class="vk-background"
       d="M0 23.04C0 12.1788 0 6.74826 3.37413 3.37413C6.74826 0 12.1788 0 23.04 0H24.96C35.8212 0 41.2517 0 44.6259 3.37413C48 6.74826 48 12.1788 48 23.04V24.96C48 35.8212 48 41.2517 44.6259 44.6259C41.2517 48 35.8212 48 24.96 48H23.04C12.1788 48 6.74826 48 3.37413 44.6259C0 41.2517 0 35.8212 0 24.96V23.04Z"
@@ -12,7 +17,9 @@
   </svg>
 </template>
 
-<style>
+<style lang="scss" scoped>
+@import "@/assets/vars";
+
 .vk-background {
   fill: transparent;
   stroke: currentColor;
@@ -20,9 +27,11 @@
   transition: all 0.3s;
 }
 
-svg:hover .vk-background {
-  fill: #0077ff;
-  stroke: #0077ff;
-  /* stroke-dasharray: 0 500; */
+@include device(screen) {
+  svg:hover .vk-background {
+    fill: #0077ff;
+    stroke: #0077ff;
+    /* stroke-dasharray: 0 500; */
+  }
 }
 </style>

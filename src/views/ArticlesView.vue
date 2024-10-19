@@ -39,7 +39,9 @@ onMounted(async () => {
 <template>
   <div class="articles">
     <div class="articles__wrapper" v-if="useRoute().path === '/articles'">
-      <SectionHeader>{{ t("ArticlesHeader") }}</SectionHeader>
+      <SectionHeader class="articles__header">{{
+        t("ArticlesHeader")
+      }}</SectionHeader>
       <ReloadOnError v-if="isError"></ReloadOnError>
       <div class="articles__items" v-else>
         <ArticleCard
@@ -63,20 +65,41 @@ onMounted(async () => {
 
 .articles {
   width: 100%;
-  margin-bottom: 50px;
   max-width: $wrapper-width;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto 150px auto;
 
   @include breakpoint(lg) {
     padding: 0 20px;
   }
 }
 
+.articles__header {
+  @include breakpoint(sm) {
+    margin-bottom: 30px;
+  }
+}
+
 .articles__items {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, $card-width-lg);
+  justify-content: center;
+  justify-items: center;
+  row-gap: 80px;
+  column-gap: 50px;
+
+  @include breakpoint(lg) {
+    row-gap: 50px;
+    column-gap: 30px;
+  }
+
+  @include breakpoint(md) {
+    grid-template-columns: repeat(auto-fit, $card-width-md);
+    column-gap: 25px;
+  }
+
+  @include breakpoint(sm) {
+    grid-template-columns: auto;
+  }
 }
 </style>
 

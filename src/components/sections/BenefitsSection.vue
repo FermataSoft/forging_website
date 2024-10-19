@@ -46,6 +46,7 @@ const { t } = useI18n();
 .benefits-section__items {
   width: fit-content;
   margin: 0 auto;
+  margin-top: 40px;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -55,9 +56,10 @@ const { t } = useI18n();
   @include breakpoint(lg) {
     column-gap: 50px;
   }
-
+  
   @include breakpoint(md) {
     column-gap: 25px;
+    padding: 0 $mobile-padding;
   }
 
   @include breakpoint(sm) {

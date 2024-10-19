@@ -19,7 +19,7 @@ const sortBy = ref("uploadDateNewFirst");
 const isMenuOpened = ref(false);
 const BUTTON_MENU_OPEN = ref(null);
 const isAscendingOrder = computed(() => {
-  return ["uploadDateNewFirst"].includes(sortBy.value);
+  return ["uploadDateOldFirst"].includes(sortBy.value);
 });
 
 watch(
@@ -54,7 +54,7 @@ useWindowParamsStore().$subscribe((mutation, state) => {
 
 <template>
   <Transition name="view">
-    <div class="works-view" @click.stop="hideMenu($event)">
+    <div class="works-view" @click="hideMenu($event)">
       <nav class="menu-block" :class="{ 'menu-block--hidden': !isMenuOpened }">
         <div class="menu-block__background" v-show="isMenuOpened"></div>
         <CloseModal class="menu-block__close-button"></CloseModal>

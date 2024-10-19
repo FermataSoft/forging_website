@@ -170,11 +170,16 @@ onUnmounted(() => {
   @include breakpoint(lg) {
     width: 100px;
   }
+
+  @include breakpoint(md) {
+    margin: 40px 0 20px;
+  }
 }
 
 .product-section {
   width: 100%;
   overflow: hidden;
+  margin-bottom: 40px;
 
   .product-section__item {
     position: relative;
@@ -191,7 +196,7 @@ onUnmounted(() => {
     @include breakpoint(md) {
       flex-direction: column;
       gap: 10px;
-      margin-bottom: 20px;
+      padding: 0 $mobile-padding;
     }
 
     &.product-section__item--reversed {
@@ -257,10 +262,11 @@ onUnmounted(() => {
     }
 
     .product-item__item-description {
+      margin-top: 10px;
       flex: 1 1.5 auto;
 
       h3 {
-        font-size: 2.4rem;
+        font-size: $header1;
         font-weight: $font-medium;
 
         @include breakpoint(md) {

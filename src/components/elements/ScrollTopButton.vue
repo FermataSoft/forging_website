@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
 const windowHeight = ref(window.innerHeight);
 const scrollYPos = ref(window.scrollY);
@@ -7,16 +7,16 @@ const scrollYPos = ref(window.scrollY);
 function scrollToTop() {
   window.scrollTo({
     top: 0,
-    behavior: 'smooth',
+    behavior: "smooth",
   });
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     scrollYPos.value = window.scrollY;
   });
 
-  window.addEventListener('resize', () => {
+  window.addEventListener("resize", () => {
     windowHeight.value = window.innerHeight;
   });
 });
@@ -24,12 +24,16 @@ onMounted(() => {
 
 <template>
   <Transition>
-    <div class="btn-scrollTop" v-show="scrollYPos > windowHeight" @click="scrollToTop"></div>
+    <div
+      class="btn-scrollTop"
+      v-show="scrollYPos > windowHeight"
+      @click="scrollToTop"
+    ></div>
   </Transition>
 </template>
 
 <style lang="scss" scoped>
-@import '../../assets/_vars.scss';
+@import "../../assets/_vars.scss";
 
 span {
   position: fixed;
@@ -50,9 +54,13 @@ span {
 
   cursor: pointer;
 
+  @include breakpoint(md) {
+    bottom: 45px;
+  }
+
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -71,19 +79,23 @@ span {
     transform: translate(-20%, -50%) rotate(45deg);
   }
 
-  &:hover {
-    mix-blend-mode: normal;
-  }
+  @include device(screen) {
+    &:hover {
+      mix-blend-mode: normal;
+    }
 
-  &:hover::before,
-  &:hover::after {
-    background-color: $primary;
-    filter: invert(0);
+    &:hover::before,
+    &:hover::after {
+      background-color: $primary;
+      filter: invert(0);
+    }
   }
 }
 
-body.--locked .btn-scrollTop {
-  right: calc(20px + $scrollbar-width);
+@include device(screen) {
+  body.--locked .btn-scrollTop {
+    right: calc(20px + $scrollbar-width);
+  }
 }
 
 .v-enter-active,

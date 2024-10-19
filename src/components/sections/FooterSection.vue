@@ -7,6 +7,7 @@ import IconTelegram from "../icons/footer/IconTelegram.vue";
 import IconViber from "../icons/footer/IconViber.vue";
 import IconInstagram from "../icons/footer/IconInstagram.vue";
 import IconVK from "../icons/footer/IconVK.vue";
+import SocialLinks from "./SocialLinks.vue";
 
 const { t } = useI18n();
 
@@ -21,45 +22,24 @@ const workStore = useWorksStore();
           <Contacts fontColor="light"></Contacts>
           <div class="footer__ip-information">
             <p>ИП Близнюк Светлана Юрьевна</p>
-            <p>{{ t("footer__ip-information-registration-authority") }}: Несвижский райисполком</p>
-            <p>{{ t("footer__ip-information-registration-date") }}: 03.02.2022</p>
+            <p>
+              {{ t("footer__ip-information-registration-authority") }}:
+              Несвижский райисполком
+            </p>
+            <p>
+              {{ t("footer__ip-information-registration-date") }}: 03.02.2022
+            </p>
             <p>УНП: 693163402</p>
           </div>
-          <div class="social-links">
-            <h2>{{ t("socialLinksHeader") }}</h2>
-            <div class="social-links__block">
-              <a
-                href="https://www.instagram.com/bliznyuksasha/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <IconInstagram></IconInstagram>
-              </a>
-              <a
-                class="link-vk"
-                href="https://www.instagram.com/bliznyuksasha/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <IconVK></IconVK>
-              </a>
-              <a
-                href="https://t.me/+375447199961"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <IconTelegram></IconTelegram>
-              </a>
-
-              <!-- !!! -->
-              <a
-                class="link-viber"
-                href="viber://chat?number=%2B375447199961"
-                rel="noopener noreferrer"
-              >
-                <IconViber></IconViber>
-              </a>
-            </div>
+          <div class="footer__social-links">
+            <h2 class="footer__social-links-header">
+              {{ t("socialLinksHeader") }}
+            </h2>
+            <SocialLinks
+              :width="30"
+              :width-mobile="35"
+              mode="light"
+            ></SocialLinks>
           </div>
         </div>
 
@@ -156,54 +136,18 @@ footer {
         }
       }
 
-      .social-links {
+      .footer__social-links {
         @include breakpoint(md) {
           align-self: center;
         }
 
-        h2 {
+        .footer__social-links-header {
           font-size: 1.6rem;
-          margin-bottom: 10px;
+          margin-bottom: 20px;
           color: $inverse-on-surface;
-        }
 
-        .social-links__block {
-          display: flex;
-          flex-direction: row;
-          gap: 20px;
-
-          a {
-            width: 30px;
-
-            color: $inverse-on-surface;
-            position: relative;
-
-            @keyframes hover-effect {
-              0% {
-                transform: translate(0, 0px);
-              }
-
-              50% {
-                transform: translate(0, -2px);
-              }
-
-              100% {
-                transform: translate(0, 0px);
-              }
-            }
-
-            img,
-            svg {
-              width: 100%;
-              height: auto;
-            }
-
-            &:hover {
-              img,
-              svg {
-                animation: hover-effect ease-out 0.4s;
-              }
-            }
+          @include breakpoint(md) {
+            text-align: center;
           }
         }
       }

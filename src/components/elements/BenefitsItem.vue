@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="benefits-item _unselectable">
+  <div class="benefits-item --unselectable">
     <img
       class="benefits-item__icon"
       :src="`./images/benefits_icons/${icon}`"
@@ -44,8 +44,14 @@ defineProps({
     height: 100px;
   }
 
-  &:hover {
-    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.25);
+  @include breakpoint(xs) {
+    padding: 15px;
+  }
+
+  @include device(screen) {
+    &:hover {
+      box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.25);
+    }
   }
 
   .benefits-item__icon {

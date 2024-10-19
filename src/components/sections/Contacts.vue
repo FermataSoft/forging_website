@@ -109,7 +109,7 @@ defineProps({
     column-gap: 25px;
   }
 
-  @include breakpoint(xs) {
+  @include breakpoint(md) {
     grid-template-columns: 1fr;
     row-gap: 25px;
   }
@@ -120,7 +120,7 @@ defineProps({
     align-items: center;
     gap: 15px;
 
-    @include breakpoint(xs) {
+    @include breakpoint(md) {
       gap: 30px;
     }
 
@@ -131,31 +131,23 @@ defineProps({
 
     .contacts__item-text-block {
       h2 {
-        font-size: 2rem;
+        font-size: $header2;
         font-weight: $font-medium;
         margin-bottom: 10px;
 
         @include breakpoint(sm) {
-          font-size: 1.6rem;
-          margin-bottom: 0;
+          font-size: $header2-mobile;
+          margin-bottom: 5px;
         }
       }
 
       p {
-        font-size: 1.4rem;
+        font-size: $paragraph;
         line-height: 2rem;
-
-        @include breakpoint(sm) {
-          font-size: 1.2rem;
-        }
       }
 
       a {
-        font-size: 1.4rem;
-
-        @include breakpoint(sm) {
-          font-size: 1.2rem;
-        }
+        font-size: $paragraph;
 
         &:hover {
           color: $primary;

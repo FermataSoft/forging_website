@@ -3,44 +3,88 @@ import IconTelegram from "@/components/icons/footer/IconTelegram.vue";
 import IconInstagram from "@/components/icons/footer/IconInstagram.vue";
 import IconVK from "@/components/icons/footer/IconVK.vue";
 import IconViber from "@/components/icons/footer/IconViber.vue";
+import { useWindowParamsStore } from "@/stores/WindowParamsStore";
+import { computed, ref } from "vue";
+
+const props = defineProps({
+  width: {
+    type: [Number, String],
+    default: 30,
+    validator(value) {
+      return !/\D+/g.test(value);
+    },
+  },
+  widthMobile: {
+    type: [Number, String],
+    validator(value) {
+      return !/\D+/g.test(value);
+    },
+  },
+  gap: {
+    type: [Number, String],
+    default: 20,
+    validator(value) {
+      return !/\D+/g.test(value);
+    },
+  },
+  mode: {
+    type: String,
+    default: "dark",
+    validator(value) {
+      return ["light", "dark"].includes(value);
+    },
+  },
+});
+
+const width = computed(() => {
+  return useWindowParamsStore().windowWidth && props.widthMobile < 650
+    ? props.widthMobile
+    : props.width;
+});
 </script>
 
 <template>
-  <div class="social-links">
-    <!-- <h2>
-      <slot></slot>
-    </h2> -->
-    <div class="social-links__block">
-      <a
-        href="https://www.instagram.com/bliznyuksasha/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <IconInstagram></IconInstagram>
-      </a>
-      <a
-        class="link-vk"
-        href="https://www.instagram.com/bliznyuksasha/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <IconVK></IconVK>
-      </a>
-      <a
-        href="https://t.me/+375447199961"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <IconTelegram></IconTelegram>
-      </a>
-      <a
-        class="link-viber"
-        href="viber://chat?number=%2B375447199961"
-        rel="noopener noreferrer"
-      >
-        <IconViber></IconViber>
-      </a>
-    </div>
+  <div
+    class="social-links"
+    :class="{
+      '--light': props.mode === 'light',
+      '--dark': props.mode === 'dark',
+    }"
+    :style="{ gap: props.gap + 'px' }"
+  >
+    <a
+      href="https://www.instagram.com/bliznyuksasha/"
+      target="_blank"
+      rel="noopener noreferrer"
+      :style="{ width: width + 'px' }"
+    >
+      <IconInstagram></IconInstagram>
+    </a>
+    <a
+      class="link-vk"
+      href="https://www.instagram.com/bliznyuksasha/"
+      target="_blank"
+      rel="noopener noreferrer"
+      :style="{ width: width + 'px' }"
+    >
+      <IconVK></IconVK>
+    </a>
+    <a
+      href="https://t.me/+375447199961"
+      target="_blank"
+      rel="noopener noreferrer"
+      :style="{ width: width + 'px' }"
+    >
+      <IconTelegram></IconTelegram>
+    </a>
+    <a
+      class="link-viber"
+      href="viber://chat?number=%2B375447199961"
+      rel="noopener noreferrer"
+      :style="{ width: width + 'px' }"
+    >
+      <IconViber></IconViber>
+    </a>
   </div>
 </template>
 
@@ -48,67 +92,48 @@ import IconViber from "@/components/icons/footer/IconViber.vue";
 @import "@/assets/vars";
 
 .social-links {
-  // h2 {
-  //   font-size: 2.5rem;
-  //   margin-bottom: 10px;
-  //   color: $inverse-on-surface;
+  display: flex;
+  flex-direction: row;
 
-  //   @include breakpoint(sm) {
-  //     font-size: 2rem;
-  //   }
-  // }
+  a {
+    position: relative;
 
-  .social-links__block {
-    // margin-top: 30px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
+    @keyframes hover-effect {
+      0% {
+        transform: translate(0, 0px);
+      }
 
-    @include breakpoint(sm) {
-      // ! 
-      // margin-top: 20px;
+      50% {
+        transform: translate(0, -2px);
+      }
+
+      100% {
+        transform: translate(0, 0px);
+      }
     }
 
-    a {
-      width: 30px;
+    img,
+    svg {
+      width: 100%;
+      height: auto;
+    }
 
-      color: $surface-container-lowest;
-      position: relative;
-
-      &:hover {
-        color: #fff;
-      }
-
-      @keyframes hover-effect {
-        0% {
-          transform: translate(0, 0px);
-        }
-
-        50% {
-          transform: translate(0, -2px);
-        }
-
-        100% {
-          transform: translate(0, 0px);
-        }
-      }
-
-      img,
-      svg {
-        width: 100%;
-        height: auto;
-        // transition: transform 0.3s ease-in-out, color 0.3s;
-      }
-
+    @include device(screen) {
       &:hover {
         img,
         svg {
           animation: hover-effect ease-out 0.4s;
-          // transform: translate(0, -2px);
         }
       }
     }
+  }
+
+  &.--light a {
+    color: $inverse-on-surface;
+  }
+
+  &.--dark a {
+    color: $secondary;
   }
 }
 </style>
