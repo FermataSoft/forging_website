@@ -8,16 +8,24 @@ import { computed, ref } from "vue";
 
 const props = defineProps({
   width: {
-    type: Number,
+    type: [Number, String],
     default: 30,
+    validator(value) {
+      return !/\D+/g.test(value);
+    },
   },
   widthMobile: {
-    type: Number,
-    default: 30,
+    type: [Number, String],
+    validator(value) {
+      return !/\D+/g.test(value);
+    },
   },
   gap: {
-    type: Number,
+    type: [Number, String],
     default: 20,
+    validator(value) {
+      return !/\D+/g.test(value);
+    },
   },
   mode: {
     type: String,
@@ -29,7 +37,7 @@ const props = defineProps({
 });
 
 const width = computed(() => {
-  return useWindowParamsStore().windowWidth < 650
+  return useWindowParamsStore().windowWidth && props.widthMobile < 650
     ? props.widthMobile
     : props.width;
 });
