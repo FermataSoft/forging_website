@@ -7,7 +7,7 @@ const { t } = useI18n();
 
 <template>
   <div class="feedback-section">
-    <h1>{{ t("headerFeedbackSection") }}</h1>
+    <h1 class="feedback-section__header">{{ t("headerFeedbackSection") }}</h1>
     <Feedback></Feedback>
   </div>
 </template>
@@ -27,10 +27,14 @@ const { t } = useI18n();
     margin-top: 50px;
   }
 
-  h1 {
-    font-size: 3.5rem;
+  .feedback-section__header {
+    font-size: $header-lg;
     font-weight: $font-regular;
     color: $on-surface;
+
+    @include breakpoint(sm) {
+      font-size: $header-lg-mobile;
+    }
   }
 }
 </style>

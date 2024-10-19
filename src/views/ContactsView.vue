@@ -16,7 +16,7 @@ const { t } = useI18n();
         :monochromeIcons="true"
       ></Contacts>
 
-      <SocialLinks :width="35" :gap="30" mode="dark"></SocialLinks>
+      <SocialLinks width="35" gap="30" mode="dark"></SocialLinks>
 
       <div class="contacts-view__feedback-form">
         <h1 class="contacts-view__feedback-form-header">
@@ -39,8 +39,8 @@ const { t } = useI18n();
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
-  gap: 50px;
+  margin-top: 50px;
+  gap: 30px;
 }
 
 .contacts-view__contacts-block {

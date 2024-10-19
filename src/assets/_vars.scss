@@ -2,6 +2,7 @@
 $wrapper-width: 1250px;
 $navbar-height: 55px;
 $scrollbar-width: 15px;
+$mobile-padding: 20px;
 
 $card-width-lg: 350px;
 $card-height-lg: calc($card-width-lg * 4 / 3);
@@ -79,6 +80,10 @@ $header3: 1.6rem;
 $header3-mobile: 1.4rem;
 $header4: 1.4rem;
 $header4-mobile: 1.2rem;
+$header-lg: 3.2rem;
+$header-lg-mobile: 2.4rem;
+$header-xl: 5rem;
+$header-xl-mobile: 2.4rem;
 
 $paragraph: 1.4rem;
 $paragraph-lg: 1.6rem;

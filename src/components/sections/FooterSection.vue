@@ -146,7 +146,7 @@ footer {
           margin-bottom: 20px;
           color: $inverse-on-surface;
 
-          @include breakpoint(xs) {
+          @include breakpoint(md) {
             text-align: center;
           }
         }

@@ -30,7 +30,7 @@ watch(
     <div class="order" v-if="isActive">
       <div class="order__background" @click.self="$emit('close')"></div>
 
-      <div class="order__modal-wrapper">
+      <div class="order__modal-wrapper" @click.self="$emit('close')">
         <div class="order__modal">
           <div class="order__top-block">
             <h1 class="order__modal-header">Свяжитесь с нами</h1>
@@ -39,7 +39,7 @@ watch(
             <Feedback class="order__form"></Feedback>
           </div>
           <div class="order__bottom-block">
-            <SocialLinks></SocialLinks>
+            <SocialLinks class="order__bottom-block-links" mode="light"></SocialLinks>
           </div>
         </div>
         <CloseModal
@@ -169,6 +169,10 @@ watch(
   width: 100%;
   height: auto;
   padding: 20px 0px;
+
+  .order__bottom-block-links {
+    justify-content: center;
+  }
 }
 
 .v-enter-active {

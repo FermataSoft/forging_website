@@ -23,6 +23,9 @@ const props = defineProps({
 @import "../../assets/_vars.scss";
 
 .section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 4rem;
   font-weight: $font-bold;
   padding-top: 50px;
@@ -63,7 +66,7 @@ const props = defineProps({
     }
 
     @include breakpoint(sm) {
-      transform: scale(0.5) translateY(10px);
+      transform: scale(0.6) translateY(3px);
     }
   }
 }

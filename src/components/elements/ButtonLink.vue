@@ -1,13 +1,13 @@
 <script setup>
-import { useI18n } from 'vue-i18n';
-import { RouterLink } from 'vue-router';
+import { useI18n } from "vue-i18n";
+import { RouterLink } from "vue-router";
 
 const { t } = useI18n();
 
 defineProps({
   link: {
     type: String,
-    required: true
+    required: true,
   },
   text: {
     type: String,
@@ -24,7 +24,7 @@ defineProps({
 </template>
 
 <style lang="scss" scoped>
-@import '../../assets/_vars.scss';
+@import "../../assets/_vars.scss";
 
 .btn-wrapper {
   display: block;
@@ -45,11 +45,12 @@ defineProps({
   transform: translate(0);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
-  box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.822), 3px 3px 9px rgba(116, 116, 116, 0.3);
+  box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.822),
+    3px 3px 9px rgba(116, 116, 116, 0.3);
 }
 
 @mixin element-color($color) {
-  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%2075.03%22%20fill%3D%22#{$color}%22%3E%0A%20%20%3Cpath%20d%3D%22M97.91%2C41.93a5.73%2C5.73%2C0%2C0%2C0%2C0-8.85L62.18%2C1.83a7.9%2C7.9%2C0%2C0%2C0-10.11%2C0%2C5.71%2C5.71%2C0%2C0%2C0%2C0%2C8.85L75.62%2C31.26H7.15C3.2%2C31.26%2C0%2C34.06%2C0%2C37.51s3.18%2C6.25%2C7.15%2C6.25H75.62L52.09%2C64.35a5.7%2C5.7%2C0%2C0%2C0%2C0%2C8.84%2C7.87%2C7.87%2C0%2C0%2C0%2C10.11%2C0L97.92%2C42Z%22%2F%3E%0A%3C%2Fsvg%3E%0A');
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%2075.03%22%20fill%3D%22#{$color}%22%3E%0A%20%20%3Cpath%20d%3D%22M97.91%2C41.93a5.73%2C5.73%2C0%2C0%2C0%2C0-8.85L62.18%2C1.83a7.9%2C7.9%2C0%2C0%2C0-10.11%2C0%2C5.71%2C5.71%2C0%2C0%2C0%2C0%2C8.85L75.62%2C31.26H7.15C3.2%2C31.26%2C0%2C34.06%2C0%2C37.51s3.18%2C6.25%2C7.15%2C6.25H75.62L52.09%2C64.35a5.7%2C5.7%2C0%2C0%2C0%2C0%2C8.84%2C7.87%2C7.87%2C0%2C0%2C0%2C10.11%2C0L97.92%2C42Z%22%2F%3E%0A%3C%2Fsvg%3E%0A");
 }
 
 .btn-arrow {
@@ -79,14 +80,28 @@ defineProps({
   transition: all 0.3s ease-in-out;
 }
 
-.btn-wrapper:hover .btn {
-  padding-left: 15px;
-  padding-right: 65px;
+@include device(screen) {
+  .btn-wrapper:hover .btn {
+    padding-left: 15px;
+    padding-right: 65px;
+  }
+
+  .btn-wrapper:hover .btn-arrow {
+    transform: scaleX(1);
+    border-radius: 0 5px 5px 0;
+  }
 }
 
-.btn-wrapper:hover .btn-arrow {
-  transform: scaleX(1);
-  border-radius: 0 5px 5px 0;
+@include device(touch) {
+  .btn-wrapper:active .btn {
+    padding-left: 15px;
+    padding-right: 65px;
+  }
+
+  .btn-wrapper:active .btn-arrow {
+    transform: scaleX(1);
+    border-radius: 0 5px 5px 0;
+  }
 }
 </style>
 

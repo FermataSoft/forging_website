@@ -86,7 +86,6 @@ const swiperEl = ref(null);
 }
 
 .process_section__header {
-  width: 100%;
   height: auto;
   padding-bottom: 20px;
   background-color: $inverse-surface;
