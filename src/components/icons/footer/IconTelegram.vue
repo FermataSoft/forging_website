@@ -7,7 +7,13 @@
     fill="currentColor"
   >
     <defs>
-      <linearGradient x1="50%" y1="0%" x2="50%" y2="99.2583404%" id="linearGradient-1">
+      <linearGradient
+        x1="50%"
+        y1="0%"
+        x2="50%"
+        y2="99.2583404%"
+        id="linearGradient-1"
+      >
         <stop stop-color="#2AABEE" offset="0%"></stop>
         <stop stop-color="#229ED9" offset="100%"></stop>
       </linearGradient>
@@ -33,10 +39,13 @@
   </svg>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/vars";
 
-svg:hover #Oval {
-  fill: url(#linearGradient-1);
-  stroke: url(#linearGradient-1);
+@include device(screen) {
+  svg:hover #Oval {
+    fill: url(#linearGradient-1);
+    stroke: url(#linearGradient-1);
+  }
 }
 </style>

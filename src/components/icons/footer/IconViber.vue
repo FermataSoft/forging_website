@@ -41,8 +41,12 @@
   </svg>
 </template>
 
-<style scoped>
-svg:hover {
-  color: #7360f2;
+<style lang="scss" scoped>
+@import "@/assets/vars";
+
+@include device(screen) {
+  svg:hover {
+    color: #7360f2;
+  }
 }
 </style>

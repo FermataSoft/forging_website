@@ -18,6 +18,7 @@ onMounted(() => {
   window.addEventListener("resize", () => {
     windowParamsStore.$patch({
       windowHeight: window.innerHeight,
+      windowWidth: window.innerWidth,
     });
   });
 });

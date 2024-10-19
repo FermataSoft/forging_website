@@ -9,7 +9,11 @@
     fill="currentColor"
   >
     <defs>
-      <linearGradient id="instagram-gradient" gradientTransform="rotate(140)" y1="0.5">
+      <linearGradient
+        id="instagram-gradient"
+        gradientTransform="rotate(140)"
+        y1="0.5"
+      >
         <stop offset="0%" stop-color="#7638FA" />
         <stop offset="25%" stop-color="#D300C5" />
         <stop offset="50%" stop-color="#FF0069" />
@@ -25,8 +29,12 @@
   </svg>
 </template>
 
-<style scoped>
-svg:hover {
-  fill: url(#instagram-gradient);
+<style lang="scss" scoped>
+@import "@/assets/vars";
+
+@include device(screen) {
+  svg:hover {
+    fill: url(#instagram-gradient);
+  }
 }
 </style>
