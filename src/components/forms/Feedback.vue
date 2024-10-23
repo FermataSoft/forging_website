@@ -86,7 +86,7 @@ function autoResize(element) {
     @submit.prevent="submit"
   >
     <div class="feedback__items">
-      <Loader v-if="form.sending"></Loader>
+      <Loader v-if="form.sending" blur></Loader>
       <div
         class="feedback__item"
         :class="{

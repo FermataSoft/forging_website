@@ -1,8 +1,15 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  blur: {
+    type: Boolean,
+    default: false,
+  },
+});
+</script>
 
 <template>
   <div class="loader">
-    <div class="loader__background"></div>
+    <div class="loader__background" :class="{ '--blur': props.blur }"></div>
     <div class="loader__animation">
       <div class="loader__face">
         <div class="loader__circle"></div>
@@ -27,7 +34,7 @@ $size: 10rem;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 3;
+  z-index: 2;
   overflow: hidden;
   // opacity: 0;
   // visibility: hidden;
@@ -35,7 +42,10 @@ $size: 10rem;
   .loader__background {
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(1px);
+
+    &.--blur {
+      backdrop-filter: blur(1px);
+    }
   }
 
   .loader__animation {
