@@ -194,6 +194,10 @@ $top-bar-inner: 50px;
     li {
       list-style: inside;
       list-style-position: inside;
+
+      p {
+        display: inline;
+      }
     }
   }
 
