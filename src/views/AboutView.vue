@@ -112,11 +112,15 @@ const { t } = useI18n();
 }
 
 .about-view__content-slide-title {
-  font-size: 2.4rem;
+  font-size: $header2;
   width: 50%;
 
+  @include breakpoint(md) {
+    font-size: calc($header2-mobile + 0.2rem);
+  }
+
   @include breakpoint(sm) {
-    font-size: 1.6rem;
+    font-size: $header2-mobile;
     width: 100%;
   }
 }
