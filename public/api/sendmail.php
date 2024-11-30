@@ -41,7 +41,7 @@ try {
     // Content
     $mail->isHTML(true);
     $mail->Subject = 'Интерьер Сталь [Форма обратной связи]';
-    $body = 'Данное письмо отправлено с сайта interierstal.by';
+    $body = "Данное письмо отправлено с сайта {$_SERVER['SERVER_NAME']}";
 
     if (trim(!empty($_POST['name']))) {
         $body .= '<p><strong>Имя:</strong> ' . $_POST['name'] . '</p>';
